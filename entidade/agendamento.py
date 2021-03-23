@@ -1,0 +1,3 @@
+
+class Agendamento:
+    pass
