@@ -1,20 +1,28 @@
-class AbstractPessoa:
+from abc import ABC, abstractmethod
+
+class AbstractPessoa(ABC):
+
+    @abstractmethod
     def __init__(self, nome: str, cpf: str):
-        self.__nome = nome
-        self.__cpf = cpf
+        if isinstance(nome, str):
+            self.__nome = nome
+        if isinstance(cpf, str):
+            self.__cpf = cpf
 
     @property
-    def nome(self):
+    def nome(self) -> str:
         return self.__nome
-    
+
     @nome.setter
     def nome(self, nome):
-        self.__nome = nome
-    
+        if isinstance(nome, str):
+            self.__nome = nome
+
     @property
-    def cpf(self):
+    def cpf(self) -> str:
         return self.__cpf
-    
+
     @cpf.setter
     def cpf(self, cpf):
-        self.__nome = cpf
+        if isinstance(cpf, str):
+            self.__nome = cpf
