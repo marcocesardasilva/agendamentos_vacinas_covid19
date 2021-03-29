@@ -23,10 +23,10 @@ class ControladorSistema:
     def opcoes_vacinas(self):
         self.__controlador_vacinas.abre_tela()
 
-    def opcoes_enfermeiro(self):
+    def opcoes_enfermeiros(self):
         self.__controlador_enfermeiros.abre_tela()
 
-    def opcoes_paciente(self):
+    def opcoes_pacientes(self):
         self.__controlador_pacientes.abre_tela()
 
     def encerra_sistema(self):
@@ -37,8 +37,8 @@ class ControladorSistema:
         lista_opcoes = {
             1: self.opcoes_agendamentos,
             2: self.opcoes_vacinas,
-            3: self.opcoes_enfermeiro,
-            4: self.opcoes_paciente,
+            3: self.opcoes_enfermeiros,
+            4: self.opcoes_pacientes,
             0: self.encerra_sistema
         }
 
@@ -46,4 +46,3 @@ class ControladorSistema:
             opcao_escolhida = self.__tela_sistema.tela_opcoes()
             funcao_escolhida = lista_opcoes[opcao_escolhida]
             funcao_escolhida()
-
