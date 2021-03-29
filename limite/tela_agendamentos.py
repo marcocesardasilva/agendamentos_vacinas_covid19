@@ -1,4 +1,3 @@
-
 class TelaAgendamentos():
 
     def tela_opcoes(self):
@@ -11,3 +10,5 @@ class TelaAgendamentos():
         print("5 - Listar aplicações agendadas")
         print("6 - Listar histórico de vacinações")
         print("0 - Retornar")
+        opcao = int(input("Escolha a opcao: "))
+        return opcao

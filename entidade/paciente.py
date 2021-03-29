@@ -1,6 +1,7 @@
 from datetime import date as Date
 from entidade.pessoa import AbstractPessoa
 
+
 class Paciente(AbstractPessoa):
 	def __init__(self, nome: str, cpf: str, data_nascimento: Date):
 		super().__init__(nome, cpf)

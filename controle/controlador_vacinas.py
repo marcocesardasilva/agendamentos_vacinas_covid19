@@ -1,3 +1,6 @@
+from limite.tela_vacinas import TelaVacinas
+from entidade.vacina import Vacina
+
 
 class ControladorVacinas():
 

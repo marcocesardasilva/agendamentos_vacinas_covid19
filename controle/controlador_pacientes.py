@@ -1,6 +1,7 @@
 from limite.tela_pacientes import TelaPacientes
 from entidade.paciente import Paciente
 
+
 class ControladorPacientes():
 
     def __init__(self, controlador_sistema):
@@ -27,5 +28,3 @@ class ControladorPacientes():
 
         while self.__mantem_tela_aberta:
             lista_opcoes[self.__tela_pacientes.tela_opcoes()]()
-
-

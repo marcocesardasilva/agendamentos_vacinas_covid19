@@ -1,4 +1,3 @@
-
 class Vacina:
     def __init__(self, fabricante: str, quantidade: int=0):
         if isinstance(fabricante, str):
@@ -18,7 +17,7 @@ class Vacina:
     @property
     def quantidade(self) -> str:
         return self.__quantidade
-    
+
     @quantidade.setter
     def quantidade(self, quantidade):
         if isinstance(quantidade, int):

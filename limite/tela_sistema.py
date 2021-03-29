@@ -1,4 +1,3 @@
-
 class TelaSistema:
 
     def tela_opcoes(self):

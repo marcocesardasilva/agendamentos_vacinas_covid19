@@ -10,3 +10,5 @@ class TelaVacinas():
         print("5 - Listar doses disponíveis")
         print("6 - Listar doses aplicadas")
         print("0 - Retornar")
+        opcao = int(input("Escolha a opcao: "))
+        return opcao

@@ -1,4 +1,3 @@
-
 class TelaEnfermeiros():
 
     def tela_opcoes(self):
@@ -11,3 +10,5 @@ class TelaEnfermeiros():
         print("5 - Listar enfermeiros")
         print("6 - Listar pacientes atendidos por um determinado enfermeiro")
         print("0 - Retornar")
+        opcao = int(input("Escolha a opcao: "))
+        return opcao
