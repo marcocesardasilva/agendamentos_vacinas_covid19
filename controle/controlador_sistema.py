@@ -1,48 +1,49 @@
 from limite.tela_sistema import TelaSistema
-from controle.controlador_pacientes import ControladorPacientes
-from controle.controlador_enfermeiros import ControladorEnfermeiros
-from controle.controlador_vacinas import ControladorVacinas
 from controlador_agendamentos import ControladorAgendamentos
+from controle.controlador_vacinas import ControladorVacinas
+from controle.controlador_enfermeiros import ControladorEnfermeiros
+from controle.controlador_pacientes import ControladorPacientes
 
 
 class ControladorSistema:
 
-  def __init__(self):
-    self.__controlador_pacientes = ControladorPacientes(self)
-    self.__controlador_enfermeiros = ControladorEnfermeiros(self)
-    self.__controlador_vacinas = ControladorVacinas(self)
-    self.__controlador_agendamentos = ControladorAgendamentos(self)
-    self.__tela_sistema = TelaSistema()
-  
-  def inicializa_sistema(self):
-    self.abre_tela()
-  
-  def cadastra_livros(self):
-    pass
-    # Chama o controlador de Livros
+    def __init__(self):
+        self.__controlador_agendamentos = ControladorAgendamentos(self)
+        self.__controlador_vacinas = ControladorVacinas(self)
+        self.__controlador_enfermeiros = ControladorEnfermeiros(self)
+        self.__controlador_pacientes = ControladorPacientes(self)
+        self.__tela_sistema = TelaSistema()
 
-  def cadastra_amigos(self):
-    # Chama o controlador de Amigos
-    self.__controlador_amigos.abre_tela()
+    def inicializa_sistema(self):
+        self.abre_tela()
 
-  def cadastra_emprestimos(self):
-    pass
-    # Chama o controlador de Emprestimos
+    def opcoes_agendamentos(self):
+        self.__controlador_pacientes.abre_tela()
 
-  def encerra_sistema(self):
-    exit(0)
+    def opcoes_vacinas(self):
+        self.__controlador_vacinas.abre_tela()
 
+    def opcoes_enfermeiro(self):
+        self.__controlador_enfermeiros.abre_tela()
 
-  def abre_tela(self):
+    def opcoes_paciente(self):
+        self.__controlador_pacientes.abre_tela()
 
-    lista_opcoes = {1: self.cadastra_livros, 2: self.cadastra_amigos, 3: self.cadastra_emprestimos, 0: self.encerra_sistema}
+    def encerra_sistema(self):
+        exit(0)
 
-    while True:
+    def abre_tela(self):
 
-      opcao_escolhida = self.__tela_sistema.tela_opcoes()
+        lista_opcoes = {
+            1: self.opcoes_agendamentos,
+            2: self.opcoes_vacinas,
+            3: self.opcoes_enfermeiro,
+            4: self.opcoes_paciente,
+            0: self.encerra_sistema
+        }
 
-      funcao_escolhida = lista_opcoes[opcao_escolhida]
+        while True:
+            opcao_escolhida = self.__tela_sistema.tela_opcoes()
+            funcao_escolhida = lista_opcoes[opcao_escolhida]
+            funcao_escolhida()
 
-      funcao_escolhida()
-    
-    

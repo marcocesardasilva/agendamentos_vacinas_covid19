@@ -1,3 +1,26 @@
 
 class Vacina:
-    pass
+    def __init__(self, fabricante: str, quantidade: int=0):
+        if isinstance(fabricante, str):
+            self.__fabricante = fabricante
+        if isinstance(quantidade, int):
+            self.__quantidade = quantidade
+    
+    @property
+    def fabricante(self) -> str:
+        return self.__fabricante
+    
+    @fabricante.setter
+    def fabricante(self, fabricante):
+        if isinstance(fabricante, str):
+            self.__fabricante = fabricante
+
+    @property
+    def quantidade(self) -> str:
+        return self.__quantidade
+
+    def adiciona_quantidade(self, quantidade):
+        self.__quantidade += quantidade
+    
+    def subtrai_quantidade(self):
+        self.__quantidade -= 1
