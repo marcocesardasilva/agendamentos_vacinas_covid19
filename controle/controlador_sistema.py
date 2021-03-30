@@ -1,5 +1,5 @@
 from limite.tela_sistema import TelaSistema
-from controlador_agendamentos import ControladorAgendamentos
+from controle.controlador_agendamentos import ControladorAgendamentos
 from controle.controlador_vacinas import ControladorVacinas
 from controle.controlador_enfermeiros import ControladorEnfermeiros
 from controle.controlador_pacientes import ControladorPacientes

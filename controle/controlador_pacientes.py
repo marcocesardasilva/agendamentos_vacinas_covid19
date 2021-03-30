@@ -16,7 +16,7 @@ class ControladorPacientes():
         self.__pacientes.append(paciente)
 
     def editar_paciente(self):
-        pass
+        cadastrar_paciente()
 
     def get_paciente(self):
         pass
