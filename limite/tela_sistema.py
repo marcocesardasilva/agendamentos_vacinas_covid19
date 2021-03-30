@@ -1,7 +1,7 @@
 class TelaSistema:
 
     def tela_opcoes(self):
-        print("-------- SisPostoVacinas ---------")
+        print("-------- SisPostoVacinas --------")
         print("Escolha sua opcao")
         print("1 - Agendamentos")
         print("2 - Vacinas")
