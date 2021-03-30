@@ -12,3 +12,18 @@ class TelaAgendamentos():
         print("0 - Retornar")
         opcao = int(input("Escolha a opcao: "))
         return opcao
+    
+    def pegar_dados_agendamento(self):
+        pass
+
+    def selecionar_agendamento(self):
+        pass
+
+    def mostrar_agendamento(self):
+        pass
+
+    def mostrar_agendamentos_abertos(self):
+        pass
+
+    def mostrar_aplicacoes_efetivadas(self):
+        pass

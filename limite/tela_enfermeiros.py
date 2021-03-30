@@ -12,3 +12,21 @@ class TelaEnfermeiros():
         print("0 - Retornar")
         opcao = int(input("Escolha a opcao: "))
         return opcao
+    
+    def pegar_dados_enfermeiro(self):
+        pass
+
+    def selecionar_enfermeiro(self):
+        pass
+
+    def mostrar_enfermeiro(self):
+        pass
+
+    def alterar_status_enfermeiro(self):
+        pass
+
+    def mostrar_lista_enferemrios(self):
+        pass
+
+    def mostrar_pacientes_por_enfermeiro(self):
+        pass

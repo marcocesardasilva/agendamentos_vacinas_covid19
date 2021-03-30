@@ -12,3 +12,18 @@ class TelaVacinas():
         print("0 - Retornar")
         opcao = int(input("Escolha a opcao: "))
         return opcao
+
+    def pegar_dados_vacina(self):
+        pass
+
+    def pegar_quantidade(self):
+        pass
+
+    def selecionar_vacina(self):
+        pass
+
+    def mostrar_doses_disponiveis(self):
+        pass
+
+    def mostrar_doses_aplicadas(self):
+        pass
