@@ -14,13 +14,18 @@ class TelaVacinas():
         return opcao
 
     def pegar_dados_vacina(self):
-        pass
+        print("-------- DADOS VACINA ----------")
+        fabricante = input("Fabricante: ")
+        quantidade = int(input("Quantidade: "))
+        return {"fabricante": fabricante, "quantidade": quantidade}
 
     def pegar_quantidade(self):
-        pass
+        quantidade = int(input("Quantidade: "))
+        return quantidade
 
     def selecionar_vacina(self):
-        pass
+        fabricante = input("Fabricante: ")
+        return fabricante
 
     def mostrar_doses_disponiveis(self):
         pass

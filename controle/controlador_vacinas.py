@@ -11,7 +11,9 @@ class ControladorVacinas():
         self.__mantem_tela_aberta = True
 
     def cadastrar_vacina(self, fabricante, quantidade):
-        pass
+        dados_vacina = self.__tela_vacinas.pegar_dados_vacina()
+        vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
+        self.__vacinas.append(vacina)
 
     def adicionar_dose(self, fabricante):
         pass
