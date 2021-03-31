@@ -27,8 +27,10 @@ class TelaVacinas():
         fabricante = input("Fabricante: ")
         return fabricante
 
-    def mostrar_doses_disponiveis(self):
-        pass
+    def mostrar_doses_disponiveis(self, dados_vacina):
+        print("--------------------------------")
+        print("Fabricante: ", dados_vacina["fabricante"])
+        print("Quantidade de doses disponíveis: ", dados_vacina["quantidade"])
 
     def mostrar_doses_aplicadas(self):
         pass

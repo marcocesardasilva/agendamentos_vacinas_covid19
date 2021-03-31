@@ -22,7 +22,20 @@ class ControladorAgendamentos():
         data_hora_agendamento: datetime,
         dose: int
     ):
-        pass
+        dados_agendamento = self.__tela_agendamentos.pegar_dados_agendamento()
+        enfermeiro = self.__controlador_sistema.ControladorEnfermeiros.get_enfermeiro()
+        paciente = self.__controlador_sistema.ControladorPacientes.get_paciente()
+        vacina = self.__controlador_sistema.ControladorVacinas.get_vacina()
+        data_hora_agendamento = datetime.strptime(
+            dados_agendamento["data_hora_agendamento"], "%d/%m/%Y %H:%M")
+        agendamento = Agendamento(
+            enfermeiro,
+            paciente,
+            vacina,
+            data_hora_agendamento,
+            dados_agendamento["dose"]
+        )
+        self.__agendamentos.append(agendamento)
 
     def editar_agendamento(self):
         pass

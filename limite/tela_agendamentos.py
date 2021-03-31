@@ -14,7 +14,11 @@ class TelaAgendamentos():
         return opcao
     
     def pegar_dados_agendamento(self):
-        pass
+        print("-------- DADOS AGENDAMENTO ----------")
+        data = input("Data (dd/mm/aaaa): ")
+        hora = input("Hora (hh:mm):")
+        dose = int(input("Dose (1 - Primeira / 2 - Segunda): "))
+        return {"data_hora_agendamento": data+" "+hora, "dose": dose}
 
     def selecionar_agendamento(self):
         pass
