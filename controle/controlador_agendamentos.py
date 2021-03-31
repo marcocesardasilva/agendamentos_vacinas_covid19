@@ -43,4 +43,15 @@ class ControladorAgendamentos():
         self.__mantem_tela_aberta = False
 
     def abre_tela(self):
-        pass
+        lista_opcoes = {
+            1: self.cadastrar_agendamento,
+            2: self.editar_agendamento,
+            3: self.get_agendamento,
+            4: self.remover_agendamento,
+            5: self.listar_agendamentos_abertos,
+            6: self.listar_aplicacoes_efetivadas,
+            0: self.retorna_tela_principal
+        }
+
+        while self.__mantem_tela_aberta:
+            lista_opcoes[self.__tela_agendamentos.tela_opcoes()]()
