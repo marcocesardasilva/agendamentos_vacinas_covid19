@@ -18,20 +18,30 @@ class TelaPacientes():
         print("-------- INCLUIR PACIENTE ----------")
         nome = input("Nome: ")
         cpf = input("CPF: ")
-        data_nascimento = input("Data de nascimento: ")
-        return {"nome": nome, "cpf": cpf, "data de nascimento": data_nascimento}
+        data_nascimento_str = input("Data de nascimento: ")
+        data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
+        return {"nome": nome, "cpf": cpf, "data_nascimento": data_nascimento_obj}
+
+    def pega_dados_paciente_edicao(self):
+        print('--------- EDITAR PACIENTE ----------')
+        nome = input('Nome: ')
+        data_nascimento_str = input("Data de nascimento: ")
+        data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
+        return {"nome": nome, "data_nascimento": data_nascimento_obj}
 
     def selecionar_paciente(self):
-        pass
+        print('---- SELECIONAR PACIENTE ------')
+        cpf = input('CPF: ')
+        return cpf
 
     def mostrar_paciente(self, dados_paciente):
         print("--------------------------------")
-        print("NOME DO PACIENTE: ", dados_paciente["nome"])
-        print("CPF DO PACIENTE: ", dados_paciente["cpf"])
-        print("DATA DE NASCIMENTO DO PACIENTE: ", dados_paciente["data_nascimento"])
+        print(f'NOME: {dados_paciente["nome"]} |'
+              f' CPF: {dados_paciente["cpf"]} |'
+              f' DATA DE NASCIMENTO: {dados_paciente["data_nascimento"]}')
 
-    def mostrar_lista_pacientes(self):
-        pass
+    # def mostrar_lista_pacientes(self):
+    #     pass
 
     def mostrar_pacientes_nunca_agendados(self):
         pass
@@ -41,3 +51,6 @@ class TelaPacientes():
 
     def mostrar_vacinados_segunda_dose(self):
         pass
+
+    def linha(self):
+        print("-" * 60)

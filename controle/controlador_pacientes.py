@@ -16,13 +16,31 @@ class ControladorPacientes():
         self.__pacientes.append(paciente)
 
     def editar_paciente(self):
-        cadastrar_paciente()
+        paciente_editar = self.get_paciente()
+        dados_editar = self.__tela_pacientes.pega_dados_paciente_edicao()
+        for paciente in self.__pacientes:
+            if paciente_editar == paciente:
+                paciente.nome(dados_editar["nome"])
+                paciente.data_nascimento(dados_editar["data_nascimento"])
+
+    def consultar_paciente(self):
+        paciente_consultar = self.get_paciente()
+        for paciente in self.__pacientes:
+            if paciente_consultar == paciente:
+                self.__tela_pacientes.mostrar_paciente(
+                    {"nome": paciente.nome, "cpf": paciente.cpf, "data_nascimento": paciente.data_nascimento})
 
     def get_paciente(self):
-        pass
+        cpf = self.__tela_pacientes.selecionar_paciente()
+        for paciente in self.__pacientes:
+            if cpf == paciente.cpf:
+                salvar_paciente = paciente
+        return salvar_paciente
 
     def listar_pacientes(self):
-        pass
+        for paciente in self.__pacientes:
+            self.__tela_pacientes.mostrar_paciente(
+                {"nome": paciente.nome, "cpf": paciente.cpf, "data_nascimento": paciente.data_nascimento})
 
     def listar_pacientes_nao_agendados(self):
         pass
@@ -37,7 +55,14 @@ class ControladorPacientes():
         self.__mantem_tela_aberta = False
 
     def abre_tela(self):
-        lista_opcoes = {1: self.cadastrar_paciente, 2: self.listar_pacientes, 0: self.retorna_tela_principal}
+        lista_opcoes = {1: self.cadastrar_paciente,
+                        2: self.editar_paciente,
+                        3: self.get_paciente,
+                        4: self.listar_pacientes,
+                        5: self.listar_pacientes_nao_agendados,
+                        6: self.listar_pacientes_primeira_dose,
+                        7: self.listar_pacientes_segunda_dose,
+                        0: self.retorna_tela_principal}
 
         while self.__mantem_tela_aberta:
             lista_opcoes[self.__tela_pacientes.tela_opcoes()]()

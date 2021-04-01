@@ -14,19 +14,35 @@ class TelaEnfermeiros():
         return opcao
     
     def pegar_dados_enfermeiro(self):
-        pass
+        print("-------- INCLUIR ENFERMEIRO ----------")
+        nome = input("Nome: ")
+        cpf = input("CPF: ")
+        matricula = input("Matrícula: ")
+        return {"nome": nome, "cpf": cpf, "matricula": matricula, "status": "Ativo"}
 
     def selecionar_enfermeiro(self):
-        pass
+        print('----- SELECIONAR ENFERMEIRO -----')
+        matricula = input("Matrícula: ")
+        return matricula
 
-    def mostrar_enfermeiro(self):
-        pass
+    def mostrar_enfermeiro(self, dados_enfermeiro):
+        print(f'NOME: {dados_enfermeiro["nome"]} |'
+              f' CPF: {dados_enfermeiro["cpf"]} |'
+              f' MATRÍCULA: {dados_enfermeiro["matricula"]} |'
+              f' STATUS: {dados_enfermeiro["status"]}'
+              )
 
     def alterar_status_enfermeiro(self):
         pass
 
-    def mostrar_lista_enferemrios(self):
-        pass
+    def mostrar_lista_enferemrios(self, dados_enfermeiro):
+        print(
+            f'NOME: {dados_enfermeiro["nome"]} |'
+            f' CPF: {dados_enfermeiro["cpf"]} |'
+            f' MATRÍCULA: {dados_enfermeiro["data_nascimento"]}')
 
     def mostrar_pacientes_por_enfermeiro(self):
         pass
+
+    def linha(self):
+        print("-" * 60)
