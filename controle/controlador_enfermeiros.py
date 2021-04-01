@@ -49,11 +49,7 @@ class ControladorEnfermeiros():
         enfermeiro_editar = self.get_enfermeiro()
         for enfermeiro in self.__enfermeiros:
             if enfermeiro == enfermeiro_editar:
-<<<<<<< HEAD
-                enfermeiro.status("Inativo")
-=======
                 enfermeiro.status = "Inativo"
->>>>>>> 2d81a49b99253eaec3f4a2639949f0239007774b
 
     def listar_enfermeiros(self):
         for enfermeiro in self.__enfermeiros:
