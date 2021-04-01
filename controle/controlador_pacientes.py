@@ -6,7 +6,7 @@ class ControladorPacientes():
 
     def __init__(self, controlador_sistema):
         self.__pacientes = []
-        self.__tela_pacientes = TelaPacientes()
+        self.__tela_pacientes = TelaPacientes(self)
         self.__controlador_sistema = controlador_sistema
         self.__mantem_tela_aberta = True
 
@@ -61,7 +61,7 @@ class ControladorPacientes():
                         4: self.listar_pacientes,
                         5: self.listar_pacientes_nao_agendados,
                         6: self.listar_pacientes_primeira_dose,
-                        7: self.listar_pacientes_segunda_dose,
+                        7: self.listar_pacientes_primeira_segunda,
                         0: self.retorna_tela_principal}
 
         while self.__mantem_tela_aberta:

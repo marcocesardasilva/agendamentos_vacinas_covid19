@@ -6,7 +6,7 @@ class ControladorEnfermeiros():
 
     def __init__(self, controlador_sistema):
         self.__enfermeiros = []
-        self.__tela_enfermeiros = TelaEnfermeiros()
+        self.__tela_enfermeiros = TelaEnfermeiros(self)
         self.__controlador_sistema = controlador_sistema
         self.__mantem_tela_aberta = True
 
@@ -32,7 +32,7 @@ class ControladorEnfermeiros():
         enfermeiro_editar = self.get_enfermeiro()
         for enfermeiro in self.__enfermeiros:
             if enfermeiro == enfermeiro_editar:
-                enfermeiro.status(Inativo)
+                enfermeiro.status("Inativo")
 
     def listar_enfermeiros(self):
         for enfermeiro in self.__enfermeiros:
