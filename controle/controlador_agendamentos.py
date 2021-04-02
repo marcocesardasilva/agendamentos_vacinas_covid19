@@ -2,18 +2,27 @@ from limite.tela_agendamentos import TelaAgendamentos
 from controle.controlador_enfermeiros import ControladorEnfermeiros
 from controle.controlador_pacientes import ControladorPacientes
 from controle.controlador_vacinas import ControladorVacinas
+from entidade.agendamento import Agendamento
+from entidade.enfermeiro import Enfermeiro
+from entidade.vacina import Vacina
 from datetime import datetime as datetime
 
 
 class ControladorAgendamentos():
 
-    def __init__(self, controlador_sistema):
+    def __init__(
+        self,
+        controlador_sistema,
+        controlador_enfermeiros: ControladorEnfermeiros,
+        controlador_pacientes: ControladorPacientes,
+        controlador_vacinas: ControladorVacinas
+    ):
         self.__agendamentos = []
         self.__tela_agendamentos = TelaAgendamentos()
         self.__controlador_sistema = controlador_sistema
-        self.__controlador_enfermeiros = ControladorEnfermeiros()
-        self.__controlador_pacientes = ControladorPacientes()
-        self.__controlador_vacinas = ControladorVacinas()
+        self.__controlador_enfermeiros = controlador_enfermeiros
+        self.__controlador_pacientes = controlador_pacientes
+        self.__controlador_vacinas = controlador_vacinas
         self.__mantem_tela_aberta = True
 
     def cadastrar_agendamento(self):
@@ -35,20 +44,48 @@ class ControladorAgendamentos():
         )
         self.__agendamentos.append(agendamento)
 
-    def editar_agendamento(self):
-        pass
-
     def get_agendamento(self):
-        pass
+        cpf_dose = self.__tela_agendamentos.selecionar_agendamento()
+        for agendamento in self.__agendamentos:
+            if cpf_dose["cpf"] == agendamento.paciente.cpf and cpf_dose["dose"] == agendamento.dose:
+                return agendamento
+
+    def editar_agendamento(self):
+        agendamento = self.get_agendamento()
+        dados_agendamento = self.__tela_agendamentos.pegar_dados_agendamento()
+        agendamento.enfermeiro = self.__controlador_enfermeiros.get_enfermeiro()
+        agendamento.paciente = self.__controlador_pacientes.get_paciente()
+        agendamento.vacina = self.__controlador_vacinas.get_vacina()
+        agendamento.data_hora_agendamento = datetime.strptime(
+            dados_agendamento["data_hora_agendamento"],
+            "%d/%m/%Y %H:%M"
+        )
+        agendamento.dose = dados_agendamento["dose"]
 
     def remover_agendamento(self):
         pass
 
     def listar_agendamentos_abertos(self):
-        pass
+        for agendamento in self.__agendamentos:
+            if agendamento.aplicada == True:
+                self.__tela_agendamentos.mostrar_agendamentos_abertos({
+                    "enfermeiro": agendamento.enfermeiro,
+                    "paciente": agendamento.paciente,
+                    "vacina": agendamento.vacina,
+                    "data_hora_agendamento": agendamento.data_hora_agendamento,
+                    "dose": agendamento.dose
+                })
 
     def listar_aplicacoes_efetivadas(self):
-        pass
+        for agendamento in self.__agendamentos:
+            if agendamento.aplicada == False:
+                self.__tela_agendamentos.mostrar_aplicacoes_efetivadas({
+                    "enfermeiro": agendamento.enfermeiro,
+                    "paciente": agendamento.paciente,
+                    "vacina": agendamento.vacina,
+                    "data_hora_agendamento": agendamento.data_hora_agendamento,
+                    "dose": agendamento.dose
+                })
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False

@@ -16,13 +16,21 @@ class TelaVacinas():
     def pegar_dados_vacina(self):
         print("-------- CADASTRAR/EDITAR VACINA ----------")
         fabricante = input("Fabricante: ")
-        quantidade = int(input("Quantidade: "))
-        return {"fabricante": fabricante, "quantidade": quantidade}
+        while True:
+            try:
+                quantidade = int(input("Quantidade: "))
+                return {"fabricante": fabricante, "quantidade": quantidade}
+            except TypeError:
+                print("Valor inválido para a quantidade. Digite um valor válido.")
 
     def pegar_quantidade(self):
-        quantidade = int(input("Quantidade: "))
-        return quantidade
-
+        while True:
+            try:
+                quantidade = int(input("Quantidade: "))
+                return quantidade
+            except TypeError:
+                print("Valor inválido para a quantidade. Digite um valor válido.")
+        
     def selecionar_vacina(self):
         fabricante = input("Fabricante: ")
         return fabricante
@@ -32,7 +40,7 @@ class TelaVacinas():
         print("Fabricante: ", dados_vacina["fabricante"])
         print("Quantidade de doses disponíveis: ", dados_vacina["quantidade"])
 
-    def mostrar_doses_aplicadas(self):
+    def mostrar_doses_aplicadas(self, dados_vacina):
         print("----------------------------------------")
         print("Fabricante: ", dados_vacina["fabricante"])
         print("Quantidade de doses aplicadas: ", dados_vacina["quantidade"])

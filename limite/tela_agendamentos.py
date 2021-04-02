@@ -21,13 +21,25 @@ class TelaAgendamentos():
         return {"data_hora_agendamento": data+" "+hora, "dose": dose}
 
     def selecionar_agendamento(self):
-        pass
+        cpf = input("CPF do Paciente: ")
+        dose = int(input("Qual a dose da vacina (1 - Primeira / 2 - Segunda): "))
+        return {"cpf": cpf, "dose": dose}
 
     def mostrar_agendamento(self):
         pass
 
-    def mostrar_agendamentos_abertos(self):
-        pass
+    def mostrar_agendamentos_abertos(self, dados_agendamento):
+        print("----------------------------------------")
+        print("enfermeiro", dados_agendamento["enfermeiro"])
+        print("paciente", dados_agendamento["paciente"])
+        print("vacina", dados_agendamento["vacina"])
+        print("data_hora_agendamento", dados_agendamento["data_hora_agendamento"])
+        print("dose", dados_agendamento["dose"])
 
-    def mostrar_aplicacoes_efetivadas(self):
-        pass
+    def mostrar_aplicacoes_efetivadas(self, dados_agendamento):
+        print("----------------------------------------")
+        print("enfermeiro", dados_agendamento["enfermeiro"])
+        print("paciente", dados_agendamento["paciente"])
+        print("vacina", dados_agendamento["vacina"])
+        print("data_hora_agendamento", dados_agendamento["data_hora_agendamento"])
+        print("dose", dados_agendamento["dose"])

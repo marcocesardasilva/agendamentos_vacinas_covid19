@@ -10,34 +10,32 @@ class ControladorVacinas():
         self.__controlador_sistema = controlador_sistema
         self.__mantem_tela_aberta = True
 
-    def cadastrar_vacina(self, fabricante, quantidade):
+    def cadastrar_vacina(self):
         dados_vacina = self.__tela_vacinas.pegar_dados_vacina()
         vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
         self.__vacinas.append(vacina)
+    
+    def get_vacina(self):
+        fabricante = self.__tela_vacinas.selecionar_vacina()
+        for vacina in self.__vacinas:
+            if fabricante == vacina.fabricante:
+                return vacina
 
     def adicionar_dose(self):
-        fabricante = self.get_vacina()
+        vacina = self.get_vacina()
         quantidade = self.__tela_vacinas.pegar_quantidade()
-        self.__vacinas[fabricante].quantidade += quantidade
+        vacina.quantidade += quantidade
 
-    def subtrair_dose(self, fabricante):
-        fabricante = self.get_vacina()
+    def subtrair_dose(self):
+        vacina = self.get_vacina()
         quantidade = self.__tela_vacinas.pegar_quantidade()
-        self.__vacinas[fabricante].quantidade -= quantidade
+        vacina.quantidade -= quantidade
 
-    def editar_vacina(self, fabricante, quantidade):
-        fabricante = self.get_vacina()
+    def editar_vacina(self):
+        vacina = self.get_vacina()
         dados_vacina = self.__tela_vacinas.pegar_dados_vacina()
-        self.__vacinas[fabricante].fabricante = dados_vacina["fabricante"]
-        self.__vacinas[fabricante].quantidade = dados_vacina["quantidade"]
-
-    def get_vacina(self):
-        encontrado = None
-        while encontrado is None:
-            fabricante = self.__tela_vacinas.selecionar_vacina()
-            if fabricante in self.__vacinas:
-                encontrado = True
-        return fabricante
+        vacina.fabricante = dados_vacina["fabricante"]
+        vacina.quantidade = dados_vacina["quantidade"]
 
     def listar_doses_disponiveis(self):
         for vacina in self.__vacinas:
