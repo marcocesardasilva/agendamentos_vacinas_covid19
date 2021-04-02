@@ -14,7 +14,7 @@ class TelaVacinas():
         return opcao
 
     def pegar_dados_vacina(self):
-        print("-------- DADOS VACINA ----------")
+        print("-------- CADASTRAR/EDITAR VACINA ----------")
         fabricante = input("Fabricante: ")
         quantidade = int(input("Quantidade: "))
         return {"fabricante": fabricante, "quantidade": quantidade}
@@ -28,9 +28,11 @@ class TelaVacinas():
         return fabricante
 
     def mostrar_doses_disponiveis(self, dados_vacina):
-        print("--------------------------------")
+        print("----------------------------------------")
         print("Fabricante: ", dados_vacina["fabricante"])
         print("Quantidade de doses disponíveis: ", dados_vacina["quantidade"])
 
     def mostrar_doses_aplicadas(self):
-        pass
+        print("----------------------------------------")
+        print("Fabricante: ", dados_vacina["fabricante"])
+        print("Quantidade de doses aplicadas: ", dados_vacina["quantidade"])

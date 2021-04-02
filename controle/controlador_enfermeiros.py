@@ -6,7 +6,7 @@ class ControladorEnfermeiros():
 
     def __init__(self, controlador_sistema):
         self.__enfermeiros = []
-        self.__tela_enfermeiros = TelaEnfermeiros(self)
+        self.__tela_enfermeiros = TelaEnfermeiros()
         self.__controlador_sistema = controlador_sistema
         self.__mantem_tela_aberta = True
 

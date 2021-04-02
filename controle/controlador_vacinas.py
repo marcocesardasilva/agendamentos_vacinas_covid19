@@ -6,7 +6,7 @@ class ControladorVacinas():
 
     def __init__(self, controlador_sistema):
         self.__vacinas = []
-        self.__tela_vacinas = TelaVacinas(self)
+        self.__tela_vacinas = TelaVacinas()
         self.__controlador_sistema = controlador_sistema
         self.__mantem_tela_aberta = True
 
