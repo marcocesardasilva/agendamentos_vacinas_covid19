@@ -42,8 +42,7 @@ class ControladorEnfermeiros():
         matricula = self.__tela_enfermeiros.selecionar_enfermeiro()
         for enfermeiro in self.__enfermeiros:
             if matricula == enfermeiro.matricula:
-                salvar_enfermeiro = enfermeiro
-                return salvar_enfermeiro
+                return enfermeiro
 
     def remover_enfermeiro(self):
         enfermeiro_editar = self.get_enfermeiro()

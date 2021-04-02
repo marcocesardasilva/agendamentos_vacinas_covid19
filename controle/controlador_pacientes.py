@@ -37,8 +37,7 @@ class ControladorPacientes():
         cpf = self.__tela_pacientes.selecionar_paciente()
         for paciente in self.__pacientes:
             if cpf == paciente.cpf:
-                salvar_paciente = paciente
-                return salvar_paciente
+                return paciente
 
     def listar_pacientes(self):
         for paciente in self.__pacientes:
