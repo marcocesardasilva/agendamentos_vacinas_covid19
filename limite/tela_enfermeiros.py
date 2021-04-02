@@ -20,6 +20,12 @@ class TelaEnfermeiros():
         matricula = input("Matrícula: ")
         return {"nome": nome, "cpf": cpf, "matricula": matricula, "status": "Ativo"}
 
+    def pegar_dados_enfermeiro_edicao(self):
+        print("-------- EDITAR ENFERMEIRO ----------")
+        nome = input('Nome: ')
+        matr = input('Matrícula: ')
+        return {'nome': nome, 'matricula': matr}
+
     def selecionar_enfermeiro(self):
         print('----- SELECIONAR ENFERMEIRO -----')
         matricula = input("Matrícula: ")
