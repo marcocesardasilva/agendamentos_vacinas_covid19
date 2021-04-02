@@ -49,6 +49,20 @@ class ControladorAgendamentos():
         for agendamento in self.__agendamentos:
             if cpf_dose["cpf"] == agendamento.paciente.cpf and cpf_dose["dose"] == agendamento.dose:
                 return agendamento
+    
+    def consultar_agendamento(self):
+        agendamento = self.get_agendamento()
+        status = "Aguardando aplicação"
+        if agendamento.aplicada is True:
+            status = "Vacina já aplicada"
+        self.__tela_agendamentos.mostrar_agendamento({
+            "enfermeiro": agendamento.enfermeiro,
+            "paciente": agendamento.paciente,
+            "vacina": agendamento.vacina,
+            "data_hora_agendamento": agendamento.data_hora_agendamento,
+            "dose": agendamento.dose,
+            "status": status
+        })
 
     def editar_agendamento(self):
         agendamento = self.get_agendamento()
@@ -63,12 +77,13 @@ class ControladorAgendamentos():
         agendamento.dose = dados_agendamento["dose"]
 
     def remover_agendamento(self):
-        pass
+        agendamento = self.get_agendamento()
+        del(agendamento[agendamento])
 
     def listar_agendamentos_abertos(self):
         for agendamento in self.__agendamentos:
             if agendamento.aplicada == True:
-                self.__tela_agendamentos.mostrar_agendamentos_abertos({
+                self.__tela_agendamentos.mostrar_lista_agendamentos({
                     "enfermeiro": agendamento.enfermeiro,
                     "paciente": agendamento.paciente,
                     "vacina": agendamento.vacina,
@@ -79,7 +94,7 @@ class ControladorAgendamentos():
     def listar_aplicacoes_efetivadas(self):
         for agendamento in self.__agendamentos:
             if agendamento.aplicada == False:
-                self.__tela_agendamentos.mostrar_aplicacoes_efetivadas({
+                self.__tela_agendamentos.mostrar_lista_agendamentos({
                     "enfermeiro": agendamento.enfermeiro,
                     "paciente": agendamento.paciente,
                     "vacina": agendamento.vacina,
@@ -93,8 +108,8 @@ class ControladorAgendamentos():
     def abre_tela(self):
         lista_opcoes = {
             1: self.cadastrar_agendamento,
-            2: self.editar_agendamento,
-            3: self.get_agendamento,
+            2: self.consultar_agendamento,
+            3: self.editar_agendamento,
             4: self.remover_agendamento,
             5: self.listar_agendamentos_abertos,
             6: self.listar_aplicacoes_efetivadas,

@@ -4,8 +4,8 @@ class TelaAgendamentos():
         print("-------- AGENDAMENTOS ----------")
         print("Escolha a opcao")
         print("1 - Cadastrar agendamento")
-        print("2 - Editar agendamento")
-        print("3 - Consultar agendamento")
+        print("2 - Consultar agendamento")
+        print("3 - Editar agendamento")
         print("4 - Remover agendamento")
         print("5 - Listar aplicações agendadas")
         print("6 - Listar histórico de vacinações")
@@ -25,21 +25,19 @@ class TelaAgendamentos():
         dose = int(input("Qual a dose da vacina (1 - Primeira / 2 - Segunda): "))
         return {"cpf": cpf, "dose": dose}
 
-    def mostrar_agendamento(self):
-        pass
-
-    def mostrar_agendamentos_abertos(self, dados_agendamento):
+    def mostrar_agendamento(self, dados_agendamento):
         print("----------------------------------------")
-        print("enfermeiro", dados_agendamento["enfermeiro"])
-        print("paciente", dados_agendamento["paciente"])
-        print("vacina", dados_agendamento["vacina"])
-        print("data_hora_agendamento", dados_agendamento["data_hora_agendamento"])
-        print("dose", dados_agendamento["dose"])
+        print("Enfermeiro:", dados_agendamento["enfermeiro"])
+        print("Paciente:", dados_agendamento["paciente"])
+        print("Vacina:", dados_agendamento["vacina"])
+        print("Data e Hora:", dados_agendamento["data_hora_agendamento"])
+        print("Dose:", dados_agendamento["dose"])
+        print("Status:", dados_agendamento["status"])
 
-    def mostrar_aplicacoes_efetivadas(self, dados_agendamento):
+    def mostrar_lista_agendamentos(self, dados_agendamento):
         print("----------------------------------------")
-        print("enfermeiro", dados_agendamento["enfermeiro"])
-        print("paciente", dados_agendamento["paciente"])
-        print("vacina", dados_agendamento["vacina"])
-        print("data_hora_agendamento", dados_agendamento["data_hora_agendamento"])
-        print("dose", dados_agendamento["dose"])
+        print("Enfermeiro:", dados_agendamento["enfermeiro"])
+        print("Paciente:", dados_agendamento["paciente"])
+        print("Vacina:", dados_agendamento["vacina"])
+        print("Data e Hora:", dados_agendamento["data_hora_agendamento"])
+        print("Dose:", dados_agendamento["dose"])
