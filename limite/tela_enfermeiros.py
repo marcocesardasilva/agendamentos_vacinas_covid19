@@ -67,3 +67,6 @@ class TelaEnfermeiros():
 
     def linha(self):
         print("-" * 70)
+
+    def enfermeiro_nao_cadastrado(self):
+        print("Enfermeiro não cadastrado para o código digitado. Tente novamente.")

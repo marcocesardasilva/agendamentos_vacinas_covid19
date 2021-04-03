@@ -33,17 +33,17 @@ class ControladorSistema:
     def inicializa_sistema(self):
         self.abre_tela()
 
-    def opcoes_agendamentos(self):
-        self.__controlador_agendamentos.abre_tela()
-
-    def opcoes_vacinas(self):
-        self.__controlador_vacinas.abre_tela()
-
     def opcoes_enfermeiros(self):
         self.__controlador_enfermeiros.abre_tela()
 
     def opcoes_pacientes(self):
         self.__controlador_pacientes.abre_tela()
+
+    def opcoes_vacinas(self):
+        self.__controlador_vacinas.abre_tela()
+
+    def opcoes_agendamentos(self):
+        self.__controlador_agendamentos.abre_tela()
 
     def encerra_sistema(self):
         exit(0)
@@ -51,10 +51,10 @@ class ControladorSistema:
     def abre_tela(self):
         
         lista_opcoes = {
-            1: self.opcoes_agendamentos,
-            2: self.opcoes_vacinas,
-            3: self.opcoes_enfermeiros,
-            4: self.opcoes_pacientes,
+            1: self.opcoes_enfermeiros,
+            2: self.opcoes_pacientes,
+            3: self.opcoes_vacinas,
+            4: self.opcoes_agendamentos,
             0: self.encerra_sistema
         }
         

@@ -12,7 +12,7 @@ class ControladorVacinas():
         self.__mantem_tela_aberta = True
 
     def cadastrar_vacina(self):
-        dados_vacina = self.__tela_vacinas.pegar_dados_vacina()
+        dados_vacina = self.__tela_vacinas.pegar_dados_cadastrar()
         vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
         self.__vacinas.append(vacina)
     
@@ -34,7 +34,7 @@ class ControladorVacinas():
 
     def editar_vacina(self):
         vacina = self.get_vacina()
-        dados_vacina = self.__tela_vacinas.pegar_dados_vacina()
+        dados_vacina = self.__tela_vacinas.pegar_dados_editar()
         vacina.fabricante = dados_vacina["fabricante"]
         vacina.quantidade = dados_vacina["quantidade"]
 
