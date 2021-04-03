@@ -11,6 +11,10 @@ class ControladorPacientes():
         self.__controlador_agendamentos = None
         self.__mantem_tela_aberta = True
 
+    @property
+    def pacientes(self):
+        return self.__pacientes
+
     def cadastrar_paciente(self):
         dados_paciente = self.__tela_pacientes.pega_dados_paciente()
         paciente = Paciente(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
@@ -49,19 +53,49 @@ class ControladorPacientes():
             )
 
     def listar_pacientes_nao_agendados(self):
-        # for paciente in self.__pacientes:
-        #     if paciente not in agendamentos:
-        #         self.__tela_pacientes.mostrar_paciente()
-        pass
+        pacientes_agendados = []
+        self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        for agendamento in self.__controlador_agendamentos.agendamentos:
+            for paciente in self.__pacientes:
+                if agendamento.paciente == paciente:
+                    pacientes_agendados.append(paciente)
+        for paciente in self.__pacientes:
+            if paciente not in pacientes_agendados:
+                self.__tela_pacientes.mostrar_paciente(
+                    {"nome": paciente.nome,
+                    "cpf": paciente.cpf,
+                    "data_nascimento": paciente.data_nascimento
+                    })
 
     def listar_pacientes_primeira_dose(self):
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         for agendamento in self.__controlador_agendamentos.agendamentos:
-            print(agendamento.dose)
+            if agendamento.dose == 1:
+                #if agendamento.aplicada == True:
+                self.__tela_pacientes.mostrar_paciente(
+                    {"nome": agendamento.paciente.nome,
+                     "cpf": agendamento.paciente.cpf,
+                     "data_nascimento": agendamento.paciente.data_nascimento
+                     })
+            # elif agendamento.dose == 2 and agendamento.aplicada == False:
+            #     self.__tela_pacientes.mostrar_paciente(
+            #         {"nome": agendamento.paciente.nome,
+            #          "cpf": agendamento.paciente.cpf,
+            #          "data_nascimento": agendamento.paciente.data_nascimento
+            #          })
 
     
-    def listar_pacientes_primeira_segunda(self):
-        pass
+    def listar_pacientes_segunda_dose(self):
+        self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        for agendamento in self.__controlador_agendamentos.agendamentos:
+            if agendamento.dose == 2:
+                # if agendamento.aplicada == True:
+                self.__tela_pacientes.mostrar_paciente(
+                    {"nome": agendamento.paciente.nome,
+                     "cpf": agendamento.paciente.cpf,
+                     "data_nascimento": agendamento.paciente.data_nascimento
+                     }
+                )
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False
@@ -74,7 +108,7 @@ class ControladorPacientes():
                         4: self.listar_pacientes,
                         5: self.listar_pacientes_nao_agendados,
                         6: self.listar_pacientes_primeira_dose,
-                        7: self.listar_pacientes_primeira_segunda,
+                        7: self.listar_pacientes_segunda_dose(),
                         0: self.retorna_tela_principal}
 
         while self.__mantem_tela_aberta:

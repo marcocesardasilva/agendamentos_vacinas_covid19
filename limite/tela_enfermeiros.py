@@ -16,14 +16,14 @@ class TelaEnfermeiros():
     def pegar_dados_enfermeiro(self):
         print("-------- INCLUIR ENFERMEIRO ----------")
         nome = input("Nome: ")
-        cpf = input("CPF: ")
-        matricula = input("Matrícula: ")
+        cpf = input("CPF (apenas números): ")
+        matricula = input("Matrícula (4 dígitos): ")
         return {"nome": nome, "cpf": cpf, "matricula": matricula, "status": "Ativo"}
 
     def pegar_dados_enfermeiro_edicao(self):
         print("-------- EDITAR ENFERMEIRO ----------")
         nome = input('Nome: ')
-        matr = input('Matrícula: ')
+        matr = input('Matrícula (4 dígitos): ')
         return {'nome': nome, 'matricula': matr}
 
     def selecionar_enfermeiro(self):
@@ -31,12 +31,15 @@ class TelaEnfermeiros():
         matricula = input("Matrícula: ")
         return matricula
 
+
     def mostrar_enfermeiro(self, dados_enfermeiro):
+        self.linha()
         print(f'NOME: {dados_enfermeiro["nome"]} |'
               f' CPF: {dados_enfermeiro["cpf"]} |'
               f' MATRÍCULA: {dados_enfermeiro["matricula"]} |'
               f' STATUS: {dados_enfermeiro["status"]}'
               )
+        self.linha()
 
     def alterar_status_enfermeiro(self):
         pass
@@ -47,8 +50,10 @@ class TelaEnfermeiros():
             f' CPF: {dados_enfermeiro["cpf"]} |'
             f' MATRÍCULA: {dados_enfermeiro["data_nascimento"]}')
 
-    def mostrar_pacientes_por_enfermeiro(self):
-        pass
+    def mostrar_pacientes_por_enfermeiro(self, dados_paciente):
+        print(f'NOME: {dados_paciente["nome"]} |'
+              f' CPF: {dados_paciente["cpf"]} |'
+              f' DATA DE NASCIMENTO: {dados_paciente["data_nascimento"]}')
 
     def linha(self):
-        print("-" * 60)
+        print("-" * 70)

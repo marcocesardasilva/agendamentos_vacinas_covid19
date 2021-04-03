@@ -8,6 +8,8 @@ class ControladorEnfermeiros():
         self.__enfermeiros = []
         self.__tela_enfermeiros = TelaEnfermeiros()
         self.__controlador_sistema = controlador_sistema
+        self.__controlador_pacientes = None
+        self.__controlador_agendamentos = None
         self.__mantem_tela_aberta = True
 
     def cadastrar_enfermeiro(self):
@@ -60,7 +62,23 @@ class ControladorEnfermeiros():
             )
 
     def listar_pacientes_por_enfermeiro(self):
-        pass
+        self.__controlador_pacientes = self.__controlador_sistema.controlador_pacientes
+        self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        enfermeiro = self.get_enfermeiro()
+        self.__tela_enfermeiros.mostrar_enfermeiro(
+            {"nome": enfermeiro.nome,
+             "cpf": enfermeiro.cpf,
+             "matricula": enfermeiro.matricula,
+             "status": enfermeiro.status}
+        )
+        for agendamento in self.__controlador_agendamentos.agendamentos:
+            if agendamento.enfermeiro == enfermeiro:
+                self.__tela_enfermeiros.mostrar_pacientes_por_enfermeiro(
+                    {"nome": agendamento.paciente.nome,
+                    "cpf": agendamento.paciente.cpf,
+                    "data_nascimento": agendamento.paciente.data_nascimento}
+                )
+
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False
