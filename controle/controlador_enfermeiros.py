@@ -44,6 +44,9 @@ class ControladorEnfermeiros():
         while True:
             try:
                 matricula = self.__tela_enfermeiros.selecionar_enfermeiro()
+                if len(self.__enfermeiros) == 0:
+                        self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
+                        break
                 for enfermeiro in self.__enfermeiros:
                     if matricula == enfermeiro.matricula:
                         return enfermeiro
@@ -51,11 +54,6 @@ class ControladorEnfermeiros():
                         self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
             except:
                 self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
-
-        # matricula = self.__tela_enfermeiros.selecionar_enfermeiro()
-        # for enfermeiro in self.__enfermeiros:
-        #     if matricula == enfermeiro.matricula:
-        #         return enfermeiro
 
     def remover_enfermeiro(self):
         enfermeiro_editar = self.get_enfermeiro()

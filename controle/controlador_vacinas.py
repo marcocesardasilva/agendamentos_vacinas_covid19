@@ -46,12 +46,16 @@ class ControladorVacinas():
             })
 
     def listar_doses_aplicadas(self):
-        pass
-        # self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
-        # doses_aplicadas = {}
-        # for agendamento in self.__controlador_agendamentos.agendamentos:
-        #     if agendamento.aplicada == True:
-                
+        self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        doses_aplicadas = {}
+        for agendamento in self.__controlador_agendamentos.agendamentos:
+            if agendamento.aplicada == True:
+                if agendamento.vacina.fabricante not in doses_aplicadas:
+                    doses_aplicadas[agendamento.vacina.fabricante] = 1
+                else:
+                    doses_aplicadas[agendamento.vacina.fabricante] += 1
+        self.__tela_vacinas.mostrar_doses_aplicadas(doses_aplicadas)
+
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False
 

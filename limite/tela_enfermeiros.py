@@ -69,4 +69,7 @@ class TelaEnfermeiros():
         print("-" * 70)
 
     def enfermeiro_nao_cadastrado(self):
-        print("Enfermeiro não cadastrado para o código digitado. Tente novamente.")
+        print("Enfermeiro não cadastrado para o código digitado.")
+    
+    def enfermeiro_inativo(self):
+        print("Enfermeiro selecionado inativo.")
