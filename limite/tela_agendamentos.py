@@ -13,8 +13,15 @@ class TelaAgendamentos():
         print("5 - Listar aplicações agendadas")
         print("6 - Listar histórico de vacinações")
         print("0 - Retornar")
-        opcao = int(input("Escolha a opcao: "))
-        return opcao
+        while True:
+            try:
+                opcao = int(input("Escolha a opcao:"))
+                if 0 <= opcao <= 6:
+                    return opcao
+                else:
+                    print("Opção escolhida inválida!")
+            except ValueError:
+                print("Valor digitado inválido!")
     
     def pegar_dados_agendamento(self):
         print("-------- DADOS AGENDAMENTO ----------")

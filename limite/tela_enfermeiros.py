@@ -13,8 +13,15 @@ class TelaEnfermeiros():
         print("5 - Listar enfermeiros")
         print("6 - Listar pacientes atendidos por um determinado enfermeiro")
         print("0 - Retornar")
-        opcao = int(input("Escolha a opcao: "))
-        return opcao
+        while True:
+            try:
+                opcao = int(input("Escolha a opcao:"))
+                if 0 <= opcao <= 6:
+                    return opcao
+                else:
+                    print("Opção escolhida inválida!")
+            except ValueError:
+                print("Valor digitado inválido!")
     
     def pegar_dados_enfermeiro(self):
         print("-------- INCLUIR ENFERMEIRO ----------")

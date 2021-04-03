@@ -16,8 +16,15 @@ class TelaPacientes():
         print("6 - Listar pacientes vacinados 1ª dose")
         print("7 - Listar pacientes vacinados 2ª dose")
         print("0 - Retornar")
-        opcao = int(input("Escolha a opcao: "))
-        return opcao
+        while True:
+            try:
+                opcao = int(input("Escolha a opcao:"))
+                if 0 <= opcao <= 7:
+                    return opcao
+                else:
+                    print("Opção escolhida inválida!")
+            except ValueError:
+                print("Valor digitado inválido!")
 
     def pega_dados_paciente(self):
         print("-------- INCLUIR PACIENTE ----------")
