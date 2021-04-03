@@ -26,5 +26,5 @@ class Vacina:
     def adiciona_quantidade(self, quantidade):
         self.__quantidade += quantidade
 
-    def subtrai_quantidade(self):
-        self.__quantidade -= 1
+    def subtrai_quantidade(self, quantidade):
+        self.__quantidade -= quantidade

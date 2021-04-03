@@ -9,21 +9,15 @@ class ControladorPacientes():
         self.__pacientes = []
         self.__tela_pacientes = TelaPacientes(self)
         self.__controlador_sistema = controlador_sistema
-        try:
-            self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
-        except AttributeError:
-            self.__controlador_sistema.controlador_agendamentos = ControladorAgendamentos(self.__controlador_sistema)
-            self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        self.__controlador_agendamentos = None
         self.__mantem_tela_aberta = True
 
     @property
-<<<<<<< HEAD
     def controlador_sistema(self):
         return self.__controlador_sistema
-=======
+
     def pacientes(self):
         return self.__pacientes
->>>>>>> 49ac2c44aefa23d7cba4e4e51e2366cc1fa319fe
 
     def cadastrar_paciente(self):
         dados_paciente = self.__tela_pacientes.pega_dados_paciente()
@@ -78,7 +72,7 @@ class ControladorPacientes():
                     })
 
     def listar_pacientes_primeira_dose(self):
-        #self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         for agendamento in self.__controlador_agendamentos.agendamentos:
             if agendamento.dose == 1:
                 #if agendamento.aplicada == True:

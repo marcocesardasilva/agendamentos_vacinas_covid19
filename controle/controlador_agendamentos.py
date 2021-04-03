@@ -49,9 +49,9 @@ class ControladorAgendamentos():
         if agendamento.aplicada is True:
             status = "Vacina já aplicada"
         self.__tela_agendamentos.mostrar_agendamento({
-            "enfermeiro": agendamento.enfermeiro,
-            "paciente": agendamento.paciente,
-            "vacina": agendamento.vacina,
+            "enfermeiro": agendamento.enfermeiro.nome,
+            "paciente": agendamento.paciente.nome,
+            "vacina": agendamento.vacina.fabricante,
             "data_hora_agendamento": agendamento.data_hora_agendamento,
             "dose": agendamento.dose,
             "status": status
@@ -77,9 +77,9 @@ class ControladorAgendamentos():
         for agendamento in self.__agendamentos:
             if agendamento.aplicada == True:
                 self.__tela_agendamentos.mostrar_lista_agendamentos({
-                    "enfermeiro": agendamento.enfermeiro,
-                    "paciente": agendamento.paciente,
-                    "vacina": agendamento.vacina,
+                    "enfermeiro": agendamento.enfermeiro.nome,
+                    "paciente": agendamento.paciente.nome,
+                    "vacina": agendamento.vacina.fabricante,
                     "data_hora_agendamento": agendamento.data_hora_agendamento,
                     "dose": agendamento.dose
                 })
@@ -88,9 +88,9 @@ class ControladorAgendamentos():
         for agendamento in self.__agendamentos:
             if agendamento.aplicada == False:
                 self.__tela_agendamentos.mostrar_lista_agendamentos({
-                    "enfermeiro": agendamento.enfermeiro,
-                    "paciente": agendamento.paciente,
-                    "vacina": agendamento.vacina,
+                    "enfermeiro": agendamento.enfermeiro.nome,
+                    "paciente": agendamento.paciente.nome,
+                    "vacina": agendamento.vacina.fabricante,
                     "data_hora_agendamento": agendamento.data_hora_agendamento,
                     "dose": agendamento.dose
                 })

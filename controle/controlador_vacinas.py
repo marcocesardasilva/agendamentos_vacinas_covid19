@@ -45,7 +45,8 @@ class ControladorVacinas():
                 "quantidade": vacina.quantidade
             })
 
-    # def listar_doses_aplicadas(self):
+    def listar_doses_aplicadas(self):
+        pass
         # self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         # doses_aplicadas = {}
         # for agendamento in self.__controlador_agendamentos.agendamentos:

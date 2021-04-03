@@ -12,24 +12,15 @@ class ControladorSistema:
         self.__controlador_vacinas = ControladorVacinas(self)
         self.__controlador_enfermeiros = ControladorEnfermeiros(self)
         self.__controlador_pacientes = ControladorPacientes(self)
-        if not self.__controlador_agendamentos:
-            self.__controlador_agendamentos = ControladorAgendamentos(self)
+        self.__controlador_agendamentos = ControladorAgendamentos(self)
     
     @property
     def controlador_enfermeiros(self):
         return self.__controlador_enfermeiros
-    
-    @controlador_enfermeiros.setter
-    def controlador_enfermeiros(self, controlador_enfermeiros):
-        self.__controlador_enfermeiros = controlador_enfermeiros
 
     @property
     def controlador_pacientes(self):
         return self.__controlador_pacientes
-    
-    @controlador_pacientes.setter
-    def controlador_pacientes(self, controlador_pacientes):
-        self.__controlador_pacientes = controlador_pacientes
 
     @property
     def controlador_vacinas(self):
@@ -38,10 +29,6 @@ class ControladorSistema:
     @property
     def controlador_agendamentos(self):
         return self.__controlador_agendamentos
-    
-    @controlador_agendamentos.setter
-    def controlador_agendamentos(self, controlador_agendamentos):
-        self.__controlador_agendamentos = controlador_agendamentos
 
     def inicializa_sistema(self):
         self.abre_tela()
@@ -72,6 +59,4 @@ class ControladorSistema:
         }
         
         while True:
-            opcao_escolhida = self.__tela_sistema.tela_opcoes()
-            funcao_escolhida = lista_opcoes[opcao_escolhida]
-            funcao_escolhida()
+            lista_opcoes[self.__tela_sistema.tela_opcoes()]()
