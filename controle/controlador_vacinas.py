@@ -51,6 +51,7 @@ class ControladorVacinas():
         self.__mantem_tela_aberta = False
 
     def abre_tela(self):
+        self.__mantem_tela_aberta = True
         lista_opcoes = {
             1: self.cadastrar_vacina,
             2: self.adicionar_dose,

@@ -8,6 +8,7 @@ class ControladorPacientes():
         self.__pacientes = []
         self.__tela_pacientes = TelaPacientes()
         self.__controlador_sistema = controlador_sistema
+        self.__controlador_agendamentos = None
         self.__mantem_tela_aberta = True
 
     def cadastrar_paciente(self):
@@ -54,7 +55,10 @@ class ControladorPacientes():
         pass
 
     def listar_pacientes_primeira_dose(self):
-        pass
+        self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        for agendamento in self.__controlador_agendamentos.agendamentos:
+            print(agendamento.dose)
+
     
     def listar_pacientes_primeira_segunda(self):
         pass
@@ -63,9 +67,10 @@ class ControladorPacientes():
         self.__mantem_tela_aberta = False
 
     def abre_tela(self):
+        self.__mantem_tela_aberta = True
         lista_opcoes = {1: self.cadastrar_paciente,
                         2: self.editar_paciente,
-                        3: self.get_paciente,
+                        3: self.consultar_paciente,
                         4: self.listar_pacientes,
                         5: self.listar_pacientes_nao_agendados,
                         6: self.listar_pacientes_primeira_dose,

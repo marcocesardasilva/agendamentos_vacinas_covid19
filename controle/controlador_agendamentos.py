@@ -10,19 +10,13 @@ from datetime import datetime as datetime
 
 class ControladorAgendamentos():
 
-    def __init__(
-        self,
-        controlador_sistema,
-        controlador_enfermeiros: ControladorEnfermeiros,
-        controlador_pacientes: ControladorPacientes,
-        controlador_vacinas: ControladorVacinas
-    ):
+    def __init__(self, controlador_sistema):
         self.__agendamentos = []
         self.__tela_agendamentos = TelaAgendamentos()
         self.__controlador_sistema = controlador_sistema
-        self.__controlador_enfermeiros = controlador_enfermeiros
-        self.__controlador_pacientes = controlador_pacientes
-        self.__controlador_vacinas = controlador_vacinas
+        self.__controlador_enfermeiros = self.__controlador_sistema.controlador_enfermeiros
+        self.__controlador_pacientes = self.__controlador_sistema.controlador_pacientes
+        self.__controlador_vacinas = self.__controlador_sistema.controlador_vacinas
         self.__mantem_tela_aberta = True
 
     def cadastrar_agendamento(self):
@@ -43,6 +37,10 @@ class ControladorAgendamentos():
             dados_agendamento["dose"]
         )
         self.__agendamentos.append(agendamento)
+
+    @property
+    def agendamentos(self):
+        return self.__agendamentos
 
     def get_agendamento(self):
         cpf_dose = self.__tela_agendamentos.selecionar_agendamento()
@@ -106,6 +104,7 @@ class ControladorAgendamentos():
         self.__mantem_tela_aberta = False
 
     def abre_tela(self):
+        self.__mantem_tela_aberta = True
         lista_opcoes = {
             1: self.cadastrar_agendamento,
             2: self.consultar_agendamento,

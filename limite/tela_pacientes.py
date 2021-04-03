@@ -1,3 +1,5 @@
+from datetime import datetime as datetime
+
 class TelaPacientes():
 
     def tela_opcoes(self):

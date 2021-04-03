@@ -22,6 +22,8 @@ class TelaVacinas():
                 return {"fabricante": fabricante, "quantidade": quantidade}
             except TypeError:
                 print("Valor inválido para a quantidade. Digite um valor válido.")
+            finally:
+                print("Vacina cadastrada.")
 
     def pegar_quantidade(self):
         while True:

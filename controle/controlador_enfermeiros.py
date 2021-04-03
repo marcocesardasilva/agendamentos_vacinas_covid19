@@ -66,6 +66,7 @@ class ControladorEnfermeiros():
         self.__mantem_tela_aberta = False
 
     def abre_tela(self):
+        self.__mantem_tela_aberta = True
         lista_opcoes = {1: self.cadastrar_enfermeiro,
                         2: self.editar_enfermeiro,
                         3: self.consultar_enfermeiro,
