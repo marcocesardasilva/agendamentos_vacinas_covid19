@@ -28,22 +28,72 @@ class TelaPacientes():
 
     def pega_dados_paciente(self):
         print("-------- INCLUIR PACIENTE ----------")
-        nome = input("Nome: ")
-        cpf = input("CPF (apenas números): ")
-        data_nascimento_str = input("Data de nascimento: ")
-        data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
+        while True:
+            try:
+                nome = input("Nome: ").upper()
+                if nome.replace(' ','').isalpha():
+                    break
+                else:
+                    print(f'O nome {nome} é inválido!')
+            except (ValueError, TypeError):
+                print('Houve problemas com o tipo de dado digitado')
+        while True:
+            try:
+                cpf = input("CPF (apenas números): ").replace(' ','')
+                if cpf.isnumeric() and len(cpf) == 11:
+                    break
+                else:
+                    print(f'O cpf {cpf} é inválido!\nDigite um cpf com 11 dígitos')
+            except (ValueError, TypeError):
+                print('Houve problemas com o tipo de dado digitado')
+        while True:
+            try:
+                data_nascimento_str = input("Data de nascimento (dd/mm/aaaa): ")
+                data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
+                if data_nascimento_obj:
+                    break
+            except:
+                print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
+        self.linha()
+        print(f'Paciente {nome}, com cpf {cpf} e nascido em {data_nascimento_obj} cadastrado!')
+        self.linha()
         return {"nome": nome, "cpf": cpf, "data_nascimento": data_nascimento_obj}
 
     def pega_dados_paciente_edicao(self):
         print('---------- EDITAR PACIENTE ----------')
-        nome = input('Nome: ')
-        data_nascimento_str = input("Data de nascimento: ")
-        data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
+        while True:
+            try:
+                nome = input("Nome: ").upper()
+                if nome.replace(' ','').isalpha():
+                    break
+                else:
+                    print(f'O nome {nome} é inválido!')
+            except (ValueError, TypeError):
+                print('Houve problemas com o tipo de dado digitado')
+        while True:
+            try:
+                data_nascimento_str = input("Data de nascimento (dd/mm/aaaa): ")
+                data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
+                if data_nascimento_obj:
+                    break
+            except:
+                print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
+        self.linha()
+        print(f'Paciente {nome}, nascido em {data_nascimento_obj} editado!')
+        self.linha()
         return {"nome": nome, "data_nascimento": data_nascimento_obj}
 
     def selecionar_paciente(self):
         print('---- SELECIONAR PACIENTE ------')
-        cpf = input('CPF (apenas números): ')
+        while True:
+            try:
+                cpf = input("CPF (apenas números): ").replace(' ','')
+                if cpf.isnumeric() and len(cpf) == 11:
+                    break
+                else:
+                    print(f'O cpf {cpf} é inválido!\nDigite um cpf com 11 dígitos')
+            except (ValueError, TypeError):
+                print('Houve problemas com o tipo de dado digitado')
         return cpf
 
     def mostrar_paciente(self, dados_paciente):
@@ -53,4 +103,4 @@ class TelaPacientes():
               f' DATA DE NASCIMENTO: {dados_paciente["data_nascimento"]}')
 
     def linha(self):
-        print("-" * 70)
+        print("-" * 90)
