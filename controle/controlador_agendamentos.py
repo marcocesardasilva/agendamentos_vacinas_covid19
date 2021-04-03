@@ -1,10 +1,5 @@
 from limite.tela_agendamentos import TelaAgendamentos
-from controle.controlador_enfermeiros import ControladorEnfermeiros
-from controle.controlador_pacientes import ControladorPacientes
-from controle.controlador_vacinas import ControladorVacinas
 from entidade.agendamento import Agendamento
-from entidade.enfermeiro import Enfermeiro
-from entidade.vacina import Vacina
 from datetime import datetime as datetime
 
 
@@ -12,7 +7,7 @@ class ControladorAgendamentos():
 
     def __init__(self, controlador_sistema):
         self.__agendamentos = []
-        self.__tela_agendamentos = TelaAgendamentos()
+        self.__tela_agendamentos = TelaAgendamentos(self)
         self.__controlador_sistema = controlador_sistema
         self.__controlador_enfermeiros = self.__controlador_sistema.controlador_enfermeiros
         self.__controlador_pacientes = self.__controlador_sistema.controlador_pacientes

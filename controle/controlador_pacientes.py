@@ -1,15 +1,24 @@
 from limite.tela_pacientes import TelaPacientes
 from entidade.paciente import Paciente
+from controle.controlador_agendamentos import ControladorAgendamentos
 
 
 class ControladorPacientes():
 
     def __init__(self, controlador_sistema):
         self.__pacientes = []
-        self.__tela_pacientes = TelaPacientes()
+        self.__tela_pacientes = TelaPacientes(self)
         self.__controlador_sistema = controlador_sistema
-        self.__controlador_agendamentos = None
+        try:
+            self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        except AttributeError:
+            self.__controlador_sistema.controlador_agendamentos = ControladorAgendamentos(self.__controlador_sistema)
+            self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         self.__mantem_tela_aberta = True
+
+    @property
+    def controlador_sistema(self):
+        return self.__controlador_sistema
 
     def cadastrar_paciente(self):
         dados_paciente = self.__tela_pacientes.pega_dados_paciente()
@@ -55,7 +64,7 @@ class ControladorPacientes():
         pass
 
     def listar_pacientes_primeira_dose(self):
-        self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        #self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         for agendamento in self.__controlador_agendamentos.agendamentos:
             print(agendamento.dose)
 

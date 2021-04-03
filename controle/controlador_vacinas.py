@@ -6,8 +6,9 @@ class ControladorVacinas():
 
     def __init__(self, controlador_sistema):
         self.__vacinas = []
-        self.__tela_vacinas = TelaVacinas()
+        self.__tela_vacinas = TelaVacinas(self)
         self.__controlador_sistema = controlador_sistema
+        self.__controlador_agendamentos = None
         self.__mantem_tela_aberta = True
 
     def cadastrar_vacina(self):
@@ -44,9 +45,12 @@ class ControladorVacinas():
                 "quantidade": vacina.quantidade
             })
 
-    def listar_doses_aplicadas(self):
-        pass
-
+    # def listar_doses_aplicadas(self):
+        # self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        # doses_aplicadas = {}
+        # for agendamento in self.__controlador_agendamentos.agendamentos:
+        #     if agendamento.aplicada == True:
+                
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False
 

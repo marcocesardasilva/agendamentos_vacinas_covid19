@@ -1,5 +1,8 @@
 class TelaVacinas():
 
+    def __init__(self, controlador_vacina):
+        self.__controlador_vacina = controlador_vacina
+
     def tela_opcoes(self):
         print("-------- VACINAS ----------")
         print("Escolha a opcao")

@@ -1,5 +1,8 @@
 class TelaSistema:
 
+    def __init__(self, controlador_sistema):
+        self.__controlador_sistema = controlador_sistema
+
     def tela_opcoes(self):
         print("-------- SisPostoVacinas --------")
         print("Escolha sua opcao")

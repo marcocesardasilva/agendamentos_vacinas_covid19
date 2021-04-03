@@ -1,5 +1,8 @@
 class TelaAgendamentos():
 
+    def __init__(self, controlador_agendamento):
+        self.__controlador_agendamento = controlador_agendamento
+
     def tela_opcoes(self):
         print("-------- AGENDAMENTOS ----------")
         print("Escolha a opcao")

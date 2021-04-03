@@ -1,5 +1,8 @@
 class TelaEnfermeiros():
 
+    def __init__(self, controlador_enfermeiros):
+        self.__controlador_enfermeiros = controlador_enfermeiros
+
     def tela_opcoes(self):
         print("-------- ENFERMEIROS ----------")
         print("Escolha a opcao")

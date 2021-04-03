@@ -2,6 +2,9 @@ from datetime import datetime as datetime
 
 class TelaPacientes():
 
+    def __init__(self, controlador_pacientes):
+        self.__controlador_pacientes = controlador_pacientes
+
     def tela_opcoes(self):
         print("-------- PACIENTES ----------")
         print("Escolha a opcao")
