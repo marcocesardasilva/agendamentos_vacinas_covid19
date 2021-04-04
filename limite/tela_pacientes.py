@@ -49,14 +49,14 @@ class TelaPacientes():
         while True:
             try:
                 data_nascimento_str = input("Data de nascimento (dd/mm/aaaa): ")
-                data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
+                data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y %H:%M')
                 if data_nascimento_obj:
                     break
             except:
                 print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
-        self.linha()
-        print(f'Paciente {nome}, com cpf {cpf} e nascido em {data_nascimento_obj} cadastrado!')
-        self.linha()
+        # self.linha()
+        # print(f'Paciente {nome}, com cpf {cpf} e nascido em {data_nascimento_obj} cadastrado!')
+        # self.linha()
         return {"nome": nome, "cpf": cpf, "data_nascimento": data_nascimento_obj}
 
     def pega_dados_paciente_edicao(self):
@@ -104,3 +104,9 @@ class TelaPacientes():
 
     def linha(self):
         print("-" * 90)
+
+    def cpf_ja_cadastrado(self, cpf):
+        print(f'O cpf {cpf} já foi cadastrado')
+
+    def cpf_nao_cadastrado(self, cpf):
+        print(f'O cpf {cpf} ainda não foi cadastrado')

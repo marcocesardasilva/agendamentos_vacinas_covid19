@@ -50,13 +50,18 @@ class ControladorAgendamentos():
         return self.__agendamentos
 
     def get_agendamento(self):
-        cpf_dose = self.__tela_agendamentos.selecionar_agendamento()
+        dose = self.__tela_agendamentos.selecionar_agendamento()
+        paciente = self.__controlador_pacientes.get_paciente()
+        if paciente is None:
+            return None
         for agendamento in self.__agendamentos:
-            if cpf_dose["cpf"] == agendamento.paciente.cpf and cpf_dose["dose"] == agendamento.dose:
+            if dose == agendamento.dose and paciente.cpf == agendamento.paciente.cpf:
                 return agendamento
     
     def consultar_agendamento(self):
         agendamento = self.get_agendamento()
+        if agendamento is None:
+            return None
         status = "Aguardando aplicação"
         if agendamento.aplicada is True:
             status = "Vacina já aplicada"
@@ -71,6 +76,8 @@ class ControladorAgendamentos():
 
     def editar_agendamento(self):
         agendamento = self.get_agendamento()
+        if agendamento is None:
+            return None
         dados_agendamento = self.__tela_agendamentos.pegar_dados_editar()
         agendamento.enfermeiro = self.__controlador_enfermeiros.get_enfermeiro()
         agendamento.paciente = self.__controlador_pacientes.get_paciente()

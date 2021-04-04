@@ -28,6 +28,14 @@ class TelaAgendamentos():
     
     def pegar_dados_cadastrar(self):
         print("-------- CADASTRAR AGENDAMENTO ----------")
+        # while True:
+        #     try:
+        #         data_agendamento_str = input("Data de nascimento (dd/mm/aaaa): ")
+        #         data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
+        #         if data_nascimento_obj:
+        #             break
+        #     except:
+        #         print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
         data = input("Data (dd/mm/aaaa): ")
         hora = input("Hora (hh:mm):")
         dose = int(input("Dose (1 - Primeira / 2 - Segunda): "))
@@ -38,16 +46,16 @@ class TelaAgendamentos():
 
     def selecionar_agendamento(self):
         print('----- SELECIONAR AGENDAMENTO -----')
-        while True:
-            try:
-                digitado = input("CPF do Paciente (apenas números): ")
-                if len(digitado) == 11:
-                    cpf = digitado
-                    break
-                else:
-                    print("CPF digitado inválido! Digite apenas números.")
-            except ValueError:
-                print("Caracterie digitado inválido para CPF!")
+        # while True:
+        #     try:
+        #         digitado = input("CPF do Paciente (apenas números): ")
+        #         if len(digitado) == 11:
+        #             cpf = digitado
+        #             break
+        #         else:
+        #             print("CPF digitado inválido! Digite apenas números.")
+        #     except ValueError:
+        #         print("Caracterie digitado inválido para CPF!")
         while True:
             try:
                 opcao = int(input("Qual a dose da vacina (1 - Primeira / 2 - Segunda): "))
@@ -58,7 +66,8 @@ class TelaAgendamentos():
                     print("Opção escolhida inválida!")
             except ValueError:
                 print("Valor digitado inválido!")
-        return {"cpf": cpf, "dose": dose}
+        #return {"cpf": cpf, "dose": dose}
+        return dose
 
     def mostrar_agendamento(self, dados_agendamento):
         print("-------- DADOS DO AGENDAMENTO SOLICITADO ----------")

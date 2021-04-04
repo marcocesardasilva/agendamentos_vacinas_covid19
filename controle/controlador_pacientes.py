@@ -20,9 +20,25 @@ class ControladorPacientes():
         return self.__pacientes
 
     def cadastrar_paciente(self):
-        dados_paciente = self.__tela_pacientes.pega_dados_paciente()
-        paciente = Paciente(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
-        self.__pacientes.append(paciente)
+        while True:
+            dados_paciente = self.__tela_pacientes.pega_dados_paciente()
+            if len(self.__pacientes) == 0:
+                paciente = Paciente(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
+                self.__pacientes.append(paciente)
+                break
+            else:
+                for paciente in self.__pacientes:
+                    if dados_paciente["cpf"] == paciente.cpf:
+                        self.__tela_pacientes.cpf_ja_cadastrado(dados_paciente['cpf'])
+                        return None
+                #        sair = 0
+                #     else:
+                #         sair = 1
+                # if sair == 0:
+                #     break
+                paciente = Paciente(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
+                self.__pacientes.append(paciente)
+                break
 
     def editar_paciente(self):
         paciente_editar = self.get_paciente()
@@ -40,13 +56,20 @@ class ControladorPacientes():
                     {"nome": paciente.nome,
                      "cpf": paciente.cpf,
                      "data_nascimento": paciente.data_nascimento}
-                )
+                    )
+            #colocar um else com o que acontece se não encontrar o paciente
 
     def get_paciente(self):
-        cpf = self.__tela_pacientes.selecionar_paciente()
-        for paciente in self.__pacientes:
-            if cpf == paciente.cpf:
-                return paciente
+        while True:
+            cpf = self.__tela_pacientes.selecionar_paciente()
+            if len(self.__pacientes) == 0:
+                self.__tela_pacientes.cpf_nao_cadastrado(cpf)
+                break
+            for paciente in self.__pacientes:
+                if cpf == paciente.cpf:
+                    return paciente
+            self.__tela_pacientes.cpf_nao_cadastrado(cpf)
+            break
 
     def listar_pacientes(self):
         for paciente in self.__pacientes:

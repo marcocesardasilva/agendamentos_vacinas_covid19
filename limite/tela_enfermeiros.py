@@ -25,20 +25,69 @@ class TelaEnfermeiros():
     
     def pegar_dados_enfermeiro(self):
         print("-------- INCLUIR ENFERMEIRO ----------")
-        nome = input("Nome: ")
-        cpf = input("CPF (apenas números): ")
-        matricula = input("Matrícula (4 dígitos): ")
+        while True:
+            try:
+                nome = input("Nome: ").upper()
+                if nome.replace(' ', '').isalpha():
+                    break
+                else:
+                    print(f'O nome {nome} é inválido!')
+            except (ValueError, TypeError):
+                print('Houve problemas com o tipo de dado digitado')
+        while True:
+            try:
+                cpf = input("CPF (apenas números): ").replace(' ', '')
+                if cpf.isnumeric() and len(cpf) == 11:
+                    break
+                else:
+                    print(f'O cpf {cpf} é inválido!\nDigite um cpf com 11 dígitos')
+            except (ValueError, TypeError):
+                print('Houve problemas com o tipo de dado digitado')
+        while True:
+            try:
+                matricula = input("Matrícula (4 dígitos): ").replace(' ','')
+                if matricula.isnumeric() and len(matricula) == 4:
+                    break
+                else:
+                    print(f'A matrícula {matricula} é inválida!\nDigite uma matrícula com 4 dígitos')
+            except (ValueError, TypeError):
+                print('Houve problemas com o tipo de dado digitado')
+
         return {"nome": nome, "cpf": cpf, "matricula": matricula, "status": "Ativo"}
 
     def pegar_dados_enfermeiro_edicao(self):
         print("-------- EDITAR ENFERMEIRO ----------")
-        nome = input('Nome: ')
-        matr = input('Matrícula (4 dígitos): ')
-        return {'nome': nome, 'matricula': matr}
+        while True:
+            try:
+                nome = input("Nome: ").upper()
+                if nome.replace(' ', '').isalpha():
+                    break
+                else:
+                    print(f'O nome {nome} é inválido!')
+            except (ValueError, TypeError):
+                print('Houve problemas com o tipo de dado digitado')
+        while True:
+            try:
+                matricula = input("Matrícula (4 dígitos): ").replace(' ','')
+                if matricula.isnumeric() and len(matricula) == 4:
+                    break
+                else:
+                    print(f'A matrícula {matricula} é inválida!\nDigite uma matrícula com 4 dígitos')
+            except (ValueError, TypeError):
+                print('Houve problemas com o tipo de dado digitado')
+        return {'nome': nome, 'matricula': matricula}
 
     def selecionar_enfermeiro(self):
         print('----- SELECIONAR ENFERMEIRO -----')
-        matricula = input("Matrícula: ")
+        while True:
+            try:
+                matricula = input("Matrícula (4 dígitos): ").replace(' ','')
+                if matricula.isnumeric() and len(matricula) == 4:
+                    break
+                else:
+                    print(f'A matrícula {matricula} é inválida!\nDigite uma matrícula com 4 dígitos')
+            except (ValueError, TypeError):
+                print('Houve problemas com o tipo de dado digitado')
         return matricula
 
 
@@ -51,8 +100,23 @@ class TelaEnfermeiros():
               )
         self.linha()
 
-    def alterar_status_enfermeiro(self):
-        pass
+    def status_enfermeiro(self, matricula):
+        print(f"Alterar status do enfermeiro {matricula}: ")
+        while True:
+            try:
+                print("Para definir status como <Ativo> digite 1,\nPara definir status como <Inativo> digite 2,\n"
+                      "Para retornar digite 0:")
+                status_desejado = int(input('Status: '))
+                if status_desejado == 1:
+                    return "Ativo"
+                elif status_desejado == 2:
+                    return "Inativo"
+                elif status_desejado == 0:
+                    break
+                else:
+                    print('Você digitou um valor inválido')
+            except (ValueError, TypeError):
+                print('Você digitou um valor inválido')
 
     def mostrar_lista_enferemrios(self, dados_enfermeiro):
         print(
@@ -73,3 +137,9 @@ class TelaEnfermeiros():
     
     def enfermeiro_inativo(self):
         print("Enfermeiro selecionado inativo.")
+
+    def cpf_ja_cadastrado(self, cpf):
+        print(f'O cpf {cpf} já foi cadastrado')
+
+    def matricula_ja_cadastrada(self, matricula):
+        print(f'A matrícula {matricula} já foi cadastrada')
