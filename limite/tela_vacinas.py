@@ -25,23 +25,39 @@ class TelaVacinas():
 
     def pegar_dados_cadastrar(self):
         print("-------- CADASTRAR VACINA ----------")
-        fabricante = input("Fabricante: ")
+        while True:
+            try:
+                fabricante = input("Fabricante: ")
+                if len(fabricante) == 0:
+                    raise ValueError
+                break
+            except ValueError:
+                print("Valor inválido para fabricante!")
         while True:
             try:
                 quantidade = int(input("Quantidade: "))
-                return {"fabricante": fabricante, "quantidade": quantidade}
+                break
             except ValueError:
                 print("Valor inválido! Digite um valor válido para a quantidade.")
+        return {"fabricante": fabricante, "quantidade": quantidade}
     
     def pegar_dados_editar(self):
         print("-------- EDITAR VACINA ----------")
-        fabricante = input("Fabricante: ")
+        while True:
+            try:
+                fabricante = input("Fabricante: ")
+                if len(fabricante) == 0:
+                    raise ValueError
+                break
+            except ValueError:
+                print("Valor inválido para fabricante!")
         while True:
             try:
                 quantidade = int(input("Quantidade: "))
-                return {"fabricante": fabricante, "quantidade": quantidade}
+                break
             except ValueError:
                 print("Valor inválido! Digite um valor válido para a quantidade.")
+        return {"fabricante": fabricante, "quantidade": quantidade}
 
     def pegar_quantidade(self):
         while True:
@@ -53,15 +69,19 @@ class TelaVacinas():
         
     def selecionar_vacina(self):
         print('---- SELECIONAR VACINA ------')
-        fabricante = input("Fabricante: ")
-        return fabricante
+        while True:
+            try:
+                fabricante = input("Fabricante: ")
+                if len(fabricante) == 0:
+                    raise ValueError
+                return fabricante
+            except ValueError:
+                print("Valor inválido para fabricante!")
 
     def mostrar_doses_disponiveis(self, dados_vacina):
         print("----------------------------------------")
         print(f'Fabricante: {dados_vacina["fabricante"]} | Quantidade: {dados_vacina["quantidade"]}')
-        #print("Fabricante: ", dados_vacina["fabricante"])
-        #print("Quantidade: ", dados_vacina["quantidade"])
 
     def mostrar_doses_aplicadas(self, dados_vacina):
-        for k,v in dados_vacina.items():
-            print(f'Fabricante: {k} | Quantidade: {v}')
+        for fabricante,quantidade in dados_vacina.items():
+            print(f'Fabricante: {fabricante} | Quantidade: {quantidade}')
