@@ -15,7 +15,7 @@ class ControladorAgendamentos():
         self.__mantem_tela_aberta = True
 
     def cadastrar_agendamento(self):
-        dados_agendamento = self.__tela_agendamentos.pegar_dados_agendamento()
+        dados_agendamento = self.__tela_agendamentos.pegar_dados_cadastrar()
         while True:
             enfermeiro = self.__controlador_enfermeiros.get_enfermeiro()
             if enfermeiro is None:
@@ -42,8 +42,8 @@ class ControladorAgendamentos():
                 dados_agendamento["dose"]
             )
             self.__agendamentos.append(agendamento)
+            self.__tela_agendamentos.agendamento_cadastrado()
             break
-            
 
     @property
     def agendamentos(self):
@@ -71,7 +71,7 @@ class ControladorAgendamentos():
 
     def editar_agendamento(self):
         agendamento = self.get_agendamento()
-        dados_agendamento = self.__tela_agendamentos.pegar_dados_agendamento()
+        dados_agendamento = self.__tela_agendamentos.pegar_dados_editar()
         agendamento.enfermeiro = self.__controlador_enfermeiros.get_enfermeiro()
         agendamento.paciente = self.__controlador_pacientes.get_paciente()
         agendamento.vacina = self.__controlador_vacinas.get_vacina()
@@ -80,10 +80,18 @@ class ControladorAgendamentos():
             "%d/%m/%Y %H:%M"
         )
         agendamento.dose = dados_agendamento["dose"]
+        agendamento.aplicada = dados_agendamento["aplicada"]
+        self.__tela_agendamentos.agendamento_editado()
+
+    def aplicar_vacina(self):
+        agendamento = self.get_agendamento()
+        agendamento.aplicada = True
+        self.__tela_agendamentos.vacina_aplicada()
 
     def remover_agendamento(self):
         agendamento = self.get_agendamento()
-        del(agendamento[agendamento])
+        del(self.__agendamentos[agendamento])
+        self.__tela_agendamentos.agendamento_removido()
 
     def listar_agendamentos_abertos(self):
         for agendamento in self.__agendamentos:
@@ -116,9 +124,10 @@ class ControladorAgendamentos():
             1: self.cadastrar_agendamento,
             2: self.consultar_agendamento,
             3: self.editar_agendamento,
-            4: self.remover_agendamento,
-            5: self.listar_agendamentos_abertos,
-            6: self.listar_aplicacoes_efetivadas,
+            4: self.aplicar_vacina,
+            5: self.remover_agendamento,
+            6: self.listar_agendamentos_abertos,
+            7: self.listar_aplicacoes_efetivadas,
             0: self.retorna_tela_principal
         }
 
