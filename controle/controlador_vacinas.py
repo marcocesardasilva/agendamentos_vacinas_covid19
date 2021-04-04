@@ -13,8 +13,16 @@ class ControladorVacinas():
 
     def cadastrar_vacina(self):
         dados_vacina = self.__tela_vacinas.pegar_dados_cadastrar()
-        vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
-        self.__vacinas.append(vacina)
+        if len(self.__vacinas) == 0:
+            vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
+            self.__vacinas.append(vacina)
+        else:
+            for vacina_cadastrada in self.__vacinas:
+                if dados_vacina["fabricante"] == vacina_cadastrada.fabricante:
+                    break
+                else:
+                    vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
+                    self.__vacinas.append(vacina)
     
     def get_vacina(self):
         fabricante = self.__tela_vacinas.selecionar_vacina()
