@@ -73,16 +73,6 @@ class ControladorEnfermeiros():
                     return enfermeiro
         self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
         return None
-        # try:
-        #     if len(self.__enfermeiros) == 0:
-        #         raise Exception
-        #     matricula = self.__tela_enfermeiros.selecionar_enfermeiro()
-        #     for enfermeiro in self.__enfermeiros:
-        #         if matricula == enfermeiro.matricula:
-        #             return enfermeiro
-        #     self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
-        # except Exception:
-        #     self.__tela_enfermeiros.nenhum_enfermeiro()
 
     def enfermeiro_inativo(self):
         self.__tela_enfermeiros.enfermeiro_inativo()

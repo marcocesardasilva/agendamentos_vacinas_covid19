@@ -130,9 +130,6 @@ class TelaEnfermeiros():
         print(f'PACIENTE: {dados_paciente["nome"]} |'
               f' CPF: {dados_paciente["cpf"]} |'
               f' Idade: {idade:.0f} anos')
-        # print(f'NOME: {dados_paciente["nome"]} |'
-        #       f' CPF: {dados_paciente["cpf"]} |'
-        #       f' DATA DE NASCIMENTO: {dados_paciente["data_nascimento"]}')
 
     def linha(self):
         print("-" * 70)

@@ -36,7 +36,7 @@ class ControladorAgendamentos():
                         diferenca_dias = dados_agendamento["data"] - agendamento.data
                         if diferenca_dias.days <= 20:
                             self.__tela_agendamentos.data_recente_primeira_dose()
-                            break
+                            return None
                         vacina_primeira_dose = agendamento.vacina
                 if dose1 == False:
                     self.__tela_agendamentos.nao_castrado_primeira_dose()

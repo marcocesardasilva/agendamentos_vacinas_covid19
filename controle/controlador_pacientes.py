@@ -33,11 +33,6 @@ class ControladorPacientes():
                     if dados_paciente["cpf"] == paciente.cpf:
                         self.__tela_pacientes.cpf_ja_cadastrado(dados_paciente['cpf'])
                         return None
-                #        sair = 0
-                #     else:
-                #         sair = 1
-                # if sair == 0:
-                #     break
                 paciente = Paciente(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
                 self.__pacientes.append(paciente)
                 break
@@ -65,7 +60,6 @@ class ControladorPacientes():
                      "cpf": paciente.cpf,
                      "data_nascimento": paciente.data_nascimento}
                     )
-            #colocar um else com o que acontece se não encontrar o paciente
 
     def get_paciente(self):
         if len(self.__pacientes) == 0:
@@ -78,16 +72,6 @@ class ControladorPacientes():
                     return paciente
         self.__tela_pacientes.cpf_nao_cadastrado(cpf)
         return None
-        # while True:
-        #     cpf = self.__tela_pacientes.selecionar_paciente()
-        #     if len(self.__pacientes) == 0:
-        #         self.__tela_pacientes.cpf_nao_cadastrado(cpf)
-        #         break
-        #     for paciente in self.__pacientes:
-        #         if cpf == paciente.cpf:
-        #             return paciente
-        #     self.__tela_pacientes.cpf_nao_cadastrado(cpf)
-        #     break
 
     def listar_pacientes(self):
         try:
@@ -126,8 +110,6 @@ class ControladorPacientes():
         pacientes_sem_agendamento = 0
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         try:
-            # if len(self.__controlador_agendamentos.agendamentos) == 0:
-            #     self.__tela_pacientes.nenhum_agendamento()
             if len(self.__pacientes) == 0:
                 return 0
             for agendamento in self.__controlador_agendamentos.agendamentos:
@@ -156,14 +138,6 @@ class ControladorPacientes():
                         )
         except Exception:
             self.__tela_pacientes.nenhum_agendamento()
-            # elif agendamento.dose == 2 and agendamento.aplicada == False:
-            #     self.__tela_pacientes.mostrar_paciente(
-            #         {"nome": agendamento.paciente.nome,
-            #          "cpf": agendamento.paciente.cpf,
-            #          "data_nascimento": agendamento.paciente.data_nascimento
-            #          })
-
-
     
     def listar_pacientes_segunda_dose(self):
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
