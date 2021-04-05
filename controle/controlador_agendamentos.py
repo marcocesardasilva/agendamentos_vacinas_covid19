@@ -247,14 +247,14 @@ class ControladorAgendamentos():
         pacientes_sem_agendamentos = self.__controlador_pacientes.pacientes_aguardando_vacina()
         for agendamento in self.__agendamentos:
             if agendamento.aplicada == True:
-                total_de_vacinas_aplicadas += 1
+                vacinas_aplicadas += 1
                 if agendamento.dose == 1:
-                    total_paciente_vacinados_primeira_dose += 1
+                    paciente_vacinados_primeira_dose += 1
                 if agendamento.dose == 2:
-                    total_paciente_vacinados_segunda_dose += 1
+                    paciente_vacinados_segunda_dose += 1
             else:
                 if agendamento.dose == 1:
-                    total_de_pacientes_sem_agendamentos += 1
+                    pacientes_sem_agendamentos += 1
         self.__tela_agendamentos.mostrar_relatorio({
                         "vacinas_aplicadas": vacinas_aplicadas,
                         "paciente_vacinados_primeira_dose": paciente_vacinados_primeira_dose,
