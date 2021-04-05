@@ -1,6 +1,6 @@
 from limite.tela_agendamentos import TelaAgendamentos
 from entidade.agendamento import Agendamento
-from datetime import datetime as datetime
+from datetime import datetime
 
 
 class ControladorAgendamentos():
@@ -21,13 +21,28 @@ class ControladorAgendamentos():
             if paciente is None:
                 break
             if dados_agendamento["dose"] == 1:
+                dose1 = False
                 for agendamento in self.__agendamentos:
-                    if agendamento.paciente.count() >= 1:
-                        break
+                    if agendamento.paciente == paciente and agendamento.dose == 1:
+                        dose1 = True
+                if dose1 == True:
+                    break
             if dados_agendamento["dose"] == 2:
+                dose1 = False
                 for agendamento in self.__agendamentos:
-                    if agendamento.paciente.count() >= 1:
-                        break
+                    if agendamento.paciente == paciente and agendamento.dose == 1:
+                        dose1 = True
+                        diferenca_dias = dados_agendamento["data"] - agendamento.data
+                        if diferenca_dias.days <= 20:
+                            break
+                if dose1 == False:
+                    break
+                dose2 = False
+                for agendamento in self.__agendamentos:
+                    if agendamento.paciente == paciente and agendamento.dose == 2:
+                        dose2 = True
+                if dose2 == True:
+                    break
             enfermeiro = self.__controlador_enfermeiros.get_enfermeiro()
             if enfermeiro is None:
                 break
@@ -37,9 +52,9 @@ class ControladorAgendamentos():
             vacina = self.__controlador_vacinas.get_vacina()
             if vacina is None:
                 break
-            vacina.subtrair_dose(1)
             if vacina.quantidade < 1:
                 break
+            vacina.subtrai_quantidade(1)
             
             agendamento = Agendamento(
                 enfermeiro,
@@ -77,7 +92,8 @@ class ControladorAgendamentos():
             "enfermeiro": agendamento.enfermeiro.nome,
             "paciente": agendamento.paciente.nome,
             "vacina": agendamento.vacina.fabricante,
-            "data_hora_agendamento": agendamento.data_hora_agendamento,
+            "data": agendamento.data,
+            "horario": agendamento.horario,
             "dose": agendamento.dose,
             "status": status
         })
@@ -90,10 +106,8 @@ class ControladorAgendamentos():
         agendamento.enfermeiro = self.__controlador_enfermeiros.get_enfermeiro()
         agendamento.paciente = self.__controlador_pacientes.get_paciente()
         agendamento.vacina = self.__controlador_vacinas.get_vacina()
-        agendamento.data_hora_agendamento = datetime.strptime(
-            dados_agendamento["data_hora_agendamento"],
-            "%d/%m/%Y %H:%M"
-        )
+        agendamento.data = dados_agendamento["data"]
+        agendamento.horario = dados_agendamento["horario"]
         agendamento.dose = dados_agendamento["dose"]
         agendamento.aplicada = dados_agendamento["aplicada"]
         self.__tela_agendamentos.agendamento_editado()
@@ -105,28 +119,36 @@ class ControladorAgendamentos():
 
     def remover_agendamento(self):
         agendamento = self.get_agendamento()
-        del(self.__agendamentos[agendamento])
-        self.__tela_agendamentos.agendamento_removido()
+        if agendamento is None:
+            return None
+        else:
+            agendamento.vacina.adiciona_quantidade(1)
+            for i in range(len(self.__agendamentos)):
+                if agendamento == self.__agendamentos[i]:
+                    del(self.__agendamentos[i])
+            self.__tela_agendamentos.agendamento_removido()
 
     def listar_agendamentos_abertos(self):
-        for agendamento in self.__agendamentos:
-            if agendamento.aplicada == True:
-                self.__tela_agendamentos.mostrar_lista_agendamentos({
-                    "enfermeiro": agendamento.enfermeiro.nome,
-                    "paciente": agendamento.paciente.nome,
-                    "vacina": agendamento.vacina.fabricante,
-                    "data_hora_agendamento": agendamento.data_hora_agendamento,
-                    "dose": agendamento.dose
-                })
-
-    def listar_aplicacoes_efetivadas(self):
         for agendamento in self.__agendamentos:
             if agendamento.aplicada == False:
                 self.__tela_agendamentos.mostrar_lista_agendamentos({
                     "enfermeiro": agendamento.enfermeiro.nome,
                     "paciente": agendamento.paciente.nome,
                     "vacina": agendamento.vacina.fabricante,
-                    "data_hora_agendamento": agendamento.data_hora_agendamento,
+                    "data": agendamento.data,
+                    "horario": agendamento.horario,
+                    "dose": agendamento.dose
+                })
+
+    def listar_aplicacoes_efetivadas(self):
+        for agendamento in self.__agendamentos:
+            if agendamento.aplicada == True:
+                self.__tela_agendamentos.mostrar_lista_agendamentos({
+                    "enfermeiro": agendamento.enfermeiro.nome,
+                    "paciente": agendamento.paciente.nome,
+                    "vacina": agendamento.vacina.fabricante,
+                    "data": agendamento.data,
+                    "horario": agendamento.horario,
                     "dose": agendamento.dose
                 })
 

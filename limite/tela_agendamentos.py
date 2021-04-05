@@ -61,16 +61,6 @@ class TelaAgendamentos():
 
     def selecionar_agendamento(self):
         print('----- SELECIONAR AGENDAMENTO -----')
-        # while True:
-        #     try:
-        #         digitado = input("CPF do Paciente (apenas números): ")
-        #         if len(digitado) == 11:
-        #             cpf = digitado
-        #             break
-        #         else:
-        #             print("CPF digitado inválido! Digite apenas números.")
-        #     except ValueError:
-        #         print("Caracterie digitado inválido para CPF!")
         while True:
             try:
                 opcao = int(input("Qual a dose da vacina (1 - Primeira / 2 - Segunda): "))
@@ -81,7 +71,6 @@ class TelaAgendamentos():
                     print("Opção escolhida inválida!")
             except ValueError:
                 print("Valor digitado inválido!")
-        #return {"cpf": cpf, "dose": dose}
         return dose
 
     def mostrar_agendamento(self, dados_agendamento):
@@ -89,26 +78,58 @@ class TelaAgendamentos():
         print("Enfermeiro:", dados_agendamento["enfermeiro"])
         print("Paciente:", dados_agendamento["paciente"])
         print("Vacina:", dados_agendamento["vacina"])
-        print("Data e Hora:", dados_agendamento["data_hora_agendamento"])
+        print("Data:", dados_agendamento["data"])
+        print("Horario:", dados_agendamento["horario"])
         print("Dose:", dados_agendamento["dose"])
         print("Status:", dados_agendamento["status"])
 
     def pegar_dados_editar(self):
-        print("-------- EDITAR AGENDAMENTO ----------")
-        data = input("Data (dd/mm/aaaa): ")
-        hora = input("Hora (hh:mm):")
-        dose = int(input("Dose (1 - Primeira / 2 - Segunda): "))
-        status_aplicacao = int(input("Vacina já foi aplicada (1 - Não / 2 - Sim): "))
+        while True:
+            try:
+                data_str = input("Data (dd/mm/aaaa): ")
+                data = datetime.strptime(data_str, '%d/%m/%Y').date()
+                if data:
+                    break
+            except:
+                print('Data inválida! A data deve ser inserida neste formato: dd/mm/aaaa.')
+        while True:
+            try:
+                horario_str = input("Horário (hh:mm):")
+                horario = datetime.strptime(horario_str, '%H:%M').time()
+                if horario:
+                    break
+            except:
+                print('Horário inválido! O horário deve ser inserida neste formato: hh:mm.')
+        while True:
+            try:
+                opcao = int(input("Qual a dose da vacina (1 - Primeira / 2 - Segunda): "))
+                if opcao == 1 or opcao == 2:
+                    dose = opcao
+                    break
+                else:
+                    print("Opção escolhida inválida!")
+            except ValueError:
+                print("Valor digitado inválido!")
+        while True:
+            try:
+                opcao = int(input("Vacina já foi aplicada (1 - Não / 2 - Sim): "))
+                if opcao == 1 or opcao == 2:
+                    status_aplicacao = opcao
+                    break
+                else:
+                    print("Opção escolhida inválida!")
+            except ValueError:
+                print("Valor digitado inválido!")
         aplicada = False
         if status_aplicacao == 2:
             aplicada = True
-        return {"data_hora_agendamento": data+" "+hora, "dose": dose, "aplicada": aplicada}
+        return {"data": data, "horario": horario, "dose": dose, "aplicada": aplicada}
 
     def agendamento_editado(self):
         print("Agendamento editado com sucesso!")
 
     def vacina_aplicada(self):
-        print("Vacina do agendamento selecionado foi aplicada.")
+        print("Vacina foi aplicada.")
     
     def agendamento_removido(self):
         print("O agendamento solicitado foi removido.")
@@ -118,5 +139,6 @@ class TelaAgendamentos():
         print("Enfermeiro:", dados_agendamento["enfermeiro"])
         print("Paciente:", dados_agendamento["paciente"])
         print("Vacina:", dados_agendamento["vacina"])
-        print("Data e Hora:", dados_agendamento["data_hora_agendamento"])
+        print("Data:", dados_agendamento["data"])
+        print("Horario:", dados_agendamento["horario"])
         print("Dose:", dados_agendamento["dose"])
