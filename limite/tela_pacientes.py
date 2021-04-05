@@ -50,8 +50,13 @@ class TelaPacientes():
             try:
                 data_nascimento_str = input("Data de nascimento (dd/mm/aaaa): ")
                 data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
-                if data_nascimento_obj:
+                idade_dias = datetime.today().date() - data_nascimento_obj
+                idade = int(idade_dias.days // 365.24231481481481481481481481481481)
+                if 0 < idade < 150:
                     break
+                else:
+                    print('Idade inválida, a idade deve ser entre 0 e 150 anos')
+
             except:
                 print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
         return {"nome": nome, "cpf": cpf, "data_nascimento": data_nascimento_obj}
@@ -71,8 +76,13 @@ class TelaPacientes():
             try:
                 data_nascimento_str = input("Data de nascimento (dd/mm/aaaa): ")
                 data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
-                if data_nascimento_obj:
+                idade_dias = datetime.today().date() - data_nascimento_obj
+                idade = int(idade_dias.days // 365.24231481481481481481481481481481)
+                if 0 < idade < 150:
                     break
+                else:
+                    print('Idade inválida, a idade deve ser entre 0 e 150 anos')
+
             except:
                 print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
         return {"nome": nome, "data_nascimento": data_nascimento_obj}
@@ -92,9 +102,11 @@ class TelaPacientes():
 
     def mostrar_paciente(self, dados_paciente):
         self.linha()
+        idade_dias = datetime.today().date() - dados_paciente["data_nascimento"]
+        idade = idade_dias.days // 365.24231481481481481481481481481481
         print(f'NOME: {dados_paciente["nome"]} |'
               f' CPF: {dados_paciente["cpf"]} |'
-              f' DATA DE NASCIMENTO: {dados_paciente["data_nascimento"]}')
+              f' Idade: {idade:.0f} anos')
 
     def linha(self):
         print("-" * 90)
