@@ -1,6 +1,8 @@
 from limite.tela_pacientes import TelaPacientes
 from entidade.paciente import Paciente
 from controle.controlador_agendamentos import ControladorAgendamentos
+from datetime import datetime as datetime
+from math import trunc
 
 
 class ControladorPacientes():

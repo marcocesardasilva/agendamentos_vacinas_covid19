@@ -136,6 +136,7 @@ class ControladorEnfermeiros():
                          "cpf": agendamento.paciente.cpf,
                          "data_nascimento": agendamento.paciente.data_nascimento}
                         )
+            self.__tela_enfermeiros.linha()
         except IndexError:
             self.__tela_enfermeiros.nenhum_agendamento()
         except TypeError:

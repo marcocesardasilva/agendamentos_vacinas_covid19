@@ -1,3 +1,6 @@
+from datetime import datetime as datetime
+
+
 class TelaEnfermeiros():
 
     def __init__(self, controlador_enfermeiros):
@@ -93,7 +96,7 @@ class TelaEnfermeiros():
 
     def mostrar_enfermeiro(self, dados_enfermeiro):
         self.linha()
-        print(f'NOME: {dados_enfermeiro["nome"]} |'
+        print(f'ENFERMEIRO: {dados_enfermeiro["nome"]} |'
               f' CPF: {dados_enfermeiro["cpf"]} |'
               f' MATRÍCULA: {dados_enfermeiro["matricula"]} |'
               f' STATUS: {dados_enfermeiro["status"]}'
@@ -122,9 +125,14 @@ class TelaEnfermeiros():
             f' MATRÍCULA: {dados_enfermeiro["data_nascimento"]}')
 
     def mostrar_pacientes_por_enfermeiro(self, dados_paciente):
-        print(f'NOME: {dados_paciente["nome"]} |'
+        idade_dias = datetime.today().date() - dados_paciente["data_nascimento"]
+        idade = idade_dias.days // 365.24231481481481481481481481481481
+        print(f'PACIENTE: {dados_paciente["nome"]} |'
               f' CPF: {dados_paciente["cpf"]} |'
-              f' DATA DE NASCIMENTO: {dados_paciente["data_nascimento"]}')
+              f' Idade: {idade:.0f} anos')
+        # print(f'NOME: {dados_paciente["nome"]} |'
+        #       f' CPF: {dados_paciente["cpf"]} |'
+        #       f' DATA DE NASCIMENTO: {dados_paciente["data_nascimento"]}')
 
     def linha(self):
         print("-" * 70)
