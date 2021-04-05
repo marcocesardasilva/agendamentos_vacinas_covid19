@@ -39,6 +39,8 @@ class ControladorPacientes():
                 paciente = Paciente(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
                 self.__pacientes.append(paciente)
                 break
+        self.__tela_pacientes.sucesso(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
+
 
     def editar_paciente(self):
         paciente_editar = self.get_paciente()
@@ -50,6 +52,7 @@ class ControladorPacientes():
             if paciente_editar == paciente:
                 paciente.nome = dados_editar["nome"]
                 paciente.data_nascimento = dados_editar["data_nascimento"]
+                self.__tela_pacientes.sucesso(dados_editar["nome"], dados_editar["data_nascimento"])
 
     def consultar_paciente(self):
         paciente_consultar = self.get_paciente()
@@ -63,11 +66,11 @@ class ControladorPacientes():
             #colocar um else com o que acontece se não encontrar o paciente
 
     def get_paciente(self):
-        cpf = self.__tela_pacientes.selecionar_paciente()
         if len(self.__pacientes) == 0:
-            self.__tela_pacientes.cpf_nao_cadastrado(cpf)
+            self.__tela_pacientes.nenhum_paciente()
             return None
         else:
+            cpf = self.__tela_pacientes.selecionar_paciente()
             for paciente in self.__pacientes:
                 if cpf == paciente.cpf:
                     return paciente

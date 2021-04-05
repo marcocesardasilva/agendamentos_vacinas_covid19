@@ -54,9 +54,6 @@ class TelaPacientes():
                     break
             except:
                 print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
-        # self.linha()
-        # print(f'Paciente {nome}, com cpf {cpf} e nascido em {data_nascimento_obj} cadastrado!')
-        # self.linha()
         return {"nome": nome, "cpf": cpf, "data_nascimento": data_nascimento_obj}
 
     def pega_dados_paciente_edicao(self):
@@ -78,9 +75,6 @@ class TelaPacientes():
                     break
             except:
                 print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
-        self.linha()
-        print(f'Paciente {nome}, nascido em {data_nascimento_obj} editado!')
-        self.linha()
         return {"nome": nome, "data_nascimento": data_nascimento_obj}
 
     def selecionar_paciente(self):
@@ -116,3 +110,11 @@ class TelaPacientes():
 
     def nenhum_agendamento(self):
         print('Ainda não há atendimentos agendados para nenhum paciente')
+
+    def sucesso(self, nome, cpf=0, data=datetime):
+        self.linha()
+        if cpf == 0:
+            print(f'Paciente {nome}, nascido em {data} editado!')
+        else:
+            print(f'Paciente {nome}, com cpf {cpf} e nascido em {data} cadastrado!')
+        self.linha()
