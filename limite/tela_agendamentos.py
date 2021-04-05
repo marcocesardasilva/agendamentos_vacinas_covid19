@@ -15,11 +15,12 @@ class TelaAgendamentos():
         print("5 - Remover agendamento")
         print("6 - Listar aplicações agendadas")
         print("7 - Listar histórico de vacinações")
+        print("8 - Relatório Geral")
         print("0 - Retornar")
         while True:
             try:
                 opcao = int(input("Escolha a opcao:"))
-                if 0 <= opcao <= 7:
+                if 0 <= opcao <= 8:
                     return opcao
                 else:
                     print("Opção escolhida inválida!")
@@ -40,10 +41,12 @@ class TelaAgendamentos():
             try:
                 horario_str = input("Horário (hh:mm):")
                 horario = datetime.strptime(horario_str, '%H:%M').time()
-                if horario:
+                if datetime.strptime("08:00", '%H:%M').time() <= horario <= datetime.strptime("18:00", '%H:%M').time():
                     break
-            except:
-                print('Horário inválido! O horário deve ser inserida neste formato: hh:mm.')
+                else:
+                    raise Exception
+            except Exception:
+                print('Horário inválido! O horário deve ser comercial (08:00 às 18:00).')
         while True:
             try:
                 opcao = int(input("Qual a dose da vacina (1 - Primeira / 2 - Segunda): "))
@@ -97,10 +100,12 @@ class TelaAgendamentos():
             try:
                 horario_str = input("Horário (hh:mm):")
                 horario = datetime.strptime(horario_str, '%H:%M').time()
-                if horario:
+                if datetime.strptime("08:00", '%H:%M').time() <= horario <= datetime.strptime("18:00", '%H:%M').time():
                     break
-            except:
-                print('Horário inválido! O horário deve ser inserida neste formato: hh:mm.')
+                else:
+                    raise Exception
+            except Exception:
+                print('Horário inválido! O horário deve ser comercial (08:00 às 18:00).')
         while True:
             try:
                 opcao = int(input("Qual a dose da vacina (1 - Primeira / 2 - Segunda): "))
@@ -164,3 +169,11 @@ class TelaAgendamentos():
 
     def agendamento_efetivado_nao_cadastrado(self):
         print("Nenhum agendamento efetivado foi encontrado.")
+
+    def mostrar_relatorio(self,dados_relatorio):
+        print("------------ RELATÓRIO GERAL --------------")
+        print("Total de vacinas aplicadas:              {}".format(dados_relatorio["vacinas_aplicadas"]))
+        print("Total de pacientes vacinados 1ª dose:    {}".format(dados_relatorio["paciente_vacinados_primeira_dose"]))
+        print("Total de pacientes vacinados 2ª dose:    {}".format(dados_relatorio["paciente_vacinados_segunda_dose"]))
+        print("Pacientes aguardando agendamento:        {}".format(dados_relatorio["pacientes_sem_agendamentos"]))
+        print("-------------------------------------------")
