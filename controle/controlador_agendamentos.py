@@ -37,6 +37,7 @@ class ControladorAgendamentos():
                         if diferenca_dias.days <= 20:
                             self.__tela_agendamentos.data_recente_primeira_dose()
                             break
+                        vacina_primeira_dose = agendamento.vacina
                 if dose1 == False:
                     self.__tela_agendamentos.nao_castrado_primeira_dose()
                     break
@@ -53,9 +54,12 @@ class ControladorAgendamentos():
             if enfermeiro.status == "Inativo":
                 self.__controlador_enfermeiros.enfermeiro_inativo()
                 break
-            vacina = self.__controlador_vacinas.get_vacina()
-            if vacina is None:
-                break
+            if dados_agendamento["dose"] == 2:
+                vacina = vacina_primeira_dose
+            else:
+                vacina = self.__controlador_vacinas.get_vacina()
+                if vacina is None:
+                    break
             if vacina.quantidade < 1:
                 self.__controlador_vacinas.chamar_doses_insuficiente()
                 break
@@ -92,8 +96,6 @@ class ControladorAgendamentos():
         self.__tela_agendamentos.agendamento_nao_cadastrado()
         return None
 
-
-    
     def consultar_agendamento(self):
         agendamento = self.get_agendamento()
         if agendamento is None:
@@ -238,6 +240,28 @@ class ControladorAgendamentos():
                         "dose": agendamento.dose
                     })
 
+    def relatorio_geral(self):
+        vacinas_aplicadas = 0
+        paciente_vacinados_primeira_dose = 0
+        paciente_vacinados_segunda_dose = 0
+        pacientes_sem_agendamentos = self.__controlador_pacientes.pacientes_aguardando_vacina()
+        for agendamento in self.__agendamentos:
+            if agendamento.aplicada == True:
+                total_de_vacinas_aplicadas += 1
+                if agendamento.dose == 1:
+                    total_paciente_vacinados_primeira_dose += 1
+                if agendamento.dose == 2:
+                    total_paciente_vacinados_segunda_dose += 1
+            else:
+                if agendamento.dose == 1:
+                    total_de_pacientes_sem_agendamentos += 1
+        self.__tela_agendamentos.mostrar_relatorio({
+                        "vacinas_aplicadas": vacinas_aplicadas,
+                        "paciente_vacinados_primeira_dose": paciente_vacinados_primeira_dose,
+                        "paciente_vacinados_segunda_dose": paciente_vacinados_segunda_dose,
+                        "pacientes_sem_agendamentos": pacientes_sem_agendamentos
+                    })
+
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False
 
@@ -251,6 +275,7 @@ class ControladorAgendamentos():
             5: self.remover_agendamento,
             6: self.listar_agendamentos_abertos,
             7: self.listar_aplicacoes_efetivadas,
+            8: self.relatorio_geral,
             0: self.retorna_tela_principal
         }
 
