@@ -49,7 +49,7 @@ class TelaPacientes():
         while True:
             try:
                 data_nascimento_str = input("Data de nascimento (dd/mm/aaaa): ")
-                data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y %H:%M')
+                data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y')#.data()
                 if data_nascimento_obj:
                     break
             except:
@@ -106,7 +106,10 @@ class TelaPacientes():
         print("-" * 90)
 
     def cpf_ja_cadastrado(self, cpf):
-        print(f'O cpf {cpf} já foi cadastrado')
+        print(f'O cpf {cpf} já foi cadastrado.')
 
     def cpf_nao_cadastrado(self, cpf):
-        print(f'O cpf {cpf} ainda não foi cadastrado')
+        print(f'O cpf {cpf} ainda não foi cadastrado.')
+
+    def nenhum_paciente(self):
+        print('Ainda não há pacientes cadastrados.')

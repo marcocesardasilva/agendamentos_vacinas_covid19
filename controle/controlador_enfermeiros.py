@@ -31,80 +31,100 @@ class ControladorEnfermeiros():
 
     def editar_enfermeiro(self):
         enfermeiro_editar = self.get_enfermeiro()
-        while True:
+        try:
+            if len(self.__enfermeiros) == 0:
+                raise Exception
+            elif enfermeiro_editar is None:
+                raise Exception
             dados_editar = self.__tela_enfermeiros.pegar_dados_enfermeiro_edicao()
             for enfermeiro in self.__enfermeiros:
                 if enfermeiro.matricula == dados_editar["matricula"]:
                     self.__tela_enfermeiros.matricula_ja_cadastrada(dados_editar["matricula"])
-                    return None
-                elif enfermeiro.cpf == dados_editar["cpf"]:
-                    self.__tela_enfermeiros.cpf_ja_cadastrado(dados_editar["cpf"])
-                    return None
-            break
-        for enfermeiro in self.__enfermeiros:
-            if enfermeiro == enfermeiro_editar:
-                enfermeiro.nome = dados_editar['nome']
-                enfermeiro.matricula = dados_editar['matricula']
-                enfermeiro.status = "Ativo"
+                    raise Exception
+            for enfermeiro in self.__enfermeiros:
+                if enfermeiro == enfermeiro_editar:
+                    enfermeiro.nome = dados_editar['nome']
+                    enfermeiro.matricula = dados_editar['matricula']
+        except Exception:
+            pass
 
     def consultar_enfermeiro(self):
-        enfermeiro_consultar = self.get_enfermeiro()
-        for enfermeiro in self.__enfermeiros:
-            if enfermeiro == enfermeiro_consultar:
-                self.__tela_enfermeiros.mostrar_enfermeiro(
-                    {"nome": enfermeiro.nome,
-                    "cpf": enfermeiro.cpf,
-                    "matricula": enfermeiro.matricula,
-                    "status": enfermeiro.status}
-                    )
-
-    def get_enfermeiro(self):
-        while True:
-            matricula = self.__tela_enfermeiros.selecionar_enfermeiro()
+        try:
+            enfermeiro = self.get_enfermeiro()
             if len(self.__enfermeiros) == 0:
-                self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
-                break
-            for enfermeiro in self.__enfermeiros:
-                if matricula == enfermeiro.matricula:
-                    return enfermeiro
-            self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
-            break
-
-    def enfermeiro_inativo(self):
-        self.__tela_enfermeiros.enfermeiro_inativo()
-
-    def alterar_status_enfermeiro(self):
-        enfermeiro = self.get_enfermeiro()
-        status = self.__tela_enfermeiros.status_enfermeiro(enfermeiro.matricula)
-        enfermeiro.status = status
-
-    def listar_enfermeiros(self):
-        for enfermeiro in self.__enfermeiros:
+                raise Exception
             self.__tela_enfermeiros.mostrar_enfermeiro(
                 {"nome": enfermeiro.nome,
                  "cpf": enfermeiro.cpf,
                  "matricula": enfermeiro.matricula,
                  "status": enfermeiro.status}
             )
+        except Exception:
+            pass
+
+    def get_enfermeiro(self):
+        try:
+            if len(self.__enfermeiros) == 0:
+                raise Exception
+            matricula = self.__tela_enfermeiros.selecionar_enfermeiro()
+            for enfermeiro in self.__enfermeiros:
+                if matricula == enfermeiro.matricula:
+                    return enfermeiro
+            self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
+        except Exception:
+            self.__tela_enfermeiros.nenhum_enfermeiro()
+
+    def enfermeiro_inativo(self):
+        self.__tela_enfermeiros.enfermeiro_inativo()
+
+    def alterar_status_enfermeiro(self):
+        enfermeiro = self.get_enfermeiro()
+        try:
+            if len(self.__enfermeiros) == 0:
+                raise Exception
+            status = self.__tela_enfermeiros.status_enfermeiro(enfermeiro.matricula)
+            enfermeiro.status = status
+        except Exception:
+            pass
+
+    def listar_enfermeiros(self):
+        try:
+            if len(self.__enfermeiros) == 0:
+                raise Exception
+            for enfermeiro in self.__enfermeiros:
+                self.__tela_enfermeiros.mostrar_enfermeiro(
+                    {"nome": enfermeiro.nome,
+                     "cpf": enfermeiro.cpf,
+                     "matricula": enfermeiro.matricula,
+                     "status": enfermeiro.status}
+                )
+        except Exception:
+            self.__tela_enfermeiros.nenhum_enfermeiro()
 
     def listar_pacientes_por_enfermeiro(self):
         self.__controlador_pacientes = self.__controlador_sistema.controlador_pacientes
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
-        enfermeiro = self.get_enfermeiro()
-        self.__tela_enfermeiros.mostrar_enfermeiro(
-            {"nome": enfermeiro.nome,
-             "cpf": enfermeiro.cpf,
-             "matricula": enfermeiro.matricula,
-             "status": enfermeiro.status}
-        )
-        for agendamento in self.__controlador_agendamentos.agendamentos:
-            if agendamento.enfermeiro == enfermeiro:
-                self.__tela_enfermeiros.mostrar_pacientes_por_enfermeiro(
-                    {"nome": agendamento.paciente.nome,
-                    "cpf": agendamento.paciente.cpf,
-                    "data_nascimento": agendamento.paciente.data_nascimento}
+        try:
+            if len(self.__controlador_agendamentos.agendamentos) == 0:
+                raise Exception
+            enfermeiro = self.get_enfermeiro()
+            # if len(self.__enfermeiros) == 0:
+            #      raise TypeError
+            self.__tela_enfermeiros.mostrar_enfermeiro(
+                {"nome": enfermeiro.nome,
+                 "cpf": enfermeiro.cpf,
+                 "matricula": enfermeiro.matricula,
+                 "status": enfermeiro.status}
                 )
-
+            for agendamento in self.__controlador_agendamentos.agendamentos:
+                if agendamento.enfermeiro == enfermeiro:
+                    self.__tela_enfermeiros.mostrar_pacientes_por_enfermeiro(
+                        {"nome": agendamento.paciente.nome,
+                         "cpf": agendamento.paciente.cpf,
+                         "data_nascimento": agendamento.paciente.data_nascimento}
+                        )
+        except Exception:
+            self.__tela_enfermeiros.nenhum_agendamento()
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False
