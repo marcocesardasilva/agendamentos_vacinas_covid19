@@ -126,8 +126,10 @@ class ControladorPacientes():
         pacientes_sem_agendamento = 0
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         try:
-            if len(self.__controlador_agendamentos.agendamentos) == 0:
-                self.__tela_pacientes.nenhum_agendamento()
+            # if len(self.__controlador_agendamentos.agendamentos) == 0:
+            #     self.__tela_pacientes.nenhum_agendamento()
+            if len(self.__pacientes) == 0:
+                return 0
             for agendamento in self.__controlador_agendamentos.agendamentos:
                 for paciente in self.__pacientes:
                     pacientes_total += 1
