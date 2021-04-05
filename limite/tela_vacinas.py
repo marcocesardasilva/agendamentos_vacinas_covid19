@@ -86,6 +86,7 @@ class TelaVacinas():
 
     def mostrar_doses_aplicadas(self, dados_vacina):
         for fabricante,quantidade in dados_vacina.items():
+            print("----------------------------------------")
             print("Fabricante: {} | Quantidade: {}" .format(fabricante, quantidade))
 
     def vacina_ja_cadastrada(self):
@@ -99,3 +100,6 @@ class TelaVacinas():
 
     def vacina_nao_cadastrada(self):
         print("Vacina não cadastrada.")
+    
+    def sem_aplicacoes(self):
+        print("Até o momento nenhuma vacina foi aplicada.")

@@ -76,7 +76,10 @@ class ControladorVacinas():
                     doses_aplicadas[agendamento.vacina.fabricante] = 1
                 else:
                     doses_aplicadas[agendamento.vacina.fabricante] += 1
-        self.__tela_vacinas.mostrar_doses_aplicadas(doses_aplicadas)
+        if len(doses_aplicadas) == 0:
+            self.__tela_vacinas.sem_aplicacoes()
+        else:
+            self.__tela_vacinas.mostrar_doses_aplicadas(doses_aplicadas)
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False
