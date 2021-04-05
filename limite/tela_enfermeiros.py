@@ -104,15 +104,12 @@ class TelaEnfermeiros():
         print(f"Alterar status do enfermeiro {matricula}: ")
         while True:
             try:
-                print("Para definir status como <Ativo> digite 1,\nPara definir status como <Inativo> digite 2,\n"
-                      "Para retornar digite 0:")
+                print("Para definir status como <Ativo> digite 1,\nPara definir status como <Inativo> digite 2")
                 status_desejado = int(input('Status: '))
                 if status_desejado == 1:
                     return "Ativo"
                 elif status_desejado == 2:
                     return "Inativo"
-                elif status_desejado == 0:
-                    break
                 else:
                     print('Você digitou um valor inválido')
             except (ValueError, TypeError):

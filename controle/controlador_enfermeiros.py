@@ -106,16 +106,19 @@ class ControladorEnfermeiros():
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         try:
             if len(self.__controlador_agendamentos.agendamentos) == 0:
-                raise Exception
-            enfermeiro = self.get_enfermeiro()
-            # if len(self.__enfermeiros) == 0:
-            #      raise TypeError
-            self.__tela_enfermeiros.mostrar_enfermeiro(
-                {"nome": enfermeiro.nome,
-                 "cpf": enfermeiro.cpf,
-                 "matricula": enfermeiro.matricula,
-                 "status": enfermeiro.status}
-                )
+                raise IndexError
+            enfermeiro_listar = self.get_enfermeiro()
+            if enfermeiro_listar is None:
+                raise TypeError
+            for enfermeiro in self.__enfermeiros:
+                #Verificar isso
+                if enfermeiro.cpf == enfermeiro_listar.cpf:
+                    self.__tela_enfermeiros.mostrar_enfermeiro(
+                        {"nome": enfermeiro.nome,
+                         "cpf": enfermeiro.cpf,
+                         "matricula": enfermeiro.matricula,
+                         "status": enfermeiro.status}
+                        )
             for agendamento in self.__controlador_agendamentos.agendamentos:
                 if agendamento.enfermeiro == enfermeiro:
                     self.__tela_enfermeiros.mostrar_pacientes_por_enfermeiro(
@@ -123,8 +126,11 @@ class ControladorEnfermeiros():
                          "cpf": agendamento.paciente.cpf,
                          "data_nascimento": agendamento.paciente.data_nascimento}
                         )
-        except Exception:
+        except IndexError:
             self.__tela_enfermeiros.nenhum_agendamento()
+        except TypeError:
+            pass
+
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False
