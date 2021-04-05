@@ -9,7 +9,7 @@ class TelaEnfermeiros():
         print("1 - Cadastrar enfermeiro")
         print("2 - Editar enfermeiro")
         print("3 - Consultar enfermeiro")
-        print("4 - Remover enfermeiro")
+        print("4 - Alterar status do enfermeiro")
         print("5 - Listar enfermeiros")
         print("6 - Listar pacientes atendidos por um determinado enfermeiro")
         print("0 - Retornar")
@@ -69,7 +69,7 @@ class TelaEnfermeiros():
         while True:
             try:
                 matricula = input("Matrícula (4 dígitos): ").replace(' ','')
-                if matricula.isnumeric() and len(matricula) == 4:
+                if len(matricula) == 4 and matricula.isnumeric():
                     break
                 else:
                     print(f'A matrícula {matricula} é inválida!\nDigite uma matrícula com 4 dígitos')
@@ -104,15 +104,12 @@ class TelaEnfermeiros():
         print(f"Alterar status do enfermeiro {matricula}: ")
         while True:
             try:
-                print("Para definir status como <Ativo> digite 1,\nPara definir status como <Inativo> digite 2,\n"
-                      "Para retornar digite 0:")
+                print("Para definir status como <Ativo> digite 1,\nPara definir status como <Inativo> digite 2")
                 status_desejado = int(input('Status: '))
                 if status_desejado == 1:
                     return "Ativo"
                 elif status_desejado == 2:
                     return "Inativo"
-                elif status_desejado == 0:
-                    break
                 else:
                     print('Você digitou um valor inválido')
             except (ValueError, TypeError):
@@ -143,3 +140,9 @@ class TelaEnfermeiros():
 
     def matricula_ja_cadastrada(self, matricula):
         print(f'A matrícula {matricula} já foi cadastrada')
+
+    def nenhum_enfermeiro(self):
+        print('Ainda não há enfermeiros cadastrados')
+
+    def nenhum_agendamento(self):
+        print('Ainda não há atendimentos agendados para nenhum enfermeiro')
