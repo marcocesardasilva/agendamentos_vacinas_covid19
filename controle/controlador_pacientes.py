@@ -40,9 +40,8 @@ class ControladorPacientes():
                 #     break
                 paciente = Paciente(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
                 self.__pacientes.append(paciente)
+                self.__tela_pacientes.sucesso(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
                 break
-        self.__tela_pacientes.sucesso(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
-
 
     def editar_paciente(self):
         paciente_editar = self.get_paciente()
