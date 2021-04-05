@@ -77,14 +77,14 @@ class TelaAgendamentos():
         return dose
 
     def mostrar_agendamento(self, dados_agendamento):
-        print("-------- DADOS DO AGENDAMENTO SOLICITADO ----------")
-        print("Enfermeiro:", dados_agendamento["enfermeiro"])
-        print("Paciente:", dados_agendamento["paciente"])
-        print("Vacina:", dados_agendamento["vacina"])
-        print("Data:", dados_agendamento["data"])
-        print("Horario:", dados_agendamento["horario"])
-        print("Dose:", dados_agendamento["dose"])
-        print("Status:", dados_agendamento["status"])
+        print("--------- DADOS DO AGENDAMENTO SOLICITADO -----------")
+        print("Enfermeiro:  ", dados_agendamento["enfermeiro"])
+        print("Paciente:    ", dados_agendamento["paciente"])
+        print("Vacina:      ", dados_agendamento["vacina"])
+        print("Data:        ", dados_agendamento["data"])
+        print("Horario:     ", dados_agendamento["horario"])
+        print("Dose:        ", dados_agendamento["dose"])
+        print("Status:      ", dados_agendamento["status"])
 
     def pegar_dados_editar(self):
         print("-------- EDITAR AGENDAMENTO ----------")
