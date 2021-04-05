@@ -13,38 +13,52 @@ class ControladorVacinas():
 
     def cadastrar_vacina(self):
         dados_vacina = self.__tela_vacinas.pegar_dados_cadastrar()
-        if len(self.__vacinas) == 0:
+        if not self.__vacinas:
             vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
             self.__vacinas.append(vacina)
+            self.__tela_vacinas.vacina_cadastrada()
         else:
             for vacina_cadastrada in self.__vacinas:
                 if dados_vacina["fabricante"] == vacina_cadastrada.fabricante:
-                    break
-                else:
-                    vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
-                    self.__vacinas.append(vacina)
-    
+                    self.__tela_vacinas.vacina_ja_cadastrada()
+                    return None
+            vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
+            self.__vacinas.append(vacina)
+            self.__tela_vacinas.vacina_cadastrada()
+
     def get_vacina(self):
         fabricante = self.__tela_vacinas.selecionar_vacina()
-        for vacina in self.__vacinas:
-            if fabricante == vacina.fabricante:
-                return vacina
+        if len(self.__vacinas) == 0:
+            self.__tela_vacinas.vacina_nao_cadastrada()
+            return None
+        else:
+            for vacina in self.__vacinas:
+                if fabricante == vacina.fabricante:
+                    return vacina
+        self.__tela_vacinas.vacina_nao_cadastrada()
+        return None
 
     def adicionar_dose(self):
         vacina = self.get_vacina()
-        quantidade = self.__tela_vacinas.pegar_quantidade()
-        vacina.quantidade += quantidade
+        if vacina is not None:
+            quantidade = self.__tela_vacinas.pegar_quantidade()
+            vacina.quantidade += quantidade
 
     def subtrair_dose(self):
         vacina = self.get_vacina()
-        quantidade = self.__tela_vacinas.pegar_quantidade()
-        vacina.quantidade -= quantidade
+        if vacina is not None:
+            quantidade = self.__tela_vacinas.pegar_quantidade()
+            if quantidade > vacina.quantidade:
+                self.__tela_vacinas.quantidade_insuficiente(vacina.quantidade)
+            else:
+                vacina.quantidade -= quantidade
 
     def editar_vacina(self):
         vacina = self.get_vacina()
-        dados_vacina = self.__tela_vacinas.pegar_dados_editar()
-        vacina.fabricante = dados_vacina["fabricante"]
-        vacina.quantidade = dados_vacina["quantidade"]
+        if vacina is not None:
+            dados_vacina = self.__tela_vacinas.pegar_dados_editar()
+            vacina.fabricante = dados_vacina["fabricante"]
+            vacina.quantidade = dados_vacina["quantidade"]
 
     def listar_doses_disponiveis(self):
         for vacina in self.__vacinas:

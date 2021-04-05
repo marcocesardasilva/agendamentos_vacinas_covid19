@@ -10,7 +10,7 @@ class TelaVacinas():
         print("2 - Adicionar doses")
         print("3 - Subtrair doses")
         print("4 - Editar vacina")
-        print("5 - Listar doses disponíveis")
+        print("5 - Listar doses por fabricante")
         print("6 - Listar doses aplicadas")
         print("0 - Retornar")
         while True:
@@ -63,12 +63,14 @@ class TelaVacinas():
         while True:
             try:
                 quantidade = int(input("Quantidade: "))
+                if quantidade < 0:
+                    raise TypeError
                 return quantidade
             except TypeError:
                 print("Valor inválido para a quantidade. Digite um valor válido.")
         
     def selecionar_vacina(self):
-        print('---- SELECIONAR VACINA ------')
+        print("---- SELECIONAR VACINA ------")
         while True:
             try:
                 fabricante = input("Fabricante: ")
@@ -80,8 +82,20 @@ class TelaVacinas():
 
     def mostrar_doses_disponiveis(self, dados_vacina):
         print("----------------------------------------")
-        print(f'Fabricante: {dados_vacina["fabricante"]} | Quantidade: {dados_vacina["quantidade"]}')
+        print("Fabricante: {} | Quantidade: {}".format(dados_vacina["fabricante"],dados_vacina["quantidade"]))
 
     def mostrar_doses_aplicadas(self, dados_vacina):
         for fabricante,quantidade in dados_vacina.items():
-            print(f'Fabricante: {fabricante} | Quantidade: {quantidade}')
+            print("Fabricante: {} | Quantidade: {}" .format(fabricante, quantidade))
+
+    def vacina_ja_cadastrada(self):
+        print("Fabricante digitado já existe no sistema.")
+    
+    def vacina_cadastrada(self):
+        print("Vacina cadastrada com sucesso!")
+
+    def quantidade_insuficiente(self, quantidade):
+        print("Quantidade disponível insuficiente. Seu estoque é de {} doses.".format(quantidade))
+
+    def vacina_nao_cadastrada(self):
+        print("Vacina não cadastrada.")
