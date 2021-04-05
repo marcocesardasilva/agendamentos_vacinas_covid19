@@ -17,28 +17,36 @@ class ControladorAgendamentos():
     def cadastrar_agendamento(self):
         dados_agendamento = self.__tela_agendamentos.pegar_dados_cadastrar()
         while True:
+            paciente = self.__controlador_pacientes.get_paciente()
+            if paciente is None:
+                break
+            if dados_agendamento["dose"] == 1:
+                for agendamento in self.__agendamentos:
+                    if agendamento.paciente.count() >= 1:
+                        break
+            if dados_agendamento["dose"] == 2:
+                for agendamento in self.__agendamentos:
+                    if agendamento.paciente.count() >= 1:
+                        break
             enfermeiro = self.__controlador_enfermeiros.get_enfermeiro()
             if enfermeiro is None:
                 break
             if enfermeiro.status == "Inativo":
                 self.__controlador_enfermeiros.enfermeiro_inativo()
                 break
-            paciente = self.__controlador_pacientes.get_paciente()
-            if paciente is None:
-                break
             vacina = self.__controlador_vacinas.get_vacina()
             if vacina is None:
                 break
-            data_hora_agendamento = datetime.strptime(
-                dados_agendamento["data_hora_agendamento"],
-                "%d/%m/%Y %H:%M"
-            )
-
+            vacina.subtrair_dose(1)
+            if vacina.quantidade < 1:
+                break
+            
             agendamento = Agendamento(
                 enfermeiro,
                 paciente,
                 vacina,
-                data_hora_agendamento,
+                dados_agendamento["data"],
+                dados_agendamento["horario"],
                 dados_agendamento["dose"]
             )
             self.__agendamentos.append(agendamento)

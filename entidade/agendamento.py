@@ -1,7 +1,8 @@
 from entidade.vacina import Vacina
 from entidade.enfermeiro import Enfermeiro
 from entidade.paciente import Paciente
-from datetime import datetime as datetime
+from datetime import datetime as date
+from datetime import datetime as time
 
 
 class Agendamento:
@@ -10,13 +11,15 @@ class Agendamento:
         enfermeiro: Enfermeiro,
         paciente: Paciente,
         vacina: Vacina,
-        data_hora_agendamento: datetime,
+        data: date,
+        horario: time,
         dose: int
     ):
         self.__enfermeiro = enfermeiro
         self.__paciente = paciente
         self.__vacina = vacina
-        self.__data_hora_agendamento = data_hora_agendamento
+        self.__data = data
+        self.__horario = horario
         self.__dose = dose
         self.__aplicada = False
 
@@ -48,13 +51,22 @@ class Agendamento:
             self.__vacina = vacina
 
     @property
-    def data_hora_agendamento(self) -> datetime:
-        return self.__data_hora_agendamento
+    def data(self) -> date:
+        return self.__data
 
-    @data_hora_agendamento.setter
-    def data_hora_agendamento(self, data_hora_agendamento):
-        if isinstance(data_hora_agendamento, datetime):
-            self.__data_hora_agendamento = data_hora_agendamento
+    @data.setter
+    def data(self, data):
+        if isinstance(data, date):
+            self.__data = data
+
+    @property
+    def horario(self) -> time:
+        return self.__horario
+
+    @horario.setter
+    def horario(self, horario):
+        if isinstance(horario, time):
+            self.__horario = horario
 
     @property
     def dose(self) -> int:

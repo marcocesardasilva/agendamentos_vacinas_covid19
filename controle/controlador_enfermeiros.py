@@ -59,16 +59,26 @@ class ControladorEnfermeiros():
                     )
 
     def get_enfermeiro(self):
-        while True:
-            matricula = self.__tela_enfermeiros.selecionar_enfermeiro()
-            if len(self.__enfermeiros) == 0:
-                self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
-                break
+        matricula = self.__tela_enfermeiros.selecionar_enfermeiro()
+        if len(self.__enfermeiros) == 0:
+            self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
+            return None
+        else:
             for enfermeiro in self.__enfermeiros:
                 if matricula == enfermeiro.matricula:
                     return enfermeiro
-            self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
-            break
+        self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
+        return None
+        # while True:
+        #     matricula = self.__tela_enfermeiros.selecionar_enfermeiro()
+        #     if len(self.__enfermeiros) == 0:
+        #         self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
+        #         break
+        #     for enfermeiro in self.__enfermeiros:
+        #         if matricula == enfermeiro.matricula:
+        #             return enfermeiro
+        #     self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
+        #     break
 
     def enfermeiro_inativo(self):
         self.__tela_enfermeiros.enfermeiro_inativo()

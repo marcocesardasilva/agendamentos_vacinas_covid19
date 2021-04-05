@@ -49,7 +49,7 @@ class TelaPacientes():
         while True:
             try:
                 data_nascimento_str = input("Data de nascimento (dd/mm/aaaa): ")
-                data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y %H:%M')
+                data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y')
                 if data_nascimento_obj:
                     break
             except:

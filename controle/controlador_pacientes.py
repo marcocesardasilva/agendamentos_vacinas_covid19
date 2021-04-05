@@ -60,16 +60,26 @@ class ControladorPacientes():
             #colocar um else com o que acontece se não encontrar o paciente
 
     def get_paciente(self):
-        while True:
-            cpf = self.__tela_pacientes.selecionar_paciente()
-            if len(self.__pacientes) == 0:
-                self.__tela_pacientes.cpf_nao_cadastrado(cpf)
-                break
+        cpf = self.__tela_pacientes.selecionar_paciente()
+        if len(self.__pacientes) == 0:
+            self.__tela_pacientes.cpf_nao_cadastrado(cpf)
+            return None
+        else:
             for paciente in self.__pacientes:
                 if cpf == paciente.cpf:
                     return paciente
-            self.__tela_pacientes.cpf_nao_cadastrado(cpf)
-            break
+        self.__tela_pacientes.cpf_nao_cadastrado(cpf)
+        return None
+        # while True:
+        #     cpf = self.__tela_pacientes.selecionar_paciente()
+        #     if len(self.__pacientes) == 0:
+        #         self.__tela_pacientes.cpf_nao_cadastrado(cpf)
+        #         break
+        #     for paciente in self.__pacientes:
+        #         if cpf == paciente.cpf:
+        #             return paciente
+        #     self.__tela_pacientes.cpf_nao_cadastrado(cpf)
+        #     break
 
     def listar_pacientes(self):
         for paciente in self.__pacientes:

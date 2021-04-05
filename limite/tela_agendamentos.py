@@ -28,18 +28,33 @@ class TelaAgendamentos():
     
     def pegar_dados_cadastrar(self):
         print("-------- CADASTRAR AGENDAMENTO ----------")
-        # while True:
-        #     try:
-        #         data_agendamento_str = input("Data de nascimento (dd/mm/aaaa): ")
-        #         data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
-        #         if data_nascimento_obj:
-        #             break
-        #     except:
-        #         print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
-        data = input("Data (dd/mm/aaaa): ")
-        hora = input("Hora (hh:mm):")
-        dose = int(input("Dose (1 - Primeira / 2 - Segunda): "))
-        return {"data_hora_agendamento": data+" "+hora, "dose": dose}
+        while True:
+            try:
+                data_str = input("Data (dd/mm/aaaa): ")
+                data = datetime.strptime(data_str, '%d/%m/%Y').date()
+                if data:
+                    break
+            except:
+                print('Data inválida! A data deve ser inserida neste formato: dd/mm/aaaa.')
+        while True:
+            try:
+                horario_str = input("Horário (hh:mm):")
+                horario = datetime.strptime(horario_str, '%H:%M').time()
+                if horario:
+                    break
+            except:
+                print('Horário inválido! O horário deve ser inserida neste formato: hh:mm.')
+        while True:
+            try:
+                opcao = int(input("Qual a dose da vacina (1 - Primeira / 2 - Segunda): "))
+                if opcao == 1 or opcao == 2:
+                    dose = opcao
+                    break
+                else:
+                    print("Opção escolhida inválida!")
+            except ValueError:
+                print("Valor digitado inválido!")
+        return {"data": data, "horario": horario, "dose": dose}
     
     def agendamento_cadastrado(self):
         print("Agendamento cadastrado com sucesso!")
