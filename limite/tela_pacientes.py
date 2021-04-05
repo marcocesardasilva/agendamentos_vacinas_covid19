@@ -105,8 +105,8 @@ class TelaPacientes():
         self.linha()
         idade_dias = datetime.today().date() - dados_paciente["data_nascimento"]
         idade = idade_dias.days // 365.24231481481481481481481481481481
-        print(f'NOME: {dados_paciente["nome"]} |'
-              f' CPF: {dados_paciente["cpf"]} |'
+        print(f'NOME: {dados_paciente["nome"]}  |'
+              f' CPF: {dados_paciente["cpf"]}   |'
               f' Idade: {idade:.0f} anos')
 
     def linha(self):

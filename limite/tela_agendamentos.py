@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 class TelaAgendamentos():
 
     def __init__(self, controlador_agendamento):
@@ -77,7 +78,7 @@ class TelaAgendamentos():
         return dose
 
     def mostrar_agendamento(self, dados_agendamento):
-        print("--------- DADOS DO AGENDAMENTO SOLICITADO -----------")
+        print("------ DADOS DO AGENDAMENTO SOLICITADO ------")
         print("Enfermeiro:  ", dados_agendamento["enfermeiro"])
         print("Paciente:    ", dados_agendamento["paciente"])
         print("Vacina:      ", dados_agendamento["vacina"])
@@ -85,6 +86,7 @@ class TelaAgendamentos():
         print("Horario:     ", dados_agendamento["horario"])
         print("Dose:        ", dados_agendamento["dose"])
         print("Status:      ", dados_agendamento["status"])
+        print("---------------------------------------------")
 
     def pegar_dados_editar(self):
         print("-------- EDITAR AGENDAMENTO ----------")
@@ -142,12 +144,12 @@ class TelaAgendamentos():
 
     def mostrar_lista_agendamentos(self, dados_agendamento):
         print("----------------------------------------")
-        print("Enfermeiro:", dados_agendamento["enfermeiro"])
-        print("Paciente:", dados_agendamento["paciente"])
-        print("Vacina:", dados_agendamento["vacina"])
-        print("Data:", dados_agendamento["data"])
-        print("Horario:", dados_agendamento["horario"])
-        print("Dose:", dados_agendamento["dose"])
+        print("Enfermeiro:  ", dados_agendamento["enfermeiro"])
+        print("Paciente:    ", dados_agendamento["paciente"])
+        print("Vacina:      ", dados_agendamento["vacina"])
+        print("Data:        ", dados_agendamento["data"])
+        print("Horario:     ", dados_agendamento["horario"])
+        print("Dose:        ", dados_agendamento["dose"])
 
     def ja_castrado_primeira_dose(self):
         print("Já existe um agendamento da primeira dose cadastrado para este paciente.")
