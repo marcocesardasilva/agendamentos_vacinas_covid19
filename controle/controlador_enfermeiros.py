@@ -120,7 +120,7 @@ class ControladorEnfermeiros():
                          "status": enfermeiro.status}
                         )
             for agendamento in self.__controlador_agendamentos.agendamentos:
-                if agendamento.enfermeiro == enfermeiro:
+                if agendamento.enfermeiro.matricula == enfermeiro_listar.matricula:
                     self.__tela_enfermeiros.mostrar_pacientes_por_enfermeiro(
                         {"nome": agendamento.paciente.nome,
                          "cpf": agendamento.paciente.cpf,

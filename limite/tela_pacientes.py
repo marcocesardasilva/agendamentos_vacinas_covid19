@@ -49,7 +49,7 @@ class TelaPacientes():
         while True:
             try:
                 data_nascimento_str = input("Data de nascimento (dd/mm/aaaa): ")
-                data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y')#.data()
+                data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
                 if data_nascimento_obj:
                     break
             except:
@@ -113,3 +113,6 @@ class TelaPacientes():
 
     def nenhum_paciente(self):
         print('Ainda não há pacientes cadastrados.')
+
+    def nenhum_agendamento(self):
+        print('Ainda não há atendimentos agendados para nenhum paciente')
