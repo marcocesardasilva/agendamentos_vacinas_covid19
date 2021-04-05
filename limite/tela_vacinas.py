@@ -40,7 +40,7 @@ class TelaVacinas():
             except ValueError:
                 print("Valor inválido! Digite um valor válido para a quantidade.")
         return {"fabricante": fabricante, "quantidade": quantidade}
-    
+
     def pegar_dados_editar(self):
         print("-------- EDITAR VACINA ----------")
         while True:
@@ -68,7 +68,7 @@ class TelaVacinas():
                 return quantidade
             except TypeError:
                 print("Valor inválido para a quantidade. Digite um valor válido.")
-        
+
     def selecionar_vacina(self):
         print("---- SELECIONAR VACINA ------")
         while True:
@@ -91,7 +91,7 @@ class TelaVacinas():
 
     def vacina_ja_cadastrada(self):
         print("Fabricante digitado já existe no sistema.")
-    
+
     def vacina_cadastrada(self):
         print("Vacina cadastrada com sucesso!")
 
@@ -100,6 +100,12 @@ class TelaVacinas():
 
     def vacina_nao_cadastrada(self):
         print("Vacina não cadastrada.")
-    
+
     def sem_aplicacoes(self):
         print("Até o momento nenhuma vacina foi aplicada.")
+
+    def lista_vazia(self):
+        print("Não existem vacinas cadastradas no sistema.")
+
+    def doses_insuficiente(self):
+        print("Quantidade de doses insuficiente para a vacina.")

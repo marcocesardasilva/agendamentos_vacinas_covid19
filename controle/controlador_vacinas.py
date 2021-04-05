@@ -61,11 +61,14 @@ class ControladorVacinas():
             vacina.quantidade = dados_vacina["quantidade"]
 
     def listar_doses_disponiveis(self):
-        for vacina in self.__vacinas:
-            self.__tela_vacinas.mostrar_doses_disponiveis({
-                "fabricante": vacina.fabricante,
-                "quantidade": vacina.quantidade
-            })
+        if len(self.__vacinas) == 0:
+            self.__tela_vacinas.lista_vazia()
+        else:
+            for vacina in self.__vacinas:
+                self.__tela_vacinas.mostrar_doses_disponiveis({
+                    "fabricante": vacina.fabricante,
+                    "quantidade": vacina.quantidade
+                })
 
     def listar_doses_aplicadas(self):
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
@@ -80,6 +83,9 @@ class ControladorVacinas():
             self.__tela_vacinas.sem_aplicacoes()
         else:
             self.__tela_vacinas.mostrar_doses_aplicadas(doses_aplicadas)
+
+    def chamar_doses_insuficiente(self):
+        self.__tela_vacinas.doses_insuficiente()
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False

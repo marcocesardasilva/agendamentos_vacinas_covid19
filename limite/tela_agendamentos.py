@@ -84,6 +84,7 @@ class TelaAgendamentos():
         print("Status:", dados_agendamento["status"])
 
     def pegar_dados_editar(self):
+        print("-------- EDITAR AGENDAMENTO ----------")
         while True:
             try:
                 data_str = input("Data (dd/mm/aaaa): ")
@@ -142,3 +143,24 @@ class TelaAgendamentos():
         print("Data:", dados_agendamento["data"])
         print("Horario:", dados_agendamento["horario"])
         print("Dose:", dados_agendamento["dose"])
+
+    def ja_castrado_primeira_dose(self):
+        print("Já existe um agendamento da primeira dose cadastrado para este paciente.")
+    
+    def ja_castrado_segunda_dose(self):
+        print("Já existe um agendamento da segunda dose cadastrado para este paciente.")
+    
+    def data_recente_primeira_dose(self):
+        print("Não agendado! Segunda dose deve ser agendada para 20 dias após a aplicação da primeira dose.")
+    
+    def nao_castrado_primeira_dose(self):
+        print("Não agendado! Segunda dose só pode ser agendada após o agendamento da primeira dose.")
+
+    def agendamento_nao_cadastrado(self):
+        print("Agendamento não cadastrado.")
+
+    def agendamento_aberto_nao_cadastrado(self):
+        print("Nenhum agendamento aberto foi encontrado.")
+
+    def agendamento_efetivado_nao_cadastrado(self):
+        print("Nenhum agendamento efetivado foi encontrado.")
