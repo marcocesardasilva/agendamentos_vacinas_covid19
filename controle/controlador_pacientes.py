@@ -120,6 +120,24 @@ class ControladorPacientes():
         except Exception:
             self.__tela_pacientes.nenhum_agendamento()
 
+    def pacientes_aguardando_vacina(self):
+        pacientes_com_agendamento = 0
+        pacientes_total = 0
+        pacientes_sem_agendamento = 0
+        self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        try:
+            if len(self.__controlador_agendamentos.agendamentos) == 0:
+                self.__tela_pacientes.nenhum_agendamento()
+            for agendamento in self.__controlador_agendamentos.agendamentos:
+                for paciente in self.__pacientes:
+                    pacientes_total += 1
+                    if agendamento.paciente == paciente:
+                        pacientes_com_agendamento += 1
+            pacientes_sem_agendamento = pacientes_total - pacientes_com_agendamento
+        except:
+            self.__tela_pacientes.nenhum_agendamento()
+        return pacientes_sem_agendamento
+
     def listar_pacientes_primeira_dose(self):
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         try:
@@ -143,6 +161,7 @@ class ControladorPacientes():
             #          "data_nascimento": agendamento.paciente.data_nascimento
             #          })
 
+
     
     def listar_pacientes_segunda_dose(self):
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
@@ -160,7 +179,6 @@ class ControladorPacientes():
                         )
         except Exception:
             self.__tela_pacientes.nenhum_agendamento()
-
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False

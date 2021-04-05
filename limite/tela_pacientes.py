@@ -1,5 +1,6 @@
 from datetime import datetime as datetime
 
+
 class TelaPacientes():
 
     def __init__(self, controlador_pacientes):
@@ -78,7 +79,7 @@ class TelaPacientes():
                 data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
                 idade_dias = datetime.today().date() - data_nascimento_obj
                 idade = int(idade_dias.days // 365.24231481481481481481481481481481)
-                if 0 < idade < 150:
+                if 0 <= idade <= 150:
                     break
                 else:
                     print('Idade inválida, a idade deve ser entre 0 e 150 anos')
