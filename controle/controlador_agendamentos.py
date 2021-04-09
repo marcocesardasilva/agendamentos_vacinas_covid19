@@ -114,40 +114,23 @@ class ControladorAgendamentos():
         })
 
     def editar_agendamento(self):
-        agendamento = self.get_agendamento()
-        if agendamento is None:
+        agendamento_editar = self.get_agendamento()
+        if agendamento_editar is None:
             return None
         dados_agendamento = self.__tela_agendamentos.pegar_dados_editar()
         while True:
-            paciente = self.__controlador_pacientes.get_paciente()
-            if paciente is None:
-                break
-            if dados_agendamento["dose"] == 1:
+            if agendamento_editar.dose == 2:
                 dose1 = False
                 for agendamento in self.__agendamentos:
-                    if agendamento.paciente == paciente and agendamento.dose == 1:
-                        dose1 = True
-                if dose1 == True:
-                    self.__tela_agendamentos.ja_castrado_primeira_dose()
-                    break
-            if dados_agendamento["dose"] == 2:
-                dose1 = False
-                for agendamento in self.__agendamentos:
-                    if agendamento.paciente == paciente and agendamento.dose == 1:
+                    if agendamento.paciente == agendamento_editar.paciente and agendamento.dose == 1:
                         dose1 = True
                         diferenca_dias = dados_agendamento["data"] - agendamento.data
                         if diferenca_dias.days <= 20:
                             self.__tela_agendamentos.data_recente_primeira_dose()
                             break
+                        vacina_primeira_dose = agendamento.vacina
                 if dose1 == False:
                     self.__tela_agendamentos.nao_castrado_primeira_dose()
-                    break
-                dose2 = False
-                for agendamento in self.__agendamentos:
-                    if agendamento.paciente == paciente and agendamento.dose == 2:
-                        dose2 = True
-                if dose2 == True:
-                    self.__tela_agendamentos.ja_castrado_segunda_dose()
                     break
             enfermeiro = self.__controlador_enfermeiros.get_enfermeiro()
             if enfermeiro is None:
@@ -155,20 +138,24 @@ class ControladorAgendamentos():
             if enfermeiro.status == "Inativo":
                 self.__controlador_enfermeiros.enfermeiro_inativo()
                 break
-            vacina = self.__controlador_vacinas.get_vacina()
-            if vacina is None:
-                break
+            if agendamento_editar.dose == 2:
+                vacina = vacina_primeira_dose
+            else:
+                vacina = self.__controlador_vacinas.get_vacina()
+                if vacina is None:
+                    break
+                vacina.subtrai_quantidade(1)
+                agendamento_editar.vacina.adiciona_quantidade(1)
             if vacina.quantidade < 1:
                 self.__controlador_vacinas.chamar_doses_insuficiente()
                 break
-        agendamento.enfermeiro = agendamento
-        agendamento.paciente = paciente
-        agendamento.vacina = vacina
-        agendamento.data = dados_agendamento["data"]
-        agendamento.horario = dados_agendamento["horario"]
-        agendamento.dose = dados_agendamento["dose"]
-        agendamento.aplicada = dados_agendamento["aplicada"]
-        self.__tela_agendamentos.agendamento_editado()
+            agendamento_editar.enfermeiro = enfermeiro
+            agendamento_editar.vacina = vacina
+            agendamento_editar.data = dados_agendamento["data"]
+            agendamento_editar.horario = dados_agendamento["horario"]
+            agendamento_editar.aplicada = dados_agendamento["aplicada"]
+            self.__tela_agendamentos.agendamento_editado()
+            break
 
     def aplicar_vacina(self):
         agendamento = self.get_agendamento()

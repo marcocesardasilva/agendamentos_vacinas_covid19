@@ -105,7 +105,7 @@ class ControladorPacientes():
 
     def pacientes_aguardando_vacina(self):
         pacientes_com_agendamento = 0
-        pacientes_total = 0
+        pacientes_total = len(self.__pacientes)
         pacientes_sem_agendamento = 0
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         try:
@@ -113,8 +113,7 @@ class ControladorPacientes():
                 return 0
             for agendamento in self.__controlador_agendamentos.agendamentos:
                 for paciente in self.__pacientes:
-                    pacientes_total += 1
-                    if agendamento.paciente == paciente:
+                    if agendamento.paciente == paciente and agendamento.dose == 1:
                         pacientes_com_agendamento += 1
             pacientes_sem_agendamento = pacientes_total - pacientes_com_agendamento
         except:

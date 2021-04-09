@@ -108,16 +108,6 @@ class TelaAgendamentos():
                 print('Horário inválido! O horário deve ser comercial (08:00 às 18:00).')
         while True:
             try:
-                opcao = int(input("Qual a dose da vacina (1 - Primeira / 2 - Segunda): "))
-                if opcao == 1 or opcao == 2:
-                    dose = opcao
-                    break
-                else:
-                    print("Opção escolhida inválida!")
-            except ValueError:
-                print("Valor digitado inválido!")
-        while True:
-            try:
                 opcao = int(input("Vacina já foi aplicada (1 - Não / 2 - Sim): "))
                 if opcao == 1 or opcao == 2:
                     status_aplicacao = opcao
@@ -129,7 +119,7 @@ class TelaAgendamentos():
         aplicada = False
         if status_aplicacao == 2:
             aplicada = True
-        return {"data": data, "horario": horario, "dose": dose, "aplicada": aplicada}
+        return {"data": data, "horario": horario, "aplicada": aplicada}
 
     def agendamento_editado(self):
         print("Agendamento editado com sucesso!")
@@ -175,5 +165,5 @@ class TelaAgendamentos():
         print("Total de vacinas aplicadas:              {}".format(dados_relatorio["vacinas_aplicadas"]))
         print("Total de pacientes vacinados 1ª dose:    {}".format(dados_relatorio["paciente_vacinados_primeira_dose"]))
         print("Total de pacientes vacinados 2ª dose:    {}".format(dados_relatorio["paciente_vacinados_segunda_dose"]))
-        print("Pacientes aguardando agendamento:        {}".format(dados_relatorio["pacientes_sem_agendamentos"]))
+        print("Pacientes aguardando:                    {}".format(dados_relatorio["pacientes_sem_agendamentos"]))
         print("-------------------------------------------")
