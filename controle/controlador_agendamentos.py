@@ -165,15 +165,16 @@ class ControladorAgendamentos():
         self.__tela_agendamentos.vacina_aplicada()
 
     def remover_agendamento(self):
-        agendamento = self.get_agendamento()
-        if agendamento is None:
+        agendamento_remover = self.get_agendamento()
+        if agendamento_remover is None:
             return None
         else:
-            agendamento.vacina.adiciona_quantidade(1)
-            for i in range(len(self.__agendamentos)):
-                if agendamento == self.__agendamentos[i]:
-                    del(self.__agendamentos[i])
-            self.__tela_agendamentos.agendamento_removido()
+            if not agendamento_remover.aplicada:
+                agendamento_remover.vacina.adiciona_quantidade(1)
+                for agendamento in self.__agendamentos:
+                    if agendamento_remover.paciente == agendamento.paciente and agendamento_remover.dose == agendamento.dose:
+                        self.__agendamentos.remove(agendamento_remover)
+                self.__tela_agendamentos.agendamento_removido()
 
     def listar_agendamentos_abertos(self):
         if len(self.__agendamentos) == 0:
