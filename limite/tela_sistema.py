@@ -15,11 +15,7 @@ class TelaSistema:
             [sg.Button('Agendamentos', size=(30, 2), key='4')],
             [sg.Button('Encerrar Sistema', size=(30, 2), key='0')]
             ]
-        window = sg.Window('Sistema de agendamento de vacinações',
-            grab_anywhere=False,
-            size=(800, 480),
-            return_keyboard_events=True,
-            keep_on_top=True).Layout(layout)
+        window = sg.Window('Sistema de agendamento de vacinações',size=(800, 480)).Layout(layout)
         botao, valores = window.Read()
         opcao = int(botao)
         window.close()

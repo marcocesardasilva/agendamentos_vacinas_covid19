@@ -20,11 +20,7 @@ class TelaAgendamentos():
             [sg.Button('Relatório Geral', size=(30, 2), key='8')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
             ]
-        window = sg.Window('Agendamentos',
-            grab_anywhere=False,
-            size=(800, 480),
-            return_keyboard_events=True,
-            keep_on_top=True).Layout(layout)
+        window = sg.Window('Agendamentos',size=(800, 480)).Layout(layout)
         botao, valores = window.Read()
         opcao = int(botao)
         window.close()

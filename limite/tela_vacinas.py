@@ -16,34 +16,25 @@ class TelaVacinas():
             [sg.Button('Listar doses por fabricante', size=(30, 2), key='5')],
             [sg.Button('Listar doses aplicadas', size=(30, 2), key='6')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
-            ]
-        window = sg.Window('Vacinas',
-            grab_anywhere=False,
-            size=(800, 480),
-            return_keyboard_events=True,
-            keep_on_top=True).Layout(layout)
+        ]
+        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
         botao, valores = window.Read()
         opcao = int(botao)
         window.close()
         return opcao
 
     def pegar_dados_cadastrar(self):
-        print("-------- CADASTRAR VACINA ----------")
-        while True:
-            try:
-                fabricante = input("Fabricante: ")
-                if len(fabricante) == 0:
-                    raise ValueError
-                break
-            except ValueError:
-                print("Valor inválido para fabricante!")
-        while True:
-            try:
-                quantidade = int(input("Quantidade: "))
-                break
-            except ValueError:
-                print("Valor inválido! Digite um valor válido para a quantidade.")
-        return {"fabricante": fabricante, "quantidade": quantidade}
+        sg.theme('Default')
+        layout = [
+            [sg.Text('Cadastro de Vacina:')],
+            [sg.Text('Fabricante',size=(15, 1)), sg.InputText()],
+            [sg.Text('Quantidade',size=(15, 1)), sg.InputText()],
+            [sg.Button('Ok'), sg.Button('Cancelar')]
+        ]
+        window = sg.Window('Vacinas', layout)
+        event, values = window.read()
+        window.close()
+        return {"fabricante": values[0], "quantidade": int(values[1])}
 
     def pegar_dados_editar(self):
         print("-------- EDITAR VACINA ----------")
