@@ -19,7 +19,11 @@ class TelaEnfermeiros():
             [sg.Button('Listar pacientes atendidos por um determinado enfermeiro', size=(30, 2), key='6')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
             ]
-        window = sg.Window('Enfermeiros').Layout(layout)
+        window = sg.Window('Enfermeiros',
+            grab_anywhere=False,
+            size=(800, 480),
+            return_keyboard_events=True,
+            keep_on_top=True).Layout(layout)
         botao, valores = window.Read()
         opcao = int(botao)
         window.close()

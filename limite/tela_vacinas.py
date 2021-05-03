@@ -17,7 +17,11 @@ class TelaVacinas():
             [sg.Button('Listar doses aplicadas', size=(30, 2), key='6')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
             ]
-        window = sg.Window('Vacinas').Layout(layout)
+        window = sg.Window('Vacinas',
+            grab_anywhere=False,
+            size=(800, 480),
+            return_keyboard_events=True,
+            keep_on_top=True).Layout(layout)
         botao, valores = window.Read()
         opcao = int(botao)
         window.close()

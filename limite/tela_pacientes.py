@@ -20,7 +20,11 @@ class TelaPacientes():
             [sg.Button('Listar pacientes vacinados 2ª dose', size=(30, 2), key='7')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
             ]
-        window = sg.Window('Pacientes').Layout(layout)
+        window = sg.Window('Pacientes',
+            grab_anywhere=False,
+            size=(800, 480),
+            return_keyboard_events=True,
+            keep_on_top=True).Layout(layout)
         botao, valores = window.Read()
         opcao = int(botao)
         window.close()
