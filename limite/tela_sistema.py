@@ -7,7 +7,6 @@ class TelaSistema:
 
     def tela_opcoes(self):
         sg.theme('Default')
-        sg.Popup('Seja bem vindo ao sistema de agendamento de vacinações.')
         layout = [
             [sg.Text('Selecione a opção desejada', size=(30, 1))],
             [sg.Button('Enfermeiros', size=(30, 2), key='1')],
