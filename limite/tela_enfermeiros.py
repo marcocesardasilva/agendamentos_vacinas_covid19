@@ -1,4 +1,5 @@
 from datetime import datetime as datetime
+import PySimpleGUI as sg
 
 
 class TelaEnfermeiros():
@@ -7,24 +8,22 @@ class TelaEnfermeiros():
         self.__controlador_enfermeiros = controlador_enfermeiros
 
     def tela_opcoes(self):
-        print("-------- ENFERMEIROS ----------")
-        print("Escolha a opcao")
-        print("1 - Cadastrar enfermeiro")
-        print("2 - Editar enfermeiro")
-        print("3 - Consultar enfermeiro")
-        print("4 - Alterar status do enfermeiro")
-        print("5 - Listar enfermeiros")
-        print("6 - Listar pacientes atendidos por um determinado enfermeiro")
-        print("0 - Retornar")
-        while True:
-            try:
-                opcao = int(input("Escolha a opcao:"))
-                if 0 <= opcao <= 6:
-                    return opcao
-                else:
-                    print("Opção escolhida inválida!")
-            except ValueError:
-                print("Valor digitado inválido!")
+        sg.theme('Default')
+        layout = [
+            [sg.Text('Selecione a opção desejada', size=(30, 1))],
+            [sg.Button('Cadastrar enfermeiro', size=(30, 2), key='1')],
+            [sg.Button('Editar enfermeiro', size=(30, 2), key='2')],
+            [sg.Button('Consultar enfermeiro', size=(30, 2), key='3')],
+            [sg.Button('Alterar status do enfermeiro', size=(30, 2), key='4')],
+            [sg.Button('Listar enfermeiros', size=(30, 2), key='5')],
+            [sg.Button('Listar pacientes atendidos por um determinado enfermeiro', size=(30, 2), key='6')],
+            [sg.Button('Retornar', size=(30, 2), key='0')]
+            ]
+        window = sg.Window('Enfermeiros').Layout(layout)
+        botao, valores = window.Read()
+        opcao = int(botao)
+        window.close()
+        return opcao
     
     def pegar_dados_enfermeiro(self):
         print("-------- INCLUIR ENFERMEIRO ----------")

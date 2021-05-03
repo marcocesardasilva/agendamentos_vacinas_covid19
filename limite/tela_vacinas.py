@@ -1,27 +1,27 @@
+import PySimpleGUI as sg
+
 class TelaVacinas():
 
     def __init__(self, controlador_vacina):
         self.__controlador_vacina = controlador_vacina
 
     def tela_opcoes(self):
-        print("-------- VACINAS ----------")
-        print("Escolha a opcao")
-        print("1 - Cadastrar vacina")
-        print("2 - Adicionar doses")
-        print("3 - Subtrair doses")
-        print("4 - Editar vacina")
-        print("5 - Listar doses por fabricante")
-        print("6 - Listar doses aplicadas")
-        print("0 - Retornar")
-        while True:
-            try:
-                opcao = int(input("Escolha a opcao:"))
-                if 0 <= opcao <= 6:
-                    return opcao
-                else:
-                    print("Opção escolhida inválida!")
-            except ValueError:
-                print("Valor digitado inválido!")
+        sg.theme('Default')
+        layout = [
+            [sg.Text('Selecione a opção desejada', size=(30, 1))],
+            [sg.Button('Cadastrar vacina', size=(30, 2), key='1')],
+            [sg.Button('Adicionar doses', size=(30, 2), key='2')],
+            [sg.Button('Subtrair doses', size=(30, 2), key='3')],
+            [sg.Button('Editar vacina', size=(30, 2), key='4')],
+            [sg.Button('Listar doses por fabricante', size=(30, 2), key='5')],
+            [sg.Button('Listar doses aplicadas', size=(30, 2), key='6')],
+            [sg.Button('Retornar', size=(30, 2), key='0')]
+            ]
+        window = sg.Window('Vacinas').Layout(layout)
+        botao, valores = window.Read()
+        opcao = int(botao)
+        window.close()
+        return opcao
 
     def pegar_dados_cadastrar(self):
         print("-------- CADASTRAR VACINA ----------")

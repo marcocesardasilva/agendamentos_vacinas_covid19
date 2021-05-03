@@ -1,4 +1,5 @@
 from datetime import datetime
+import PySimpleGUI as sg
 
 class TelaAgendamentos():
 
@@ -6,26 +7,24 @@ class TelaAgendamentos():
         self.__controlador_agendamento = controlador_agendamento
 
     def tela_opcoes(self):
-        print("-------- AGENDAMENTOS ----------")
-        print("Escolha a opcao")
-        print("1 - Cadastrar agendamento")
-        print("2 - Consultar agendamento")
-        print("3 - Editar agendamento")
-        print("4 - Aplicar Vacina")
-        print("5 - Remover agendamento")
-        print("6 - Listar aplicações agendadas")
-        print("7 - Listar histórico de vacinações")
-        print("8 - Relatório Geral")
-        print("0 - Retornar")
-        while True:
-            try:
-                opcao = int(input("Escolha a opcao:"))
-                if 0 <= opcao <= 8:
-                    return opcao
-                else:
-                    print("Opção escolhida inválida!")
-            except ValueError:
-                print("Valor digitado inválido!")
+        sg.theme('Default')
+        layout = [
+            [sg.Text('Selecione a opção desejada', size=(30, 1))],
+            [sg.Button('Cadastrar agendamento', size=(30, 2), key='1')],
+            [sg.Button('Consultar agendamento', size=(30, 2), key='2')],
+            [sg.Button('Editar agendamento', size=(30, 2), key='3')],
+            [sg.Button('Aplicar Vacina', size=(30, 2), key='4')],
+            [sg.Button('Remover agendamento', size=(30, 2), key='5')],
+            [sg.Button('Listar aplicações agendadas', size=(30, 2), key='6')],
+            [sg.Button('Listar histórico de vacinações', size=(30, 2), key='7')],
+            [sg.Button('Relatório Geral', size=(30, 2), key='8')],
+            [sg.Button('Retornar', size=(30, 2), key='0')]
+            ]
+        window = sg.Window('Agendamentos').Layout(layout)
+        botao, valores = window.Read()
+        opcao = int(botao)
+        window.close()
+        return opcao
     
     def pegar_dados_cadastrar(self):
         print("-------- CADASTRAR AGENDAMENTO ----------")

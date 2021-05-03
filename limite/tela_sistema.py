@@ -1,22 +1,22 @@
+import PySimpleGUI as sg
+
 class TelaSistema:
 
     def __init__(self, controlador_sistema):
         self.__controlador_sistema = controlador_sistema
 
     def tela_opcoes(self):
-        print("-------- POSTO DE VACINAÇÃO --------")
-        print("Escolha uma opção da lista:")
-        print("1 - Enfermeiros")
-        print("2 - Pacientes")
-        print("3 - Vacinas")
-        print("4 - Agendamentos")
-        print("0 - Finalizar sistema")
-        while True:
-            try:
-                opcao = int(input("Escolha sua opção:"))
-                if 0 <= opcao <= 4:
-                    return opcao
-                else:
-                    print("Opção escolhida inválida!")
-            except ValueError:
-                print("Valor digitado inválido!")
+        sg.theme('Default')
+        layout = [
+            [sg.Text('Selecione a opção desejada', size=(30, 1))],
+            [sg.Button('Enfermeiros', size=(30, 2), key='1')],
+            [sg.Button('Pacientes', size=(30, 2), key='2')],
+            [sg.Button('Vacinas', size=(30, 2), key='3')],
+            [sg.Button('Agendamentos', size=(30, 2), key='4')],
+            [sg.Button('Encerrar Sistema', size=(30, 2), key='0')]
+            ]
+        window = sg.Window('Posto de Vacinação').Layout(layout)
+        botao, valores = window.Read()
+        opcao = int(botao)
+        window.close()
+        return opcao

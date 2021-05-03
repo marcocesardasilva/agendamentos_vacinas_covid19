@@ -1,4 +1,5 @@
 from datetime import datetime as datetime
+import PySimpleGUI as sg
 
 
 class TelaPacientes():
@@ -7,25 +8,23 @@ class TelaPacientes():
         self.__controlador_pacientes = controlador_pacientes
 
     def tela_opcoes(self):
-        print("-------- PACIENTES ----------")
-        print("Escolha a opcao")
-        print("1 - Cadastrar paciente")
-        print("2 - Editar paciente")
-        print("3 - Consultar paciente")
-        print("4 - Listar pacientes cadastrados")
-        print("5 - Listar pacientes nunca agendados")
-        print("6 - Listar pacientes vacinados 1ª dose")
-        print("7 - Listar pacientes vacinados 2ª dose")
-        print("0 - Retornar")
-        while True:
-            try:
-                opcao = int(input("Escolha a opcao:"))
-                if 0 <= opcao <= 7:
-                    return opcao
-                else:
-                    print("Opção escolhida inválida!")
-            except ValueError:
-                print("Valor digitado inválido!")
+        sg.theme('Default')
+        layout = [
+            [sg.Text('Selecione a opção desejada', size=(30, 1))],
+            [sg.Button('Cadastrar paciente', size=(30, 2), key='1')],
+            [sg.Button('Editar paciente', size=(30, 2), key='2')],
+            [sg.Button('Consultar paciente', size=(30, 2), key='3')],
+            [sg.Button('Listar pacientes cadastrados', size=(30, 2), key='4')],
+            [sg.Button('Listar pacientes nunca agendados', size=(30, 2), key='5')],
+            [sg.Button('Listar pacientes vacinados 1ª dose', size=(30, 2), key='6')],
+            [sg.Button('Listar pacientes vacinados 2ª dose', size=(30, 2), key='7')],
+            [sg.Button('Retornar', size=(30, 2), key='0')]
+            ]
+        window = sg.Window('Pacientes').Layout(layout)
+        botao, valores = window.Read()
+        opcao = int(botao)
+        window.close()
+        return opcao
 
     def pega_dados_paciente(self):
         print("-------- INCLUIR PACIENTE ----------")
