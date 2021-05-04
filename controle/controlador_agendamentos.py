@@ -149,14 +149,6 @@ class ControladorAgendamentos():
             if vacina.quantidade < 1:
                 self.__controlador_vacinas.chamar_doses_insuficiente()
                 break
-            # for agendamento in self.__agendamentos:
-            #     if agendamento_editar.paciente == agendamento.paciente:
-            #         if agendamento_editar.dose == agendamento.dose:
-            #             agendamento.enfermeiro = enfermeiro
-            #             agendamento.vacina = vacina
-            #             agendamento.data = dados_agendamento["data"]
-            #             agendamento.horario = dados_agendamento["horario"]
-            #             agendamento.aplicada = dados_agendamento["aplicada"]
             agendamento_editar.enfermeiro = enfermeiro
             agendamento_editar.vacina = vacina
             agendamento_editar.data = dados_agendamento["data"]
