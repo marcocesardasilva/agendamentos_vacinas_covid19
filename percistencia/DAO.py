@@ -3,8 +3,10 @@ from abc import ABC, abstractmethod
 
 
 class DAO(ABC):
-    def __init__(self, data_source=''):
-        self.__data_source = data_source
+
+    @abstractmethod
+    def __init__(self, datasource=''):
+        self.__datasource = datasource
         self.__cache = {}
         try:
             self.__load()
@@ -12,26 +14,24 @@ class DAO(ABC):
             self.__dump()
 
     def __dump(self):
-        pickle.dump(self.__cache, open(self.__data_source, 'wb'))
+        pickle.dump(self.__cache, open(self.__datasource, 'wb'))
 
     def __load(self):
-        self.__cache = pickle.load(open(self.__data_source, 'rb'))
+        self.__cache = pickle.load(open(self.__datasource, 'rb'))
 
-    def add(self, index, model):
-        self.__cache[index] = model
+    def add(self, key, obj):
+        self.__cache[key] = obj
         self.__dump()
 
-    @abstractmethod
-    def get(self, index):
+    def get(self, key):
         try:
-            return self.__cache[index]
+            return self.__cache[key]
         except KeyError:
             pass
 
-    @abstractmethod
-    def remove(self, index):
+    def remove(self, key):
         try:
-            self.__cache.pop(index)
+            self.__cache.pop(key)
             self.__dump()
         except KeyError:
             pass
