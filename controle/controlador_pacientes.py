@@ -3,12 +3,13 @@ from entidade.paciente import Paciente
 from controle.controlador_agendamentos import ControladorAgendamentos
 from datetime import datetime as datetime
 from math import trunc
+from persistencia.pacienteDAO import PacienteDAO
 
 
 class ControladorPacientes():
 
     def __init__(self, controlador_sistema):
-        self.__pacientes = []
+        self.__dao = PacienteDAO()
         self.__tela_pacientes = TelaPacientes(self)
         self.__controlador_sistema = controlador_sistema
         self.__controlador_agendamentos = None
@@ -19,22 +20,22 @@ class ControladorPacientes():
         return self.__controlador_sistema
 
     def pacientes(self):
-        return self.__pacientes
+        return self.__dao.get_all()
 
     def cadastrar_paciente(self):
         while True:
             dados_paciente = self.__tela_pacientes.pega_dados_paciente()
-            if len(self.__pacientes) == 0:
+            if len(self.__dao.get_all()) == 0:
                 paciente = Paciente(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
-                self.__pacientes.append(paciente)
+                self.__dao.add(paciente)
                 break
             else:
-                for paciente in self.__pacientes:
+                for paciente in self.__dao.get_all():
                     if dados_paciente["cpf"] == paciente.cpf:
                         self.__tela_pacientes.cpf_ja_cadastrado(dados_paciente['cpf'])
                         return None
                 paciente = Paciente(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
-                self.__pacientes.append(paciente)
+                self.__dao.add(paciente)
                 self.__tela_pacientes.sucesso(dados_paciente["nome"], dados_paciente["cpf"], dados_paciente["data_nascimento"])
                 break
 
@@ -44,7 +45,7 @@ class ControladorPacientes():
         if paciente_editar is None:
             return None
         dados_editar = self.__tela_pacientes.pega_dados_paciente_edicao()
-        for paciente in self.__pacientes:
+        for paciente in self.__dao.get_all():
             if paciente_editar == paciente:
                 paciente.nome = dados_editar["nome"]
                 paciente.data_nascimento = dados_editar["data_nascimento"]
@@ -52,7 +53,7 @@ class ControladorPacientes():
 
     def consultar_paciente(self):
         paciente_consultar = self.get_paciente()
-        for paciente in self.__pacientes:
+        for paciente in self.__dao.get_all():
             if paciente_consultar == paciente:
                 self.__tela_pacientes.mostrar_paciente(
                     {"nome": paciente.nome,
@@ -61,12 +62,12 @@ class ControladorPacientes():
                     )
 
     def get_paciente(self):
-        if len(self.__pacientes) == 0:
+        if len(self.__dao.get_all()) == 0:
             self.__tela_pacientes.nenhum_paciente()
             return None
         else:
             cpf = self.__tela_pacientes.selecionar_paciente()
-            for paciente in self.__pacientes:
+            for paciente in self.__dao.get_all():
                 if cpf == paciente.cpf:
                     return paciente
         self.__tela_pacientes.cpf_nao_cadastrado(cpf)
@@ -74,7 +75,7 @@ class ControladorPacientes():
 
     def listar_pacientes(self):
         try:
-            for paciente in self.__pacientes:
+            for paciente in self.__dao.get_all():
                 self.__tela_pacientes.mostrar_paciente(
                     {"nome": paciente.nome,
                      "cpf": paciente.cpf,
@@ -90,10 +91,10 @@ class ControladorPacientes():
             if len(self.__controlador_agendamentos.agendamentos) == 0:
                 self.__tela_pacientes.nenhum_agendamento()
             for agendamento in self.__controlador_agendamentos.agendamentos:
-                for paciente in self.__pacientes:
+                for paciente in self.__dao.get_all():
                     if agendamento.paciente == paciente:
                         pacientes_agendados.append(paciente)
-            for paciente in self.__pacientes:
+            for paciente in self.__dao.get_all():
                 if paciente not in pacientes_agendados:
                     self.__tela_pacientes.mostrar_paciente(
                         {"nome": paciente.nome,
@@ -105,14 +106,14 @@ class ControladorPacientes():
 
     def pacientes_aguardando_vacina(self):
         pacientes_com_agendamento = 0
-        pacientes_total = len(self.__pacientes)
+        pacientes_total = len(self.__dao.get_all())
         pacientes_sem_agendamento = 0
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         try:
-            if len(self.__pacientes) == 0:
+            if len(self.__dao.get_all()) == 0:
                 return 0
             for agendamento in self.__controlador_agendamentos.agendamentos:
-                for paciente in self.__pacientes:
+                for paciente in self.__dao.get_all():
                     if agendamento.paciente == paciente and agendamento.dose == 1:
                         pacientes_com_agendamento += 1
             pacientes_sem_agendamento = pacientes_total - pacientes_com_agendamento

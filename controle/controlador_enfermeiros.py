@@ -1,11 +1,12 @@
 from limite.tela_enfermeiros import TelaEnfermeiros
 from entidade.enfermeiro import Enfermeiro
+from persistencia.enfermeiroDAO import EnfermeiroDAO
 
 
 class ControladorEnfermeiros():
 
     def __init__(self, controlador_sistema):
-        self.__enfermeiros = []
+        self.__dao = EnfermeiroDAO()
         self.__tela_enfermeiros = TelaEnfermeiros(self)
         self.__controlador_sistema = controlador_sistema
         self.__controlador_pacientes = None
@@ -15,7 +16,7 @@ class ControladorEnfermeiros():
     def cadastrar_enfermeiro(self):
         while True:
             dados_enfermeiro = self.__tela_enfermeiros.pegar_dados_enfermeiro()
-            for enfermeiro in self.__enfermeiros:
+            for enfermeiro in self.__dao.get_all():
                 if enfermeiro.matricula == dados_enfermeiro["matricula"]:
                     self.__tela_enfermeiros.matricula_ja_cadastrada(dados_enfermeiro["matricula"])
                     return None
@@ -26,22 +27,22 @@ class ControladorEnfermeiros():
                                     dados_enfermeiro["cpf"],
                                     dados_enfermeiro["matricula"],
                                     dados_enfermeiro["status"])
-            self.__enfermeiros.append(enfermeiro)
+            self.__dao.add(enfermeiro)
             break
 
     def editar_enfermeiro(self):
         enfermeiro_editar = self.get_enfermeiro()
         try:
-            if len(self.__enfermeiros) == 0:
+            if len(self.__dao.get_all()) == 0:
                 raise Exception
             elif enfermeiro_editar is None:
                 raise Exception
             dados_editar = self.__tela_enfermeiros.pegar_dados_enfermeiro_edicao()
-            for enfermeiro in self.__enfermeiros:
+            for enfermeiro in self.__dao.get_all():
                 if enfermeiro.matricula == dados_editar["matricula"]:
                     self.__tela_enfermeiros.matricula_ja_cadastrada(dados_editar["matricula"])
                     raise Exception
-            for enfermeiro in self.__enfermeiros:
+            for enfermeiro in self.__dao.get_all():
                 if enfermeiro == enfermeiro_editar:
                     enfermeiro.nome = dados_editar['nome']
                     enfermeiro.matricula = dados_editar['matricula']
@@ -51,7 +52,7 @@ class ControladorEnfermeiros():
     def consultar_enfermeiro(self):
         try:
             enfermeiro = self.get_enfermeiro()
-            if len(self.__enfermeiros) == 0:
+            if len(self.__dao.get_all()) == 0:
                 raise Exception
             self.__tela_enfermeiros.mostrar_enfermeiro(
                 {"nome": enfermeiro.nome,
@@ -64,11 +65,11 @@ class ControladorEnfermeiros():
 
     def get_enfermeiro(self):
         matricula = self.__tela_enfermeiros.selecionar_enfermeiro()
-        if len(self.__enfermeiros) == 0:
+        if len(self.__dao.get_all()) == 0:
             self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
             return None
         else:
-            for enfermeiro in self.__enfermeiros:
+            for enfermeiro in self.__dao.get_all():
                 if matricula == enfermeiro.matricula:
                     return enfermeiro
         self.__tela_enfermeiros.enfermeiro_nao_cadastrado()
@@ -80,7 +81,7 @@ class ControladorEnfermeiros():
     def alterar_status_enfermeiro(self):
         enfermeiro = self.get_enfermeiro()
         try:
-            if len(self.__enfermeiros) == 0:
+            if len(self.__dao.get_all()) == 0:
                 raise Exception
             status = self.__tela_enfermeiros.status_enfermeiro(enfermeiro.matricula)
             enfermeiro.status = status
@@ -89,9 +90,9 @@ class ControladorEnfermeiros():
 
     def listar_enfermeiros(self):
         try:
-            if len(self.__enfermeiros) == 0:
+            if len(self.__dao.get_all()) == 0:
                 raise Exception
-            for enfermeiro in self.__enfermeiros:
+            for enfermeiro in self.__dao.get_all():
                 self.__tela_enfermeiros.mostrar_enfermeiro(
                     {"nome": enfermeiro.nome,
                      "cpf": enfermeiro.cpf,
@@ -110,7 +111,7 @@ class ControladorEnfermeiros():
             enfermeiro_listar = self.get_enfermeiro()
             if enfermeiro_listar is None:
                 raise TypeError
-            for enfermeiro in self.__enfermeiros:
+            for enfermeiro in self.__dao.get_all():
                 #Verificar isso
                 if enfermeiro.cpf == enfermeiro_listar.cpf:
                     self.__tela_enfermeiros.mostrar_enfermeiro(

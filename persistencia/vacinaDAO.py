@@ -1,10 +1,10 @@
-from persistencia.DAO import DAO
+from persistencia.dao import DAO
 from entidade.vacina import Vacina
 
 
 class VacinaDAO(DAO):
     def __init__(self):
-        super().__init__('vacinas.pkl')
+        super().__init__('dados/vacinas.pkl')
 
     def add(self, vacina: Vacina):
         if (isinstance(vacina.fabricante, str)) and (vacina is not None) \

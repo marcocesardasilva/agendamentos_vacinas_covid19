@@ -22,7 +22,7 @@ class Agendamento:
         self.__horario = horario
         self.__dose = dose
         self.__aplicada = False
-        self.__codigo = str(dose)+Paciente.cpf
+        self.__codigo = str(str(self.__dose)+str(self.__paciente.cpf))
 
     @property
     def enfermeiro(self) -> Enfermeiro:
@@ -93,5 +93,5 @@ class Agendamento:
 
     @codigo.setter
     def codigo(self, codigo):
-        if isinstance(codigo, codigo):
+        if isinstance(codigo, str):
             self.__codigo = codigo

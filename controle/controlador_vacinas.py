@@ -1,11 +1,12 @@
 from limite.tela_vacinas import TelaVacinas
 from entidade.vacina import Vacina
+from persistencia.vacinaDAO import VacinaDAO
 
 
 class ControladorVacinas():
 
     def __init__(self, controlador_sistema):
-        self.__vacinas = []
+        self.__dao = VacinaDAO()
         self.__tela_vacinas = TelaVacinas(self)
         self.__controlador_sistema = controlador_sistema
         self.__controlador_agendamentos = None
@@ -13,26 +14,26 @@ class ControladorVacinas():
 
     def cadastrar_vacina(self):
         dados_vacina = self.__tela_vacinas.pegar_dados_cadastrar()
-        if not self.__vacinas:
+        if not self.__dao.get_all():
             vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
-            self.__vacinas.append(vacina)
+            self.__dao.add(vacina)
             self.__tela_vacinas.vacina_cadastrada()
         else:
-            for vacina_cadastrada in self.__vacinas:
+            for vacina_cadastrada in self.__dao.get_all():
                 if dados_vacina["fabricante"] == vacina_cadastrada.fabricante:
                     self.__tela_vacinas.vacina_ja_cadastrada()
                     return None
             vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
-            self.__vacinas.append(vacina)
+            self.__dao.add(vacina)
             self.__tela_vacinas.vacina_cadastrada()
 
     def get_vacina(self):
         fabricante = self.__tela_vacinas.selecionar_vacina()
-        if len(self.__vacinas) == 0:
+        if len(self.__dao.get_all()) == 0:
             self.__tela_vacinas.vacina_nao_cadastrada()
             return None
         else:
-            for vacina in self.__vacinas:
+            for vacina in self.__dao.get_all():
                 if fabricante == vacina.fabricante:
                     return vacina
         self.__tela_vacinas.vacina_nao_cadastrada()
@@ -61,10 +62,10 @@ class ControladorVacinas():
             vacina.quantidade = dados_vacina["quantidade"]
 
     def listar_doses_disponiveis(self):
-        if len(self.__vacinas) == 0:
+        if len(self.__dao.get_all()) == 0:
             self.__tela_vacinas.lista_vazia()
         else:
-            for vacina in self.__vacinas:
+            for vacina in self.__dao.get_all():
                 self.__tela_vacinas.mostrar_doses_disponiveis({
                     "fabricante": vacina.fabricante,
                     "quantidade": vacina.quantidade

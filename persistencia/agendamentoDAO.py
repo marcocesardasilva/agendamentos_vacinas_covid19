@@ -1,10 +1,10 @@
-from persistencia.DAO import DAO
+from persistencia.dao import DAO
 from entidade.agendamento import Agendamento
 
 
 class AgendamentoDAO(DAO):
     def __init__(self):
-        super().__init__('agendamentos.pkl')
+        super().__init__('dados/agendamentos.pkl')
 
     def add(self, agendamento: Agendamento):
         if (isinstance(agendamento.codigo, str)) and (agendamento is not None) \

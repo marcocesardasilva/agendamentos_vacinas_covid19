@@ -1,15 +1,15 @@
-from persistencia.DAO import DAO
+from persistencia.dao import DAO
 from entidade.paciente import Paciente
 
 
-class EnfermeiroDAO(DAO):
+class PacienteDAO(DAO):
     def __init__(self):
-        super().__init__('paciente.pkl')
+        super().__init__('dados/paciente.pkl')
 
     def add(self, paciente: Paciente):
         if (isinstance(paciente.cpf, str)) and (paciente is not None) \
                 and isinstance(paciente, Paciente):
-            super().add(paciente.codigo, paciente)
+            super().add(paciente.cpf, paciente)
     
     def get(self, key: str):
         if isinstance(key, str):

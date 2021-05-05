@@ -137,6 +137,7 @@ class TelaAgendamentos():
         print("Data:", dados_agendamento["data"])
         print("Horario:", dados_agendamento["horario"])
         print("Dose:", dados_agendamento["dose"])
+        print("Código:", dados_agendamento["codigo"])
 
     def ja_castrado_primeira_dose(self):
         print("Já existe um agendamento da primeira dose cadastrado para este paciente.")
