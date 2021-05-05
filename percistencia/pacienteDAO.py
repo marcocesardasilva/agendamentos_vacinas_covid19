@@ -1,4 +1,4 @@
-from DAO import DAO
+from percistencia.DAO import DAO
 from entidade.paciente import Paciente
 
 
