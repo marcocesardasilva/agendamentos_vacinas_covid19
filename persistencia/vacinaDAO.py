@@ -1,4 +1,4 @@
-from percistencia.DAO import DAO
+from persistencia.DAO import DAO
 from entidade.vacina import Vacina
 
 
