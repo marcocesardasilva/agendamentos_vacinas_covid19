@@ -9,7 +9,7 @@ class EnfermeiroDAO(DAO):
     def add(self, enfermeiro: Enfermeiro):
         if (isinstance(enfermeiro.matricula, str)) and (enfermeiro is not None) \
                 and isinstance(enfermeiro, Enfermeiro):
-            super().add(enfermeiro.codigo, enfermeiro)
+            super().add(enfermeiro.matricula, enfermeiro)
     
     def get(self, key: str):
         if isinstance(key, str):
