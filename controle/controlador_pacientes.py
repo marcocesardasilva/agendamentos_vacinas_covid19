@@ -1,4 +1,5 @@
-from limite.tela_pacientes import TelaPacientes
+from limite.tela_pacientes_main import TelaPacientes
+from limite.tela_pacientes_cadastro import TelaPacientesCadastro
 from entidade.paciente import Paciente
 from controle.controlador_agendamentos import ControladorAgendamentos
 from datetime import datetime as datetime
@@ -6,11 +7,13 @@ from math import trunc
 from persistencia.pacienteDAO import PacienteDAO
 
 
+
 class ControladorPacientes():
 
     def __init__(self, controlador_sistema):
         self.__dao = PacienteDAO()
         self.__tela_pacientes = TelaPacientes(self)
+        self.__tela_pacientes_cadastro = TelaPacientesCadastro(self)
         self.__controlador_sistema = controlador_sistema
         self.__controlador_agendamentos = None
         self.__mantem_tela_aberta = True

@@ -1,4 +1,5 @@
-from limite.tela_enfermeiros import TelaEnfermeiros
+from limite.tela_enfermeiros_main import TelaEnfermeiros
+from limite.tela_enfermeiros_cadastro import TelaEnfermeirosCadastro
 from entidade.enfermeiro import Enfermeiro
 from persistencia.enfermeiroDAO import EnfermeiroDAO
 
@@ -8,14 +9,16 @@ class ControladorEnfermeiros():
     def __init__(self, controlador_sistema):
         self.__dao = EnfermeiroDAO()
         self.__tela_enfermeiros = TelaEnfermeiros(self)
+        self.__tela_enfermeiros_cadastro = TelaEnfermeirosCadastro(self)
         self.__controlador_sistema = controlador_sistema
         self.__controlador_pacientes = None
         self.__controlador_agendamentos = None
         self.__mantem_tela_aberta = True
 
+
     def cadastrar_enfermeiro(self):
         while True:
-            dados_enfermeiro = self.__tela_enfermeiros.pegar_dados_enfermeiro()
+            dados_enfermeiro = self.__tela_enfermeiros_cadastro.pegar_dados_enfermeiro()
             for enfermeiro in self.__dao.get_all():
                 if enfermeiro.matricula == dados_enfermeiro["matricula"]:
                     self.__tela_enfermeiros.matricula_ja_cadastrada(dados_enfermeiro["matricula"])
@@ -29,6 +32,23 @@ class ControladorEnfermeiros():
                                     dados_enfermeiro["status"])
             self.__dao.add(enfermeiro)
             break
+
+    # def cadastrar_enfermeiro(self):
+    #     while True:
+    #         dados_enfermeiro = self.__tela_enfermeiros.pegar_dados_enfermeiro()
+    #         for enfermeiro in self.__dao.get_all():
+    #             if enfermeiro.matricula == dados_enfermeiro["matricula"]:
+    #                 self.__tela_enfermeiros.matricula_ja_cadastrada(dados_enfermeiro["matricula"])
+    #                 return None
+    #             elif enfermeiro.cpf == dados_enfermeiro["cpf"]:
+    #                 self.__tela_enfermeiros.cpf_ja_cadastrado(dados_enfermeiro["cpf"])
+    #                 return None
+    #         enfermeiro = Enfermeiro(dados_enfermeiro["nome"],
+    #                                 dados_enfermeiro["cpf"],
+    #                                 dados_enfermeiro["matricula"],
+    #                                 dados_enfermeiro["status"])
+    #         self.__dao.add(enfermeiro)
+    #         break
 
     def editar_enfermeiro(self):
         enfermeiro_editar = self.get_enfermeiro()

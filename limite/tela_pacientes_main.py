@@ -14,10 +14,10 @@ class TelaPacientes():
             [sg.Button('Cadastrar paciente', size=(30, 2), key='1')],
             [sg.Button('Editar paciente', size=(30, 2), key='2')],
             [sg.Button('Consultar paciente', size=(30, 2), key='3')],
-            [sg.Button('Listar pacientes cadastrados', size=(30, 2), key='4')],
-            [sg.Button('Listar pacientes nunca agendados', size=(30, 2), key='5')],
-            [sg.Button('Listar pacientes vacinados 1ª dose', size=(30, 2), key='6')],
-            [sg.Button('Listar pacientes vacinados 2ª dose', size=(30, 2), key='7')],
+          # [sg.Button('Listar pacientes cadastrados', size=(30, 2), key='4')],
+         #  [sg.Button('Listar pacientes nunca agendados', size=(30, 2), key='5')],
+        #   [sg.Button('Listar pacientes vacinados 1ª dose', size=(30, 2), key='6')],
+       #    [sg.Button('Listar pacientes vacinados 2ª dose', size=(30, 2), key='7')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
             ]
         window = sg.Window('Pacientes',size=(800, 480)).Layout(layout)
@@ -25,7 +25,7 @@ class TelaPacientes():
         opcao = int(botao)
         window.close()
         return opcao
-
+'''
     def pega_dados_paciente(self):
         print("-------- INCLUIR PACIENTE ----------")
         while True:
@@ -130,3 +130,4 @@ class TelaPacientes():
         else:
             print(f'Paciente {nome}, com cpf {cpf} e nascido em {data} cadastrado!')
         self.linha()
+'''
