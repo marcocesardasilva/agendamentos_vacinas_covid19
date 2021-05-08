@@ -19,7 +19,7 @@ class TelaAgendamentos():
             [sg.Button('Listar histórico de vacinações', size=(30, 2), key='7')],
             [sg.Button('Relatório Geral', size=(30, 2), key='8')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
-            ]
+        ]
         window = sg.Window('Agendamentos',size=(800, 480)).Layout(layout)
         botao, valores = window.Read()
         opcao = int(botao)

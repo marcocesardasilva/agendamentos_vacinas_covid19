@@ -1,7 +1,6 @@
 import PySimpleGUI as sg
 
 class TelaSistema:
-
     def __init__(self, controlador_sistema):
         self.__controlador_sistema = controlador_sistema
 
@@ -14,7 +13,8 @@ class TelaSistema:
             [sg.Button('Vacinas', size=(30, 2), key='3')],
             [sg.Button('Agendamentos', size=(30, 2), key='4')],
             [sg.Button('Encerrar Sistema', size=(30, 2), key='0')]
-            ]
+        ]
+
         window = sg.Window('Sistema de agendamento de vacinações',size=(800, 480)).Layout(layout)
         botao, valores = window.Read()
         opcao = int(botao)

@@ -31,10 +31,20 @@ class TelaVacinas():
             [sg.Text('Quantidade',size=(15, 1)), sg.InputText()],
             [sg.Button('Ok'), sg.Button('Cancelar')]
         ]
-        window = sg.Window('Vacinas', layout)
-        event, values = window.read()
+        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
+        while True:
+            try:
+                event, values = window.read()
+                if event == sg.WIN_CLOSED or event == 'Cancelar':
+                    return None
+                if len(values[0]) == 0:
+                    raise ValueError
+                quantidade = int(values[1])
+                break
+            except ValueError:
+                sg.popup('Valor inválido para fabricante ou quantidade.', 'Tente novamente.')
         window.close()
-        return {"fabricante": values[0], "quantidade": int(values[1])}
+        return {"fabricante": values[0], "quantidade": quantidade}
 
     def pegar_dados_editar(self):
         print("-------- EDITAR VACINA ----------")
@@ -88,7 +98,8 @@ class TelaVacinas():
         print("Fabricante digitado já existe no sistema.")
 
     def vacina_cadastrada(self):
-        print("Vacina cadastrada com sucesso!")
+        sg.theme('Default')
+        sg.popup('Vacina cadastrada com sucesso!')
 
     def quantidade_insuficiente(self, quantidade):
         print("Quantidade disponível insuficiente. Seu estoque é de {} doses.".format(quantidade))

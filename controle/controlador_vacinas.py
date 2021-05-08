@@ -14,6 +14,8 @@ class ControladorVacinas():
 
     def cadastrar_vacina(self):
         dados_vacina = self.__tela_vacinas.pegar_dados_cadastrar()
+        if dados_vacina is None:
+            return None
         if not self.__dao.get_all():
             vacina = Vacina(dados_vacina["fabricante"], dados_vacina["quantidade"])
             self.__dao.add(vacina)
