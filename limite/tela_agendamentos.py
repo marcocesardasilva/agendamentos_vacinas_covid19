@@ -161,9 +161,17 @@ class TelaAgendamentos():
         print("Nenhum agendamento efetivado foi encontrado.")
 
     def mostrar_relatorio(self,dados_relatorio):
-        print("------------ RELATÓRIO GERAL --------------")
-        print("Total de vacinas aplicadas:              {}".format(dados_relatorio["vacinas_aplicadas"]))
-        print("Total de pacientes vacinados 1ª dose:    {}".format(dados_relatorio["paciente_vacinados_primeira_dose"]))
-        print("Total de pacientes vacinados 2ª dose:    {}".format(dados_relatorio["paciente_vacinados_segunda_dose"]))
-        print("Pacientes aguardando:                    {}".format(dados_relatorio["pacientes_sem_agendamentos"]))
-        print("-------------------------------------------")
+        sg.popup(
+            '------------ RELATÓRIO GERAL ------------------',
+            'Total de vacinas aplicadas:                {}'.format(dados_relatorio["vacinas_aplicadas"]),
+            'Total de pacientes vacinados 1ª dose:      {}'.format(dados_relatorio["paciente_vacinados_primeira_dose"]),
+            'Total de pacientes vacinados 2ª dose:      {}'.format(dados_relatorio["paciente_vacinados_segunda_dose"]),
+            'Pacientes aguardando:                      {}'.format(dados_relatorio["pacientes_sem_agendamentos"]),
+            '-----------------------------------------------'
+        )
+        # print("------------ RELATÓRIO GERAL --------------")
+        # print("Total de vacinas aplicadas:              {}".format(dados_relatorio["vacinas_aplicadas"]))
+        # print("Total de pacientes vacinados 1ª dose:    {}".format(dados_relatorio["paciente_vacinados_primeira_dose"]))
+        # print("Total de pacientes vacinados 2ª dose:    {}".format(dados_relatorio["paciente_vacinados_segunda_dose"]))
+        # print("Pacientes aguardando:                    {}".format(dados_relatorio["pacientes_sem_agendamentos"]))
+        # print("-------------------------------------------")

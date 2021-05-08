@@ -10,7 +10,7 @@ class VacinaDAO(DAO):
         if (isinstance(vacina.fabricante, str)) and (vacina is not None) \
                 and isinstance(vacina, Vacina):
             super().add(vacina.fabricante, vacina)
-    
+
     def get(self, key: str):
         if isinstance(key, str):
             return super().get(key)
