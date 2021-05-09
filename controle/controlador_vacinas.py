@@ -77,11 +77,8 @@ class ControladorVacinas():
         if len(self.__dao.get_all()) == 0:
             self.__tela_vacinas.lista_vazia()
         else:
-            for vacina in self.__dao.get_all():
-                self.__tela_vacinas.mostrar_doses_disponiveis({
-                    "fabricante": vacina.fabricante,
-                    "quantidade": vacina.quantidade
-                })
+            dados_vacinas = self.__dao.get_all()
+            self.__tela_vacinas.mostrar_doses_disponiveis(dados_vacinas)
 
     def listar_doses_aplicadas(self):
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos

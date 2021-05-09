@@ -19,7 +19,7 @@ class TelaVacinas():
             [sg.Button('Retornar', size=(30, 2), key='0')]
         ]
         window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
-        botao, valores = window.Read()
+        botao, _ = window.Read()
         opcao = int(botao)
         window.close()
         return opcao
@@ -69,30 +69,6 @@ class TelaVacinas():
             except ValueError:
                 print('Valor inválido para fabricante!')
 
-    def pegar_dados_editar(self):
-        sg.theme('Default')
-        layout = [
-            [sg.Text('Editar Vacina:')],
-            [sg.Text('Fabricante',size=(15, 1)), sg.InputText()],
-            [sg.Text('Quantidade',size=(15, 1)), sg.InputText()],
-            [sg.Button('Ok'), sg.Button('Cancelar')]
-        ]
-        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
-        while True:
-            try:
-                event, values = window.read()
-                if event == sg.WIN_CLOSED or event == 'Cancelar':
-                    window.close()
-                    return None
-                if len(values[0]) == 0:
-                    raise ValueError
-                quantidade = int(values[1])
-                break
-            except ValueError:
-                sg.popup('Valor inválido para fabricante ou quantidade.', 'Tente novamente.')
-        window.close()
-        return {'fabricante': values[0].upper(), 'quantidade': quantidade}
-
     def pegar_quantidade(self):
         sg.theme('Default')
         layout = [
@@ -116,8 +92,30 @@ class TelaVacinas():
                 sg.popup('Valor inválido para a quantidade.', 'Digite um valor válido.')
 
     def mostrar_doses_disponiveis(self, dados_vacina):
-        print('----------------------------------------')
-        print('Fabricante: {} | Quantidade: {}'.format(dados_vacina['fabricante'],dados_vacina['quantidade']))
+        sg.theme('Default')
+        dados = []
+        for vacina in dados_vacina:
+            dados.append([vacina.fabricante, vacina.quantidade])
+        headings = ['Fabricante', 'Quantidade']
+        layout = [
+            [sg.Table(values=dados, headings=headings, max_col_width=5,
+                # background_color='light blue',
+                auto_size_columns=True,
+                display_row_numbers=True,
+                justification='center',
+                num_rows=5,
+                alternating_row_color='lightblue',
+                key='-TABLE-',
+                row_height=35,
+                tooltip='Lista de vacinas disponíveis')],
+                [sg.Button('Ok')]
+        ]
+        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
+        while True:
+            event, _ = window.read()
+            if event == sg.WIN_CLOSED or event == 'Ok':
+                break
+        window.close()
 
     def mostrar_doses_aplicadas(self, dados_vacina):
         for fabricante,quantidade in dados_vacina.items():
