@@ -18,7 +18,11 @@ class TelaVacinas():
             [sg.Button('Listar doses aplicadas', size=(30, 2), key='7')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
         ]
-        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
+        window = sg.Window(
+            'Vacinas',
+            size=(800, 480),
+            #element_justification="center"
+            ).Layout(layout)
         botao, _ = window.Read()
         opcao = int(botao)
         window.close()
@@ -32,7 +36,11 @@ class TelaVacinas():
             [sg.Text('Quantidade',size=(15, 1)), sg.InputText()],
             [sg.Button('Ok'), sg.Button('Cancelar')]
         ]
-        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
+        window = sg.Window(
+            'Vacinas',
+            size=(800, 480),
+            #element_justification="center"
+            ).Layout(layout)
         while True:
             try:
                 event, values = window.read()
@@ -48,26 +56,65 @@ class TelaVacinas():
         window.close()
         return {'fabricante': values[0].upper(), 'quantidade': quantidade}
 
-    def selecionar_vacina(self):
+    def selecionar_vacina(self, lista_de_vacinas):
         sg.theme('Default')
+        dados = []
+        dados.append(['Fabricante', 'Quantidade'])
+        for vacina in lista_de_vacinas:
+            dados.append([vacina.fabricante, vacina.quantidade])
+        headings = ['Fabricante', 'Quantidade']
         layout = [
-            [sg.Text('Selecionar Vacina:')],
-            [sg.Text('Fabricante',size=(15, 1)), sg.InputText()],
-            [sg.Button('Ok'), sg.Button('Cancelar')]
+            [sg.Table(values=dados[1:][:], headings=headings, max_col_width=5,
+                # background_color='light blue',
+                auto_size_columns=True,
+                display_row_numbers=True,
+                justification='center',
+                num_rows=5,
+                alternating_row_color='lightblue',
+                key='-VACINA-',
+                row_height=35,
+                tooltip='Lista de vacinas disponíveis')],
+                [sg.Button('Selecionar', size=(20, 2)), sg.Button('Cancelar', size=(20, 2))]
         ]
-        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
+        window = sg.Window(
+            'Vacinas',
+            size=(800, 480),
+            #element_justification="center"
+            ).Layout(layout)
         while True:
-            try:
-                event, values = window.read()
-                if event == sg.WIN_CLOSED or event == 'Cancelar':
-                    window.close()
-                    return None
-                if len(values[0]) == 0:
-                    raise ValueError
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Ok':
+                return None
+            elif event == 'Selecionar':
                 window.close()
-                return values[0].upper()
-            except ValueError:
-                print('Valor inválido para fabricante!')
+                vacina_selecionada = values['-VACINA-']
+                return dados[vacina_selecionada[0]+1][0]
+        window.close()
+
+
+
+        # layout = [
+        #     [sg.Text('Selecionar Vacina:')],
+        #     [sg.Text('Fabricante',size=(15, 1)), sg.InputText()],
+        #     [sg.Button('Ok'), sg.Button('Cancelar')]
+        # ]
+        # window = sg.Window(
+        #     'Vacinas',
+        #     size=(800, 480),
+        #     #element_justification="center"
+        #     ).Layout(layout)
+        # while True:
+        #     try:
+        #         event, values = window.read()
+        #         if event == sg.WIN_CLOSED or event == 'Cancelar':
+        #             window.close()
+        #             return None
+        #         if len(values[0]) == 0:
+        #             raise ValueError
+        #         window.close()
+        #         return values[0].upper()
+        #     except ValueError:
+        #         print('Valor inválido para fabricante!')
 
     def pegar_quantidade(self):
         sg.theme('Default')
@@ -76,7 +123,11 @@ class TelaVacinas():
             [sg.Text('Quantidade',size=(15, 1)), sg.InputText()],
             [sg.Button('Ok'), sg.Button('Cancelar')]
         ]
-        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
+        window = sg.Window(
+            'Vacinas',
+            size=(800, 480),
+            #element_justification="center"
+            ).Layout(layout)
         while True:
             try:
                 event, values = window.read()
@@ -110,7 +161,11 @@ class TelaVacinas():
                 tooltip='Lista de vacinas disponíveis')],
                 [sg.Button('Ok')]
         ]
-        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
+        window = sg.Window(
+            'Vacinas',
+            size=(800, 480),
+            #element_justification="center"
+            ).Layout(layout)
         while True:
             event, _ = window.read()
             if event == sg.WIN_CLOSED or event == 'Ok':

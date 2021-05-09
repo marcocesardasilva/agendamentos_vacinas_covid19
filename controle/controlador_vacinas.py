@@ -34,7 +34,8 @@ class ControladorVacinas():
             self.__tela_vacinas.lista_vazia()
             return None
         else:
-            fabricante = self.__tela_vacinas.selecionar_vacina()
+            lista_de_vacinas = self.__dao.get_all()
+            fabricante = self.__tela_vacinas.selecionar_vacina(lista_de_vacinas)
             if fabricante is None:
                 return None
             if self.__dao.get(fabricante):

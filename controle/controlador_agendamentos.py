@@ -17,6 +17,8 @@ class ControladorAgendamentos():
 
     def cadastrar_agendamento(self):
         dados_agendamento = self.__tela_agendamentos.pegar_dados_cadastrar()
+        if dados_agendamento is None:
+            return None
         while True:
             paciente = self.__controlador_pacientes.get_paciente()
             if paciente is None:
@@ -83,14 +85,21 @@ class ControladorAgendamentos():
         return self.__dao.get_all()
 
     def get_agendamento(self):
-        dose = self.__tela_agendamentos.selecionar_agendamento()
-        paciente = self.__controlador_pacientes.get_paciente()
-        if paciente is None:
-            return None
         if len(self.__dao.get_all()) == 0:
-            self.__tela_agendamentos.agendamento_nao_cadastrado()
+            self.__tela_agendamentos.lista_vazia()
             return None
         else:
+            dose = self.__tela_agendamentos.selecionar_agendamento()
+            paciente = self.__controlador_pacientes.get_paciente()
+            codigo = str(str(dose)+str(paciente.cpf))
+            if paciente is None:
+                return None
+            if self.__dao.get(codigo):
+                self.__dao.get(codigo)
+            else:
+                self.__tela_agendamentos.agendamento_nao_cadastrado()
+                return None
+
             for agendamento in self.__dao.get_all():
                 if dose == agendamento.dose and paciente.cpf == agendamento.paciente.cpf:
                     return agendamento
