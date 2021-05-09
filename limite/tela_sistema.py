@@ -20,6 +20,9 @@ class TelaSistema:
             #element_justification="center"
             ).Layout(layout)
         botao, _ = window.Read()
+        if botao == sg.WIN_CLOSED:
+            window.close()
+            return 0
         opcao = int(botao)
         window.close()
         return opcao
