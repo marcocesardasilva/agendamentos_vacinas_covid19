@@ -32,65 +32,65 @@ class TelaEnfermeiros():
 
     def mensagem(self, mensagem=0):
         sg.theme('Default')
-        sg.popup(f'{mensagem}')
+        sg.popup(f'{mensagem}', no_titlebar=True)
 
     def get_enfermeiro_matricula(self):
         return sg.popup_get_text('Digite a Matríula do enfermeiro: ')
 
 
-    def pegar_dados_enfermeiro(self):
-        print("-------- INCLUIR ENFERMEIRO ----------")
-        while True:
-            try:
-                nome = input("Nome: ").upper()
-                if nome.replace(' ', '').isalpha():
-                    break
-                else:
-                    print(f'O nome {nome} é inválido!')
-            except (ValueError, TypeError):
-                print('Houve problemas com o tipo de dado digitado')
-        while True:
-            try:
-                cpf = input("CPF (apenas números): ").replace(' ', '')
-                if cpf.isnumeric() and len(cpf) == 11:
-                    break
-                else:
-                    print(f'O cpf {cpf} é inválido!\nDigite um cpf com 11 dígitos')
-            except (ValueError, TypeError):
-                print('Houve problemas com o tipo de dado digitado')
-        while True:
-            try:
-                matricula = input("Matrícula (4 dígitos): ").replace(' ','')
-                if matricula.isnumeric() and len(matricula) == 4:
-                    break
-                else:
-                    print(f'A matrícula {matricula} é inválida!\nDigite uma matrícula com 4 dígitos')
-            except (ValueError, TypeError):
-                print('Houve problemas com o tipo de dado digitado')
+    # def pegar_dados_enfermeiro(self):
+    #     print("-------- INCLUIR ENFERMEIRO ----------")
+    #     while True:
+    #         try:
+    #             nome = input("Nome: ").upper()
+    #             if nome.replace(' ', '').isalpha():
+    #                 break
+    #             else:
+    #                 print(f'O nome {nome} é inválido!')
+    #         except (ValueError, TypeError):
+    #             print('Houve problemas com o tipo de dado digitado')
+    #     while True:
+    #         try:
+    #             cpf = input("CPF (apenas números): ").replace(' ', '')
+    #             if cpf.isnumeric() and len(cpf) == 11:
+    #                 break
+    #             else:
+    #                 print(f'O cpf {cpf} é inválido!\nDigite um cpf com 11 dígitos')
+    #         except (ValueError, TypeError):
+    #             print('Houve problemas com o tipo de dado digitado')
+    #     while True:
+    #         try:
+    #             matricula = input("Matrícula (4 dígitos): ").replace(' ','')
+    #             if matricula.isnumeric() and len(matricula) == 4:
+    #                 break
+    #             else:
+    #                 print(f'A matrícula {matricula} é inválida!\nDigite uma matrícula com 4 dígitos')
+    #         except (ValueError, TypeError):
+    #             print('Houve problemas com o tipo de dado digitado')
+    #
+    #     return {"nome": nome, "cpf": cpf, "matricula": matricula, "status": "Ativo"}
 
-        return {"nome": nome, "cpf": cpf, "matricula": matricula, "status": "Ativo"}
-
-    def pegar_dados_enfermeiro_edicao(self):
-        print("-------- EDITAR ENFERMEIRO ----------")
-        while True:
-            try:
-                nome = input("Nome: ").upper()
-                if nome.replace(' ', '').isalpha():
-                    break
-                else:
-                    print(f'O nome {nome} é inválido!')
-            except (ValueError, TypeError):
-                print('Houve problemas com o tipo de dado digitado')
-        while True:
-            try:
-                matricula = input("Matrícula (4 dígitos): ").replace(' ','')
-                if len(matricula) == 4 and matricula.isnumeric():
-                    break
-                else:
-                    print(f'A matrícula {matricula} é inválida!\nDigite uma matrícula com 4 dígitos')
-            except (ValueError, TypeError):
-                print('Houve problemas com o tipo de dado digitado')
-        return {'nome': nome, 'matricula': matricula}
+    # def pegar_dados_enfermeiro_edicao(self):
+    #     print("-------- EDITAR ENFERMEIRO ----------")
+    #     while True:
+    #         try:
+    #             nome = input("Nome: ").upper()
+    #             if nome.replace(' ', '').isalpha():
+    #                 break
+    #             else:
+    #                 print(f'O nome {nome} é inválido!')
+    #         except (ValueError, TypeError):
+    #             print('Houve problemas com o tipo de dado digitado')
+    #     while True:
+    #         try:
+    #             matricula = input("Matrícula (4 dígitos): ").replace(' ','')
+    #             if len(matricula) == 4 and matricula.isnumeric():
+    #                 break
+    #             else:
+    #                 print(f'A matrícula {matricula} é inválida!\nDigite uma matrícula com 4 dígitos')
+    #         except (ValueError, TypeError):
+    #             print('Houve problemas com o tipo de dado digitado')
+    #     return {'nome': nome, 'matricula': matricula}
 
     def selecionar_enfermeiro(self):
         print('----- SELECIONAR ENFERMEIRO -----')
@@ -122,7 +122,7 @@ class TelaEnfermeiros():
                              # background_color='light blue',
                              auto_size_columns=True,
                              display_row_numbers=True,
-                             justification='right',
+                             justification='left',
                              alternating_row_color='lightgrey',
                              key='dado',
                              row_height=35,
@@ -147,15 +147,18 @@ class TelaEnfermeiros():
         sg.theme('Default')
         while True:
             try:
-                status_desejado = sg.popup_get_text(f"Alterar status do enfermeiro {matricula}: \nPara definir status como <Ativo> digite 1,\nPara definir status como <Inativo> digite 2")
-                if status_desejado == 1:
+                status_desejado = sg.popup_yes_no(f"Deseja definir o status do enfermeiro {matricula} como Ativo?")
+                print(status_desejado)
+                if status_desejado == 'Yes':
                     return "Ativo"
-                elif status_desejado == 2:
+                elif status_desejado == 'No':
                     return "Inativo"
                 else:
-                    print('Você digitou um valor inválido')
+                    sg.popup('Você digitou um valor inválido')
+                    break
             except (ValueError, TypeError):
-                print('Você digitou um valor inválido')
+                sg.popup('Você digitou um valor inválido')
+                break
 
     def mostrar_lista_enferemrios(self, dados_enfermeiro):
         print(
@@ -163,12 +166,34 @@ class TelaEnfermeiros():
             f' CPF: {dados_enfermeiro["cpf"]} |'
             f' MATRÍCULA: {dados_enfermeiro["data_nascimento"]}')
 
-    def mostrar_pacientes_por_enfermeiro(self, dados_paciente):
-        idade_dias = datetime.today().date() - dados_paciente["data_nascimento"]
-        idade = idade_dias.days // 365.24231481481481481481481481481481
-        print(f'PACIENTE: {dados_paciente["nome"]} |'
-              f' CPF: {dados_paciente["cpf"]} |'
-              f' Idade: {idade:.0f} anos')
+    def mostrar_pacientes_por_enfermeiro(self, dados_enfermeiro, dados_paciente):
+        titulos = [dados_paciente[0][0], dados_paciente[0][1], dados_paciente[0][2]]
+        sg.theme('Default')
+        layout = [[sg.Text(f'Pacientes atendidos pelo enfermeiro {dados_enfermeiro["nome"]}, matricula {dados_enfermeiro["matricula"]}:')],
+            [sg.Table(values=dados_paciente[1:][:], headings=titulos, max_col_width=25,
+                            # background_color='light blue',
+                            auto_size_columns=True,
+                            display_row_numbers=True,
+                            justification='left',
+                            alternating_row_color='lightgrey',
+                            key='dado',
+                            row_height=35,
+                            tooltip='This is a table')],
+                  [sg.Button('Selecionar', size=(20, 2)), sg.Button('Sair', size=(20, 2))],
+                  ]
+        window = sg.Window('Enfermeiros', layout,
+                           # botao, valores = window.Read()
+                           )
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED:
+                break
+            elif event == 'Sair':
+                break
+            elif event == 'Selecionar':
+                window.close()
+                return values['dado']
+        window.close()
 
     def linha(self):
         print("-" * 70)

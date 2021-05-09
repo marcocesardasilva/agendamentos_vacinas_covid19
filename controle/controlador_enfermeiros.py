@@ -2,6 +2,7 @@ from limite.tela_enfermeiros_main import TelaEnfermeiros
 from limite.tela_enfermeiros_cadastro import TelaEnfermeirosCadastro
 from entidade.enfermeiro import Enfermeiro
 from persistencia.enfermeiroDAO import EnfermeiroDAO
+from datetime import datetime as datetime
 
 
 class ControladorEnfermeiros():
@@ -18,7 +19,8 @@ class ControladorEnfermeiros():
     def cadastrar_enfermeiro(self):
         while True:
             dados_enfermeiro = self.__tela_enfermeiros_cadastro.pegar_dados_enfermeiro()
-            if not dados_enfermeiro:
+            if dados_enfermeiro["nome"] is None or dados_enfermeiro["matricula"] is None \
+            or dados_enfermeiro["cpf"] is None or dados_enfermeiro["status"] is None:
                 break
             for enfermeiro in self.__dao.get_all():
                 if enfermeiro.matricula == dados_enfermeiro["matricula"]:
@@ -33,6 +35,7 @@ class ControladorEnfermeiros():
                     nome_ok = nome
                 else:
                     self.__tela_enfermeiros_main.mensagem(f'O nome {nome} é inválido!')
+                    break
             except (ValueError, TypeError):
                 self.__tela_enfermeiros_main.mensagem('Houve problemas com o tipo de dado digitado')
             try:
@@ -41,6 +44,7 @@ class ControladorEnfermeiros():
                     cpf_ok = cpf
                 else:
                     self.__tela_enfermeiros_main.mensagem(f'O cpf {cpf} é inválido!\nDigite um cpf com 11 dígitos')
+                    break
             except (ValueError, TypeError):
                 self.__tela_enfermeiros_main.mensagem('Houve problemas com o tipo de dado digitado')
             try:
@@ -49,13 +53,14 @@ class ControladorEnfermeiros():
                     matricula_ok = matricula
                 else:
                     self.__tela_enfermeiros_main.mensagem(f'A matrícula {matricula} é inválida!\nDigite uma matrícula com 4 dígitos')
+                    break
             except (ValueError, TypeError):
                 self.__tela_enfermeiros_main.mensagem('Houve problemas com o tipo de dado digitado')
             enfermeiro = Enfermeiro(nome_ok,
                                     cpf_ok,
                                     matricula_ok,
                                     dados_enfermeiro["status"])
-            self.__tela_enfermeiros_main.mensagem(dados_enfermeiro)
+            self.__tela_enfermeiros_main.mensagem("Enfermeiro cadastrado!")
             self.__dao.add(enfermeiro)
             break
 
@@ -117,19 +122,19 @@ class ControladorEnfermeiros():
         if enfermeiro is not None:
             self.__dao.remove(enfermeiro.matricula)
 
-    def consultar_enfermeiro(self):
-        try:
-            enfermeiro = self.get_enfermeiro()
-            if len(self.__dao.get_all()) == 0:
-                raise Exception
-            self.__tela_enfermeiros_main.mostrar_enfermeiro(
-                {"nome": enfermeiro.nome,
-                 "cpf": enfermeiro.cpf,
-                 "matricula": enfermeiro.matricula,
-                 "status": enfermeiro.status}
-            )
-        except Exception:
-            pass
+    # def consultar_enfermeiro(self):
+    #     try:
+    #         enfermeiro = self.get_enfermeiro()
+    #         if len(self.__dao.get_all()) == 0:
+    #             raise Exception
+    #         self.__tela_enfermeiros_main.mostrar_enfermeiro(
+    #             {"nome": enfermeiro.nome,
+    #              "cpf": enfermeiro.cpf,
+    #              "matricula": enfermeiro.matricula,
+    #              "status": enfermeiro.status}
+    #         )
+    #     except Exception:
+    #         pass
 
     def get_enfermeiro(self):
         if len(self.__dao.get_all()) == 0:
@@ -154,6 +159,7 @@ class ControladorEnfermeiros():
                 raise Exception
             status = self.__tela_enfermeiros_main.status_enfermeiro(enfermeiro.matricula)
             enfermeiro.status = status
+            self.__dao.add(enfermeiro)
         except Exception:
             pass
 
@@ -176,29 +182,24 @@ class ControladorEnfermeiros():
     def listar_pacientes_por_enfermeiro(self):
         self.__controlador_pacientes = self.__controlador_sistema.controlador_pacientes
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        matriz = []
+        linha = ['        Nome        ', '    CPF    ', 'Idade']
+        matriz.append(linha)
         try:
             if len(self.__controlador_agendamentos.agendamentos) == 0:
                 raise IndexError
             enfermeiro_listar = self.get_enfermeiro()
+            dados_enfermeiro = {"nome": enfermeiro_listar.nome, "matricula": enfermeiro_listar.matricula}
             if enfermeiro_listar is None:
                 raise TypeError
-            for enfermeiro in self.__dao.get_all():
-                #Verificar isso
-                if enfermeiro.cpf == enfermeiro_listar.cpf:
-                    self.__tela_enfermeiros_main.mostrar_enfermeiro(
-                        {"nome": enfermeiro.nome,
-                         "cpf": enfermeiro.cpf,
-                         "matricula": enfermeiro.matricula,
-                         "status": enfermeiro.status}
-                        )
             for agendamento in self.__controlador_agendamentos.agendamentos:
                 if agendamento.enfermeiro.matricula == enfermeiro_listar.matricula:
-                    self.__tela_enfermeiros_main.mostrar_pacientes_por_enfermeiro(
-                        {"nome": agendamento.paciente.nome,
-                         "cpf": agendamento.paciente.cpf,
-                         "data_nascimento": agendamento.paciente.data_nascimento}
-                        )
-            self.__tela_enfermeiros_main.linha()
+                    linha = [agendamento.paciente.nome, agendamento.paciente.cpf]
+                    idade_dias = datetime.today().date() - agendamento.paciente.data_nascimento
+                    idade = idade_dias.days // 365.24231481481481481481481481481481
+                    linha.append(idade)
+                    matriz.append(linha)
+            self.__tela_enfermeiros_main.mostrar_pacientes_por_enfermeiro(dados_enfermeiro, matriz)
         except IndexError:
             self.__tela_enfermeiros_main.nenhum_agendamento()
         except TypeError:
@@ -212,7 +213,7 @@ class ControladorEnfermeiros():
         self.__mantem_tela_aberta = True
         lista_opcoes = {1: self.cadastrar_enfermeiro,
                         2: self.editar_enfermeiro,
-                        3: self.consultar_enfermeiro,
+                        # 3: self.consultar_enfermeiro,
                         4: self.alterar_status_enfermeiro,
                         5: self.listar_enfermeiros,
                         6: self.listar_pacientes_por_enfermeiro,
