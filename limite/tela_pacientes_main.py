@@ -6,15 +6,25 @@ class TelaPacientes():
 
     def __init__(self, controlador_pacientes):
         self.__controlador_pacientes = controlador_pacientes
+        # self.__tabela_pacientes = tabela_pacientes
 
     def tela_opcoes(self):
+        #lista = self.__tabela_pacientes
         sg.theme('Default')
-        layout = [
+        layout = [#[sg.Table(values=lista[1:][:], max_col_width=25,
+        #                     # background_color='light blue',
+        #                     auto_size_columns=True,
+        #                     display_row_numbers=True,
+        #                     justification='right',
+        #                     alternating_row_color='lightgrey',
+        #                     key='-TABLE-',
+        #                     row_height=35,
+        #                     tooltip='This is a table')],
             [sg.Text('Selecione a opção desejada', size=(30, 1))],
             [sg.Button('Cadastrar paciente', size=(30, 2), key='1')],
             [sg.Button('Editar paciente', size=(30, 2), key='2')],
             [sg.Button('Consultar paciente', size=(30, 2), key='3')],
-          # [sg.Button('Listar pacientes cadastrados', size=(30, 2), key='4')],
+            [sg.Button('Listar pacientes cadastrados', size=(30, 2), key='4')],
          #  [sg.Button('Listar pacientes nunca agendados', size=(30, 2), key='5')],
         #   [sg.Button('Listar pacientes vacinados 1ª dose', size=(30, 2), key='6')],
        #    [sg.Button('Listar pacientes vacinados 2ª dose', size=(30, 2), key='7')],
@@ -25,7 +35,14 @@ class TelaPacientes():
         opcao = int(botao)
         window.close()
         return opcao
-'''
+
+    def mensagem(self, mensagem=0):
+        sg.theme('Default')
+        sg.popup(f'{mensagem}')
+
+    def get_paciente_cpf(self):
+        return sg.popup_get_text('Digite o CPF do paciente (apenas números): ')
+
     def pega_dados_paciente(self):
         print("-------- INCLUIR PACIENTE ----------")
         while True:
@@ -100,13 +117,43 @@ class TelaPacientes():
                 print('Houve problemas com o tipo de dado digitado')
         return cpf
 
+    def mostrar_paciente_tabela(self, dados_paciente):
+        titulos = [dados_paciente[0][0], dados_paciente[0][1], dados_paciente[0][2]]
+        print(titulos)
+        sg.theme('Default')
+        layout = [[sg.Table(values=dados_paciente[1:][:], headings=titulos, max_col_width=25,
+                             # background_color='light blue',
+                             auto_size_columns=True,
+                             display_row_numbers=True,
+                             justification='right',
+                             alternating_row_color='lightgrey',
+                             key='-TABLE-',
+                             row_height=35,
+                             tooltip='This is a table')],
+                  [sg.Button('Selecionar'), sg.Button('Sair')],
+                  ]
+        window = sg.Window('The Table Element', layout,
+                           #botao, valores = window.Read()
+                           )
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED:
+                break
+            elif event == 'sair':
+                break
+            elif event == 'Selecionar':
+                print(values)
+        window.close()
+        return None
+
     def mostrar_paciente(self, dados_paciente):
         self.linha()
-        idade_dias = datetime.today().date() - dados_paciente["data_nascimento"]
-        idade = idade_dias.days // 365.24231481481481481481481481481481
+        # idade_dias = datetime.today().date() - dados_paciente["data_nascimento"]
+        # idade = idade_dias.days // 365.24231481481481481481481481481481
         print(f'NOME: {dados_paciente["nome"]} |'
               f' CPF: {dados_paciente["cpf"]} |'
-              f' Idade: {idade:.0f} anos')
+              f' Data: {dados_paciente["data_nascimento"]}')
+#              f' Idade: {idade:.0f} anos')
 
     def linha(self):
         print("-" * 90)
@@ -130,4 +177,3 @@ class TelaPacientes():
         else:
             print(f'Paciente {nome}, com cpf {cpf} e nascido em {data} cadastrado!')
         self.linha()
-'''

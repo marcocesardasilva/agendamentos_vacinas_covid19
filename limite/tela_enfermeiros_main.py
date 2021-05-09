@@ -13,18 +13,29 @@ class TelaEnfermeiros():
             [sg.Text('Selecione a opção desejada', size=(30, 1))],
             [sg.Button('Cadastrar enfermeiro', size=(30, 2), key='1')],
             [sg.Button('Editar enfermeiro', size=(30, 2), key='2')],
-            [sg.Button('Consultar enfermeiro', size=(30, 2), key='3')],
+           #[sg.Button('Consultar enfermeiro', size=(30, 2), key='3')],
             [sg.Button('Alterar status do enfermeiro', size=(30, 2), key='4')],
             [sg.Button('Listar enfermeiros', size=(30, 2), key='5')],
             [sg.Button('Listar pacientes atendidos por um determinado enfermeiro', size=(30, 2), key='6')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
             ]
         window = sg.Window('Enfermeiros',size=(800, 480)).Layout(layout)
-        botao, valores = window.Read()
-        opcao = int(botao)
+        botao, valores = window.read()
+        try:
+            opcao = int(botao)
+            return opcao
+        except TypeError:
+            pass
         window.close()
-        return opcao
-    
+
+    def mensagem(self, mensagem=0):
+        sg.theme('Default')
+        sg.popup(f'{mensagem}')
+
+    def get_enfermeiro_matricula(self):
+        return sg.popup_get_text('Digite a Matríula do enfermeiro: ')
+
+
     def pegar_dados_enfermeiro(self):
         print("-------- INCLUIR ENFERMEIRO ----------")
         while True:
@@ -102,12 +113,39 @@ class TelaEnfermeiros():
               )
         self.linha()
 
+    def mostrar_enfermeiro_tabela(self, dados_enfermeiro):
+        titulos = [dados_enfermeiro[0][0], dados_enfermeiro[0][1], dados_enfermeiro[0][2], dados_enfermeiro[0][3]]
+        sg.theme('Default')
+        layout = [[sg.Table(values=dados_enfermeiro[1:][:], headings=titulos, max_col_width=25,
+                             # background_color='light blue',
+                             auto_size_columns=True,
+                             display_row_numbers=True,
+                             justification='right',
+                             alternating_row_color='lightgrey',
+                             key='dado',
+                             row_height=35,
+                             tooltip='This is a table')],
+                  [sg.Button('Selecionar', size=(20, 2)), sg.Button('Sair', size=(20, 2))],
+                  ]
+        window = sg.Window('The Table Element', layout,
+                           #botao, valores = window.Read()
+                           )
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED:
+                break
+            elif event == 'Sair':
+                break
+            elif event == 'Selecionar':
+                window.close()
+                return values['dado']
+        window.close()
+
     def status_enfermeiro(self, matricula):
-        print(f"Alterar status do enfermeiro {matricula}: ")
+        sg.theme('Default')
         while True:
             try:
-                print("Para definir status como <Ativo> digite 1,\nPara definir status como <Inativo> digite 2")
-                status_desejado = int(input('Status: '))
+                status_desejado = sg.popup_get_text(f"Alterar status do enfermeiro {matricula}: \nPara definir status como <Ativo> digite 1,\nPara definir status como <Inativo> digite 2")
                 if status_desejado == 1:
                     return "Ativo"
                 elif status_desejado == 2:
