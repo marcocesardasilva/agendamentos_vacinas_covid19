@@ -26,4 +26,4 @@ class AbstractPessoa(ABC):
     @cpf.setter
     def cpf(self, cpf):
         if isinstance(cpf, str):
-            self.__nome = cpf
+            self.__cpf = cpf

@@ -29,11 +29,18 @@ class ControladorPacientes():
         while True:
             dados_paciente = self.__tela_pacientes_cadastro.pegar_dados_cadastrar()
             try:
-                nome = dados_paciente['nome'].upper()
+                nome = dados_paciente["nome"].upper()
                 if not nome.replace(' ','').isalpha():
                     break
             except (ValueError, TypeError):
-                print('Houve problemas com o tipo de dado digitado')
+                self.__tela_pacientes_main.mensagem('Houve problemas com o tipo de dado digitado')
+            try:
+                cpf = dados_paciente["cpf"].replace(' ','')
+                if not cpf.isnumeric() and len(cpf) == 11:
+                    self.__tela_pacientes_main.mensagem(f'O cpf {cpf} é inválido!\nDigite um cpf com 11 dígitos')
+                    break
+            except (ValueError, TypeError):
+                self.__tela_pacientes_main.mensagem('Houve problemas com o tipo de dado digitado')
             try:
                 data_nascimento_str = dados_paciente["data_nascimento"]
                 data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
@@ -59,7 +66,7 @@ class ControladorPacientes():
                     if dados_paciente["cpf"] == paciente.cpf:
                         self.__tela_pacientes_main.mensagem(f'O cpf {dados_paciente["cpf"]} já foi cadastrado')
                         return None
-                paciente = Paciente(dados_paciente["nome"], dados_paciente["cpf"], data_nascimento_obj)
+                paciente = Paciente(nome, cpf, data_nascimento_obj)
                 self.__dao.add(paciente)
                 break
 
@@ -82,40 +89,87 @@ class ControladorPacientes():
 
     def editar_paciente(self,nome=0,cpf=0,data_nascimento=0):
         #paciente_editar = self.__dao.get('cpf')
-        paciente_editar = self.__tela_pacientes_main.get_paciente_cpf()
+        paciente_editar = self.get_paciente()
         #rever
         if paciente_editar is None:
             return None
-        dados_editar = self.__tela_pacientes_main.pega_dados_paciente_edicao()
-        for paciente in self.__dao.get_all():
-            if paciente_editar == paciente:
-                paciente.nome = dados_editar["nome"]
-                paciente.data_nascimento = dados_editar["data_nascimento"]
-                self.__tela_pacientes_main.sucesso(dados_editar["nome"], dados_editar["data_nascimento"])
+        dados_editar = self.__tela_pacientes_cadastro.pegar_dados_cadastrar()
+        try:
+            nome = dados_editar["nome"].upper()
+            if nome.replace(' ', '').isalpha():
+                nome_ok = nome
+        except (ValueError, TypeError):
+            self.__tela_pacientes_main.mensagem('Houve problemas com o tipo de dado digitado')
+            return None
+        try:
+            data_nascimento_str = dados_editar["data_nascimento"]
+            data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
+            idade_dias = datetime.today().date() - data_nascimento_obj
+            idade = int(idade_dias.days // 365.24231481481481481481481481481481)
+            if not 0 < idade < 150:
+                self.__tela_pacientes_main.mensagem('Idade inválida, a idade deve ser entre 0 e 150 anos')
+                return None
+        except:
+            self.__tela_pacientes_main.mensagem('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
+        paciente_editar.nome = nome_ok
+        paciente_editar.data_nascimento = data_nascimento_obj
+        self.__dao.add(paciente_editar)
+        self.__tela_pacientes_main.sucesso(paciente_editar.nome, paciente_editar.cpf, data_nascimento_obj)
 
     def consultar_paciente(self):
+        self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
         paciente_consultar = self.get_paciente()
+        dose = 0
+        aplicada = False
+        for agendamento in self.__controlador_agendamentos.agendamentos:
+            for paciente in self.__dao.get_all():
+                if agendamento.paciente == paciente:
+                    dose = agendamento.dose
+                    aplicada = agendamento.aplicada
         for paciente in self.__dao.get_all():
             if paciente_consultar == paciente:
                 self.__tela_pacientes_main.mostrar_paciente(
                     {"nome": paciente.nome,
                      "cpf": paciente.cpf,
-                     "data_nascimento": paciente.data_nascimento}
+                     "data_nascimento": paciente.data_nascimento,
+                     "dose": dose,
+                     "aplicada": aplicada
+                     }
                     )
+
+    def remover_paciente(self):
+        paciente = self.get_paciente()
+        if paciente is not None:
+            self.__dao.remove(paciente.cpf)
+
 
     def get_paciente(self):
         if len(self.__dao.get_all()) == 0:
             self.__tela_pacientes_main.nenhum_paciente()
             return None
         else:
-            cpf = self.__tela_pacientes_main.get_paciente_cpf()
-            for paciente in self.__dao.get_all():
-                if cpf == paciente.cpf:
-                    return paciente
-        self.__tela_pacientes_main.cpf_nao_cadastrado(cpf)
+            cpf = self.listar_pacientes()
+            if cpf is None:
+                return None
+            if self.__dao.get(cpf):
+                return self.__dao.get(cpf)
+            else:
+                self.__tela_pacientes_main.cpf_nao_cadastrado(cpf)
         return None
 
-    #def tabela_pacientes(self):
+
+    def tabela_pacientes(self):
+        matriz = []
+        linha = ['Nome', 'CPF', 'Idade']
+        matriz.append(linha)
+        for paciente in self.__dao.get_all():
+            linha = [paciente.nome, paciente.cpf]
+            idade_dias = datetime.today().date() - paciente.data_nascimento
+            idade = idade_dias.days // 365.24231481481481481481481481481481
+            linha.append(idade)
+            matriz.append(linha)
+        return matriz
+
     def listar_pacientes(self):
         matriz = []
         linha = ['Nome', 'CPF', 'Idade']
@@ -126,7 +180,9 @@ class ControladorPacientes():
             idade = idade_dias.days // 365.24231481481481481481481481481481
             linha.append(idade)
             matriz.append(linha)
-        self.__tela_pacientes_main.mostrar_paciente_tabela(matriz)
+        paciente_selecionado = self.__tela_pacientes_main.mostrar_paciente_tabela(matriz)
+        if paciente_selecionado:
+            return matriz[paciente_selecionado[0]+1][1]
     #
     # def listar_pacientes(self):
     #     for paciente in self.__dao.get_all():
@@ -219,6 +275,7 @@ class ControladorPacientes():
                         5: self.listar_pacientes_nao_agendados,
                         6: self.listar_pacientes_primeira_dose,
                         7: self.listar_pacientes_segunda_dose,
+                        8: self.remover_paciente,
                         0: self.retorna_tela_principal}
 
         while self.__mantem_tela_aberta:

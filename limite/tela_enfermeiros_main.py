@@ -17,12 +17,14 @@ class TelaEnfermeiros():
             [sg.Button('Alterar status do enfermeiro', size=(30, 2), key='4')],
             [sg.Button('Listar enfermeiros', size=(30, 2), key='5')],
             [sg.Button('Listar pacientes atendidos por um determinado enfermeiro', size=(30, 2), key='6')],
+            [sg.Button('Remover Enfermeiro', size=(30, 2), key='7')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
             ]
         window = sg.Window('Enfermeiros',size=(800, 480)).Layout(layout)
         botao, valores = window.read()
         try:
             opcao = int(botao)
+            window.close()
             return opcao
         except TypeError:
             pass
@@ -127,7 +129,7 @@ class TelaEnfermeiros():
                              tooltip='This is a table')],
                   [sg.Button('Selecionar', size=(20, 2)), sg.Button('Sair', size=(20, 2))],
                   ]
-        window = sg.Window('The Table Element', layout,
+        window = sg.Window('Enfermeiros', layout,
                            #botao, valores = window.Read()
                            )
         while True:

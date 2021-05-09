@@ -14,13 +14,13 @@ class TelaEnfermeirosCadastro():
             [sg.Text('Nome',size=(15, 1)), sg.InputText()],
             [sg.Text('CPF',size=(15, 1)), sg.InputText()],
             [sg.Text('Matrícula', size=(15, 1)), sg.InputText()],
-            [sg.Text('Status', size=(15,1)), sg.InputText()],
+            [sg.Text('Status', size=(15,1)), sg.InputCombo(('Ativo', 'Inativo'), size=(15,1))],
             [sg.Button('Ok'), sg.Button('Cancelar')]
         ]
         window = sg.Window('Enfermeiros', layout)
         event, values = window.read()
         if event == 'Cancelar':
-            return 0
+            return None
         window.close()
         dados = {"nome": values[0], "cpf": str(values[1]), "matricula": values[2], "status": values[3]}
         return dados
