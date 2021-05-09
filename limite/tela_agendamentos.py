@@ -138,7 +138,7 @@ class TelaAgendamentos():
             ['Total de vacinas aplicadas:', dados_relatorio['vacinas_aplicadas']],
             ['Total de pacientes vacinados 1ª dose:', dados_relatorio['paciente_vacinados_primeira_dose']],
             ['Total de pacientes vacinados 2ª dose:', dados_relatorio['paciente_vacinados_segunda_dose']],
-            ['Pacientes aguardando:', dados_relatorio['pacientes_sem_agendamentos']]
+            ['Pacientes não vacinados:', dados_relatorio['pacientes_sem_agendamentos']]
         ]
         headings = ['            Indicador            ', '    Contador    ']
         layout = [

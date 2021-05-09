@@ -83,7 +83,7 @@ class TelaVacinas():
             ).Layout(layout)
         while True:
             event, values = window.read()
-            if event == sg.WIN_CLOSED or event == 'Ok':
+            if event == sg.WIN_CLOSED or event == 'Cancelar':
                 return None
             elif event == 'Selecionar':
                 window.close()

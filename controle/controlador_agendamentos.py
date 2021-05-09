@@ -91,9 +91,9 @@ class ControladorAgendamentos():
         else:
             dose = self.__tela_agendamentos.selecionar_agendamento()
             paciente = self.__controlador_pacientes.get_paciente()
-            codigo = str(str(dose)+str(paciente.cpf))
             if paciente is None:
                 return None
+            codigo = str(str(dose)+str(paciente.cpf))
             if self.__dao.get(codigo):
                 self.__dao.get(codigo)
             else:

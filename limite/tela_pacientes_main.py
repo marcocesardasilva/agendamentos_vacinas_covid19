@@ -23,9 +23,9 @@ class TelaPacientes():
             [sg.Button('Editar paciente', size=(30, 2), key='2')],
             [sg.Button('Consultar paciente', size=(30, 2), key='3')],
             [sg.Button('Listar pacientes cadastrados', size=(30, 2), key='4')],
-         #  [sg.Button('Listar pacientes nunca agendados', size=(30, 2), key='5')],
-        #   [sg.Button('Listar pacientes vacinados 1ª dose', size=(30, 2), key='6')],
-       #    [sg.Button('Listar pacientes vacinados 2ª dose', size=(30, 2), key='7')],
+           [sg.Button('Listar pacientes nunca agendados', size=(30, 2), key='5')],
+           [sg.Button('Listar pacientes vacinados 1ª dose', size=(30, 2), key='6')],
+          [sg.Button('Listar pacientes vacinados 2ª dose', size=(30, 2), key='7')],
             [sg.Button('Remover paciente', size=(30, 2), key='8')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
             ]
@@ -104,23 +104,22 @@ class TelaPacientes():
     #             print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
     #     return {"nome": nome, "data_nascimento": data_nascimento_obj}
 
-    def mostrar_paciente_tabela(self, dados_paciente):
+    def mostrar_paciente_tabela(self, dados_paciente, titulo):
         titulos = [dados_paciente[0][0], dados_paciente[0][1], dados_paciente[0][2]]
-        print(titulos)
         sg.theme('Default')
         layout = [[sg.Table(values=dados_paciente[1:][:], headings=titulos, max_col_width=50,
                              # background_color='light blue',
                              def_col_width=200,
                              auto_size_columns=True,
                              display_row_numbers=True,
-                             justification='right',
+                             justification='left',
                              alternating_row_color='lightgrey',
                              key='dado',
                              row_height=35,
                              tooltip='This is a table')],
-                  [sg.Button('Selecionar'), sg.Button('sair')],
+                  [sg.Button('Selecionar', size=(20, 2)), sg.Button('sair', size=(20, 2))],
                   ]
-        window = sg.Window('Pacientes', layout, size=(800, 480)
+        window = sg.Window(titulo, layout
                            #botao, valores = window.Read()
                            )
         while True:
@@ -142,8 +141,9 @@ class TelaPacientes():
         sg.popup(   f'NOME:         {dados_paciente["nome"]}\n'
                     f'CPF:          {dados_paciente["cpf"]}\n'
                     f'IDADE:        {idade:.0f} anos\n'
-                    f'DOSE:         {dados_paciente["dose"]}\n'
-                    f'APLICADA:     {dados_paciente["aplicada"]}\n')
+#                    f'DOSE:         {dados_paciente["dose"]}\n'
+#                    f'APLICADA:     {dados_paciente["aplicada"]}\n'
+                    )
 
     def cpf_ja_cadastrado(self, cpf):
         sg.theme('Default')
