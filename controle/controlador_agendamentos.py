@@ -89,39 +89,15 @@ class ControladorAgendamentos():
             self.__tela_agendamentos.lista_vazia()
             return None
         else:
-            dose = self.__tela_agendamentos.selecionar_agendamento()
-            paciente = self.__controlador_pacientes.get_paciente()
-            if paciente is None:
+            lista_de_agendamentos = self.__dao.get_all()
+            codigo = self.__tela_agendamentos.selecionar_agendamento(lista_de_agendamentos)
+            if codigo is None:
                 return None
-            codigo = str(str(dose)+str(paciente.cpf))
             if self.__dao.get(codigo):
-                self.__dao.get(codigo)
+                return self.__dao.get(codigo)
             else:
                 self.__tela_agendamentos.agendamento_nao_cadastrado()
                 return None
-
-            for agendamento in self.__dao.get_all():
-                if dose == agendamento.dose and paciente.cpf == agendamento.paciente.cpf:
-                    return agendamento
-        self.__tela_agendamentos.agendamento_nao_cadastrado()
-        return None
-
-    def consultar_agendamento(self):
-        agendamento = self.get_agendamento()
-        if agendamento is None:
-            return None
-        status = "Aguardando aplicação"
-        if agendamento.aplicada is True:
-            status = "Vacina já aplicada"
-        self.__tela_agendamentos.mostrar_agendamento({
-            "enfermeiro": agendamento.enfermeiro.nome,
-            "paciente": agendamento.paciente.nome,
-            "vacina": agendamento.vacina.fabricante,
-            "data": agendamento.data,
-            "horario": agendamento.horario,
-            "dose": agendamento.dose,
-            "status": status
-        })
 
     def editar_agendamento(self):
         agendamento_editar = self.get_agendamento()
@@ -164,6 +140,7 @@ class ControladorAgendamentos():
             agendamento_editar.data = dados_agendamento["data"]
             agendamento_editar.horario = dados_agendamento["horario"]
             agendamento_editar.aplicada = dados_agendamento["aplicada"]
+            self.__dao.add(agendamento_editar)
             self.__tela_agendamentos.agendamento_editado()
             break
 
@@ -172,73 +149,48 @@ class ControladorAgendamentos():
         if agendamento is None:
             return None
         agendamento.aplicada = True
+        self.__dao.add(agendamento)
         self.__tela_agendamentos.vacina_aplicada()
 
     def remover_agendamento(self):
-        agendamento_remover = self.get_agendamento()
-        if agendamento_remover is None:
+        agendamento = self.get_agendamento()
+        if agendamento is None:
             return None
         else:
-            if not agendamento_remover.aplicada:
-                agendamento_remover.vacina.adiciona_quantidade(1)
-                for agendamento in self.__dao.get_all():
-                    if agendamento_remover.paciente == agendamento.paciente and agendamento_remover.dose == agendamento.dose:
-                        self.__dao.remove(agendamento_remover)
+            if not agendamento.aplicada:
+                agendamento.vacina.adiciona_quantidade(1)
+                self.__dao.remove(agendamento.codigo)
                 self.__tela_agendamentos.agendamento_removido()
 
     def listar_agendamentos_abertos(self):
         if len(self.__dao.get_all()) == 0:
             self.__tela_agendamentos.agendamento_aberto_nao_cadastrado()
             return None
-        encontrado = False
-        contador = 0
-        while encontrado is False and contador < len(self.__dao.get_all()):
-            for agendamento in self.__dao.get_all():
-                if agendamento.aplicada == True:
-                    contador += 1
-                else:
-                    encontrado = True
-        if encontrado == False:
-            self.__tela_agendamentos.agendamento_aberto_nao_cadastrado()
-        else:    
+        else:
+            agendamentos_abertos = []
             for agendamento in self.__dao.get_all():
                 if agendamento.aplicada == False:
-                    self.__tela_agendamentos.mostrar_lista_agendamentos({
-                        "enfermeiro": agendamento.enfermeiro.nome,
-                        "paciente": agendamento.paciente.nome,
-                        "vacina": agendamento.vacina.fabricante,
-                        "data": agendamento.data,
-                        "horario": agendamento.horario,
-                        "dose": agendamento.dose,
-                        "codigo": agendamento.codigo
-                    })
+                    agendamentos_abertos.append(agendamento)
+            if len(agendamentos_abertos) == 0:
+                self.__tela_agendamentos.agendamento_aberto_nao_cadastrado()
+                return None
+            else:
+                self.__tela_agendamentos.mostrar_lista_agendamentos(agendamentos_abertos)
 
     def listar_aplicacoes_efetivadas(self):
         if len(self.__dao.get_all()) == 0:
-            self.__tela_agendamentos.agendamento_efetivado_nao_cadastrado()
+            self.__tela_agendamentos.agendamento_aberto_nao_cadastrado()
             return None
-        encontrado = False
-        contador = 0
-        while encontrado is False and contador < len(self.__dao.get_all()):
-            for agendamento in self.__dao.get_all():
-                if agendamento.aplicada == False:
-                    contador += 1
-                else:
-                    encontrado = True
-        if encontrado == False:
-            self.__tela_agendamentos.agendamento_efetivado_nao_cadastrado()
-        else:    
+        else:
+            aplicacoes_efetivadas = []
             for agendamento in self.__dao.get_all():
                 if agendamento.aplicada == True:
-                    self.__tela_agendamentos.mostrar_lista_agendamentos({
-                        "enfermeiro": agendamento.enfermeiro.nome,
-                        "paciente": agendamento.paciente.nome,
-                        "vacina": agendamento.vacina.fabricante,
-                        "data": agendamento.data,
-                        "horario": agendamento.horario,
-                        "dose": agendamento.dose,
-                        "codigo": agendamento.codigo
-                    })
+                    aplicacoes_efetivadas.append(agendamento)
+            if len(aplicacoes_efetivadas) == 0:
+                self.__tela_agendamentos.agendamento_aberto_nao_cadastrado()
+                return None
+            else:
+                self.__tela_agendamentos.mostrar_lista_agendamentos(aplicacoes_efetivadas)
 
     def relatorio_geral(self):
         vacinas_aplicadas = 0
@@ -269,13 +221,12 @@ class ControladorAgendamentos():
         self.__mantem_tela_aberta = True
         lista_opcoes = {
             1: self.cadastrar_agendamento,
-            2: self.consultar_agendamento,
-            3: self.editar_agendamento,
-            4: self.aplicar_vacina,
-            5: self.remover_agendamento,
-            6: self.listar_agendamentos_abertos,
-            7: self.listar_aplicacoes_efetivadas,
-            8: self.relatorio_geral,
+            2: self.editar_agendamento,
+            3: self.aplicar_vacina,
+            4: self.remover_agendamento,
+            5: self.listar_agendamentos_abertos,
+            6: self.listar_aplicacoes_efetivadas,
+            7: self.relatorio_geral,
             0: self.retorna_tela_principal
         }
 

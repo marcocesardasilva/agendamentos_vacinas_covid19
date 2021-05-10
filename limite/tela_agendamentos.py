@@ -11,13 +11,12 @@ class TelaAgendamentos():
         layout = [
             [sg.Text('Selecione a opção desejada', size=(30, 1))],
             [sg.Button('Cadastrar agendamento', size=(30, 2), key='1')],
-            [sg.Button('Consultar agendamento', size=(30, 2), key='2')],
-            [sg.Button('Editar agendamento', size=(30, 2), key='3')],
-            [sg.Button('Aplicar Vacina', size=(30, 2), key='4')],
-            [sg.Button('Remover agendamento', size=(30, 2), key='5')],
-            [sg.Button('Listar aplicações agendadas', size=(30, 2), key='6')],
-            [sg.Button('Listar histórico de vacinações', size=(30, 2), key='7')],
-            [sg.Button('Relatório Geral', size=(30, 2), key='8')],
+            [sg.Button('Editar agendamento', size=(30, 2), key='2')],
+            [sg.Button('Aplicar Vacina', size=(30, 2), key='3')],
+            [sg.Button('Remover agendamento', size=(30, 2), key='4')],
+            [sg.Button('Listar aplicações agendadas', size=(30, 2), key='5')],
+            [sg.Button('Listar histórico de vacinações', size=(30, 2), key='6')],
+            [sg.Button('Relatório Geral', size=(30, 2), key='7')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
         ]
         window = sg.Window('Agendamentos',size=(800, 480)).Layout(layout)
@@ -31,61 +30,71 @@ class TelaAgendamentos():
         layout = [
             [sg.Text('Cadastrar Agendamento:')],
             [sg.Text('Data (dd/mm/aaaa):',size=(15, 1)), sg.InputText()],
-            [sg.Text('Horário (hh:mm):',size=(15, 1)), sg.InputText()],
-            #[sg.Text('Dose da vacina (1 ou 2):',size=(15, 1)), sg.InputText()],
+            [sg.Text('Hora:',size=(15, 1)), sg.InputCombo(('08','09','10','11','13','14','15','16','17'), size=(15,1)),
+            sg.Text('Minuto:',size=(6, 1)), sg.InputCombo(('00','10','20','30','40','50'), size=(15,1))],
             [sg.Text('Dose', size=(15,1)), sg.InputCombo(('1ª dose', '2ª dose'), size=(15,1))],
-            # [sg.Text('Dose', size=(15,1)), sg.Radio('1ª dose', "Radio", default=True),
-            #     sg.Radio('2ª dose', "Radio")],
             [sg.Button('Ok'), sg.Button('Cancelar')]
         ]
         window = sg.Window('Agendamentos',size=(800, 480)).Layout(layout)
         while True:
             try:
                 event, values = window.read()
-                print(values[0])
-                print(values[1])
-                print(values[2])
                 if event == sg.WIN_CLOSED or event == 'Cancelar':
                     window.close()
                     return None
                 data_str = values[0]
                 data = datetime.strptime(data_str, '%d/%m/%Y').date()
-                horario_str = values[1]
+                horario_str = values[1]+':'+values[2]
                 horario = datetime.strptime(horario_str, '%H:%M').time()
-                datetime.strptime("08:00", '%H:%M').time() <= horario <= datetime.strptime("18:00", '%H:%M').time()
+                datetime.strptime('08:00', '%H:%M').time() <= horario <= datetime.strptime('18:00', '%H:%M').time()
                 break
             except ValueError:
                 sg.popup('Valores digitados inválidos.', 'Tente novamente.')
-        if values[2] == '1ª dose':
+        if values[3] == '1ª dose':
             dose = 1
-        if values[2] == '2ª dose':
+        if values[3] == '2ª dose':
             dose = 2
         window.close()
-        return {"data": data, "horario": horario, "dose": dose}
+        return {'data': data, 'horario': horario, 'dose': dose}
 
-    def selecionar_agendamento(self):
-        print('----- SELECIONAR AGENDAMENTO -----')
+    def selecionar_agendamento(self, lista_de_agendamentos):
+        sg.theme('Default')
+        dados = []
+        dados.append(['Codigo','Data','Horário','Enfermeiro','Paciente','Dose','Vacina','Aplicada'])
+        for agendamento in lista_de_agendamentos:
+            dados.append([
+                agendamento.codigo,
+                agendamento.data,
+                agendamento.horario,
+                agendamento.enfermeiro.nome,
+                agendamento.paciente.nome,
+                agendamento.dose,
+                agendamento.vacina.fabricante,
+                agendamento.aplicada])
+        headings = ['   Codigo   ','   Data   ','Horário','   Enfermeiro   ','   Paciente   ','Dose','  Vacina  ','Aplicada']
+        layout = [
+            [sg.Table(values=dados[1:][:], headings=headings, max_col_width=5,
+                def_col_width=200,
+                auto_size_columns=True,
+                display_row_numbers=True,
+                justification='left',
+                alternating_row_color='lightgrey',
+                key='-AGENDAMENTO-',
+                row_height=35,
+                tooltip='Lista de vacinas disponíveis')],
+                [sg.Button('Selecionar', size=(20, 2)), sg.Button('Cancelar', size=(20, 2))]
+        ]
+        window = sg.Window('Agendamentos', size=(800, 480)).Layout(layout)
         while True:
-            try:
-                opcao = int(input("Qual a dose da vacina (1 - Primeira / 2 - Segunda): "))
-                if opcao == 1 or opcao == 2:
-                    dose = opcao
-                    break
-                else:
-                    print("Opção escolhida inválida!")
-            except ValueError:
-                print("Valor digitado inválido!")
-        return dose
-
-    def mostrar_agendamento(self, dados_agendamento):
-        print("--------- DADOS DO AGENDAMENTO SOLICITADO -----------")
-        print("Enfermeiro:  ", dados_agendamento["enfermeiro"])
-        print("Paciente:    ", dados_agendamento["paciente"])
-        print("Vacina:      ", dados_agendamento["vacina"])
-        print("Data:        ", dados_agendamento["data"])
-        print("Horario:     ", dados_agendamento["horario"])
-        print("Dose:        ", dados_agendamento["dose"])
-        print("Status:      ", dados_agendamento["status"])
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Cancelar':
+                window.close()
+                return None
+            elif event == 'Selecionar':
+                window.close()
+                agendamento_selecionado = values['-AGENDAMENTO-']
+                return dados[agendamento_selecionado[0]+1][0]
+        window.close()
 
     def pegar_dados_editar(self):
         print("-------- EDITAR AGENDAMENTO ----------")
@@ -122,15 +131,39 @@ class TelaAgendamentos():
             aplicada = True
         return {"data": data, "horario": horario, "aplicada": aplicada}
 
-    def mostrar_lista_agendamentos(self, dados_agendamento):
-        print("----------------------------------------")
-        print("Enfermeiro:", dados_agendamento["enfermeiro"])
-        print("Paciente:", dados_agendamento["paciente"])
-        print("Vacina:", dados_agendamento["vacina"])
-        print("Data:", dados_agendamento["data"])
-        print("Horario:", dados_agendamento["horario"])
-        print("Dose:", dados_agendamento["dose"])
-        print("Código:", dados_agendamento["codigo"])
+    def mostrar_lista_agendamentos(self, lista_de_agendamentos):
+        sg.theme('Default')
+        dados = []
+        dados.append(['Codigo','Data','Horário','Enfermeiro','Paciente','Dose','Vacina','Aplicada'])
+        for agendamento in lista_de_agendamentos:
+            dados.append([
+                agendamento.codigo,
+                agendamento.data,
+                agendamento.horario,
+                agendamento.enfermeiro.nome,
+                agendamento.paciente.nome,
+                agendamento.dose,
+                agendamento.vacina.fabricante,
+                agendamento.aplicada])
+        headings = ['   Codigo   ','   Data   ','Horário','   Enfermeiro   ','   Paciente   ','Dose','  Vacina  ','Aplicada']
+        layout = [
+            [sg.Table(values=dados[1:][:], headings=headings, max_col_width=5,
+                def_col_width=200,
+                auto_size_columns=True,
+                display_row_numbers=True,
+                justification='left',
+                alternating_row_color='lightgrey',
+                key='-AGENDAMENTO-',
+                row_height=35,
+                tooltip='Lista de vacinas disponíveis')],
+                [sg.Button('Ok')]
+        ]
+        window = sg.Window('Agendamentos', size=(800, 480)).Layout(layout)
+        while True:
+            event, _ = window.read()
+            if event == sg.WIN_CLOSED or event == 'Ok':
+                break
+        window.close()
     
     def mostrar_relatorio(self,dados_relatorio):
         sg.theme('Default')
@@ -142,15 +175,14 @@ class TelaAgendamentos():
         ]
         headings = ['            Indicador            ', '    Contador    ']
         layout = [
-            [sg.Table(values=dados, headings=headings, max_col_width=10,
-                #background_color='light blue',
+            [sg.Table(values=dados, headings=headings, max_col_width=5,
                 auto_size_columns=True,
                 display_row_numbers=False,
                 justification='left',
                 num_rows=4,
-                #alternating_row_color='lightblue',
+                alternating_row_color='lightgrey',
                 key='-TABLE-',
-                row_height=50,
+                row_height=35,
                 tooltip='Relatório de Indicadores de Vacinas')],
                 [sg.Button('Ok')]
         ]
