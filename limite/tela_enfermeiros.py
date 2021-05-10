@@ -53,63 +53,6 @@ class TelaEnfermeiros():
         sg.theme('Default')
         sg.popup(f'{mensagem}', no_titlebar=True)
 
-    # def get_enfermeiro_matricula(self):
-    #     return sg.popup_get_text('Digite a Matríula do enfermeiro: ')
-
-    # def pegar_dados_enfermeiro(self):
-    #     print("-------- INCLUIR ENFERMEIRO ----------")
-    #     while True:
-    #         try:
-    #             nome = input("Nome: ").upper()
-    #             if nome.replace(' ', '').isalpha():
-    #                 break
-    #             else:
-    #                 print(f'O nome {nome} é inválido!')
-    #         except (ValueError, TypeError):
-    #             print('Houve problemas com o tipo de dado digitado')
-    #     while True:
-    #         try:
-    #             cpf = input("CPF (apenas números): ").replace(' ', '')
-    #             if cpf.isnumeric() and len(cpf) == 11:
-    #                 break
-    #             else:
-    #                 print(f'O cpf {cpf} é inválido!\nDigite um cpf com 11 dígitos')
-    #         except (ValueError, TypeError):
-    #             print('Houve problemas com o tipo de dado digitado')
-    #     while True:
-    #         try:
-    #             matricula = input("Matrícula (4 dígitos): ").replace(' ','')
-    #             if matricula.isnumeric() and len(matricula) == 4:
-    #                 break
-    #             else:
-    #                 print(f'A matrícula {matricula} é inválida!\nDigite uma matrícula com 4 dígitos')
-    #         except (ValueError, TypeError):
-    #             print('Houve problemas com o tipo de dado digitado')
-    #
-    #     return {"nome": nome, "cpf": cpf, "matricula": matricula, "status": "Ativo"}
-
-    # def pegar_dados_enfermeiro_edicao(self):
-    #     print("-------- EDITAR ENFERMEIRO ----------")
-    #     while True:
-    #         try:
-    #             nome = input("Nome: ").upper()
-    #             if nome.replace(' ', '').isalpha():
-    #                 break
-    #             else:
-    #                 print(f'O nome {nome} é inválido!')
-    #         except (ValueError, TypeError):
-    #             print('Houve problemas com o tipo de dado digitado')
-    #     while True:
-    #         try:
-    #             matricula = input("Matrícula (4 dígitos): ").replace(' ','')
-    #             if len(matricula) == 4 and matricula.isnumeric():
-    #                 break
-    #             else:
-    #                 print(f'A matrícula {matricula} é inválida!\nDigite uma matrícula com 4 dígitos')
-    #         except (ValueError, TypeError):
-    #             print('Houve problemas com o tipo de dado digitado')
-    #     return {'nome': nome, 'matricula': matricula}
-
     def selecionar_enfermeiro_tabela(self, dados_enfermeiro, titulo):
         titulos = [dados_enfermeiro[0][0], dados_enfermeiro[0][1], dados_enfermeiro[0][2], dados_enfermeiro[0][3]]
         sg.theme('Default')
@@ -138,15 +81,6 @@ class TelaEnfermeiros():
                 window.close()
                 return values['dado']
         window.close()
-
-    # def mostrar_enfermeiro(self, dados_enfermeiro):
-    #     self.linha()
-    #     print(f'ENFERMEIRO: {dados_enfermeiro["nome"]} |'
-    #           f' CPF: {dados_enfermeiro["cpf"]} |'
-    #           f' MATRÍCULA: {dados_enfermeiro["matricula"]} |'
-    #           f' STATUS: {dados_enfermeiro["status"]}'
-    #           )
-    #     self.linha()
 
     def mostrar_enfermeiro_tabela(self, dados_enfermeiro, titulo):
         titulos = [dados_enfermeiro[0][0], dados_enfermeiro[0][1], dados_enfermeiro[0][2], dados_enfermeiro[0][3]]
@@ -193,12 +127,6 @@ class TelaEnfermeiros():
             except (ValueError, TypeError):
                 sg.popup('Você digitou um valor inválido')
                 break
-
-    # def mostrar_lista_enferemrios(self, dados_enfermeiro):
-    #     print(
-    #         f'NOME: {dados_enfermeiro["nome"]} |'
-    #         f' CPF: {dados_enfermeiro["cpf"]} |'
-    #         f' MATRÍCULA: {dados_enfermeiro["data_nascimento"]}')
 
     def mostrar_pacientes_por_enfermeiro(self, dados_enfermeiro, dados_paciente):
         titulos = [dados_paciente[0][0], dados_paciente[0][1], dados_paciente[0][2]]
