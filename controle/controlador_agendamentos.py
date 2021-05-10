@@ -24,33 +24,24 @@ class ControladorAgendamentos():
             if paciente is None:
                 break
             if dados_agendamento["dose"] == 1:
-                dose1 = False
-                for agendamento in self.__dao.get_all():
-                    if agendamento.paciente == paciente and agendamento.dose == 1:
-                        dose1 = True
-                if dose1 == True:
+                codigo = str(str(dados_agendamento["dose"])+str(paciente.cpf))
+                if self.__dao.get(codigo):
                     self.__tela_agendamentos.ja_castrado_primeira_dose()
                     break
             if dados_agendamento["dose"] == 2:
-                dose1 = False
-                for agendamento in self.__dao.get_all():
-                    if agendamento.paciente == paciente and agendamento.dose == 1:
-                        dose1 = True
-                        diferenca_dias = dados_agendamento["data"] - agendamento.data
-                        if diferenca_dias.days <= 20:
-                            self.__tela_agendamentos.data_recente_primeira_dose()
-                            return None
-                        vacina_primeira_dose = agendamento.vacina
-                if dose1 == False:
+                codigo = str(str(dados_agendamento["dose"])+str(paciente.cpf))
+                if self.__dao.get(codigo):
+                    self.__tela_agendamentos.ja_castrado_primeira_dose()
+                    break
+                codigo_primeiro_agendamento = str(str(1)+str(paciente.cpf))
+                primeiro_agendamento = self.__dao.get(codigo_primeiro_agendamento)
+                if primeiro_agendamento is None:
                     self.__tela_agendamentos.nao_castrado_primeira_dose()
                     break
-                dose2 = False
-                for agendamento in self.__dao.get_all():
-                    if agendamento.paciente == paciente and agendamento.dose == 2:
-                        dose2 = True
-                if dose2 == True:
-                    self.__tela_agendamentos.ja_castrado_segunda_dose()
-                    break
+                diferenca_dias = dados_agendamento["data"] - primeiro_agendamento.data
+                if diferenca_dias.days <= 20:
+                    self.__tela_agendamentos.data_recente_primeira_dose()
+                    return None
             enfermeiro = self.__controlador_enfermeiros.get_enfermeiro()
             if enfermeiro is None:
                 break
@@ -58,7 +49,7 @@ class ControladorAgendamentos():
                 self.__controlador_enfermeiros.enfermeiro_inativo()
                 break
             if dados_agendamento["dose"] == 2:
-                vacina = vacina_primeira_dose
+                vacina = primeiro_agendamento.vacina
             else:
                 vacina = self.__controlador_vacinas.get_vacina()
                 if vacina is None:
@@ -67,7 +58,7 @@ class ControladorAgendamentos():
                 self.__controlador_vacinas.chamar_doses_insuficiente()
                 break
             vacina.subtrai_quantidade(1)
-            
+            self.__controlador_vacinas.salvar_vacina(vacina)
             agendamento = Agendamento(
                 enfermeiro,
                 paciente,
@@ -77,7 +68,6 @@ class ControladorAgendamentos():
                 dados_agendamento["dose"]
             )
             self.__dao.add(agendamento)
-            self.__controlador_vacinas.salvar_vacina(vacina)
             self.__tela_agendamentos.agendamento_cadastrado()
             break
 
@@ -138,11 +128,12 @@ class ControladorAgendamentos():
                 break
             agendamento_editar.enfermeiro = enfermeiro
             agendamento_editar.vacina = vacina
-            agendamento_editar.data = dados_agendamento["data"]
-            agendamento_editar.horario = dados_agendamento["horario"]
-            agendamento_editar.aplicada = dados_agendamento["aplicada"]
+            agendamento_editar.data = dados_agendamento['data']
+            agendamento_editar.horario = dados_agendamento['horario']
+            agendamento_editar.aplicada = dados_agendamento['aplicada']
             self.__dao.add(agendamento_editar)
             self.__controlador_vacinas.salvar_vacina(vacina)
+            self.__controlador_vacinas.salvar_vacina(agendamento_editar.vacina)
             self.__tela_agendamentos.agendamento_editado()
             break
 
