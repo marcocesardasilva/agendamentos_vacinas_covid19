@@ -38,6 +38,24 @@ class TelaPacientes():
             pass
         window.close()
 
+    def pegar_dados_cadastrar(self):
+        sg.theme('Default')
+        layout = [
+            [sg.Text('Dados do Paciente:')],
+            [sg.Text('Nome: ',size=(15, 1)), sg.InputText()],
+            [sg.Text('CPF: ',size=(15, 1)), sg.InputText()],
+            [sg.Text('Data de Nascimento (dd/mm/aaaa):', size=(15, 1)), sg.InputText()],
+            [sg.Button('Ok'), sg.Button('Cancelar')]
+        ]
+        window = sg.Window('Vacinas', layout,
+            size=(800, 480),)
+        event, values = window.Read()
+        if event == sg.WIN_CLOSED or event == 'Cancelar':
+            window.close()
+            return None
+        window.close()
+        return {"nome": values[0], "cpf": values[1], "data_nascimento": values[2]}
+
     def mensagem(self, mensagem=0):
         sg.theme('Default')
         sg.popup(f'{mensagem}', no_titlebar=True)
@@ -118,7 +136,8 @@ class TelaPacientes():
                              tooltip='This is a table')],
                   [sg.Button('Selecionar', size=(20, 2)), sg.Button('sair', size=(20, 2))],
                   ]
-        window = sg.Window(titulo, layout
+        window = sg.Window(titulo, layout,
+            size=(800, 480),
                            #botao, valores = window.Read()
                            )
         while True:
@@ -158,7 +177,8 @@ class TelaPacientes():
                              tooltip='This is a table')],
                             [sg.Button('ok')]
                             ]
-        window = sg.Window(titulo, layout
+        window = sg.Window(titulo, layout,
+            size=(800, 480),
                            #botao, valores = window.Read()
                            )
         while True:

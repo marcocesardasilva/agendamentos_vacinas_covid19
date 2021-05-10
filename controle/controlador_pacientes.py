@@ -1,5 +1,4 @@
 from limite.tela_pacientes_main import TelaPacientes
-from limite.tela_pacientes_cadastro import TelaPacientesCadastro
 from entidade.paciente import Paciente
 from controle.controlador_agendamentos import ControladorAgendamentos
 from datetime import datetime as datetime
@@ -12,7 +11,6 @@ class ControladorPacientes():
     def __init__(self, controlador_sistema):
         self.__dao = PacienteDAO()
         self.__tela_pacientes_main = TelaPacientes(self)
-        self.__tela_pacientes_cadastro = TelaPacientesCadastro(self)
         self.__controlador_sistema = controlador_sistema
         self.__controlador_agendamentos = None
         self.__mantem_tela_aberta = True
@@ -26,7 +24,7 @@ class ControladorPacientes():
 
     def cadastrar_paciente(self):
         while True:
-            dados_paciente = self.__tela_pacientes_cadastro.pegar_dados_cadastrar()
+            dados_paciente = self.__tela_pacientes_main.pegar_dados_cadastrar()
             if dados_paciente is None:
                 break
             try:
@@ -56,7 +54,7 @@ class ControladorPacientes():
             if len(self.__dao.get_all()) == 0:
                 self.__tela_pacientes_main.mensagem(f'Deu certo até aqui{len(self.__dao.get_all())}')
 
-                paciente = Paciente(dados_paciente["nome"], dados_paciente["cpf"], data_nascimento_obj)
+                paciente = Paciente(nome, cpf, data_nascimento_obj)
                 self.__dao.add(paciente)
                 break
             else:
@@ -69,6 +67,7 @@ class ControladorPacientes():
                         return None
                 paciente = Paciente(nome, cpf, data_nascimento_obj)
                 self.__dao.add(paciente)
+                self.__tela_pacientes_main.sucesso(nome, cpf, data_nascimento_obj)
                 break
 
     # def cadastrar_paciente(self):
@@ -94,7 +93,7 @@ class ControladorPacientes():
         # rever
         if paciente_editar is None:
             return None
-        dados_editar = self.__tela_pacientes_cadastro.pegar_dados_cadastrar()
+        dados_editar = self.__tela_pacientes_main.pegar_dados_cadastrar()
         try:
             nome = dados_editar["nome"].upper()
             if nome.replace(' ', '').isalpha():
@@ -243,10 +242,11 @@ class ControladorPacientes():
                     idade = idade_dias.days // 365.24231481481481481481481481481481
                     linha.append(idade)
                     matriz.append(linha)
-            paciente_selecionado = self.__tela_pacientes_main.mostrar_paciente_tabela(matriz,
+            #paciente_selecionado = \
+                self.__tela_pacientes_main.listar_paciente_tabela(matriz,
                                                                                       'Pacientes aguardando agendamento')
-            if paciente_selecionado:
-                return matriz[paciente_selecionado[0] + 1][1]
+            # if paciente_selecionado:
+            #     return matriz[paciente_selecionado[0] + 1][1]
         except Exception:
             self.__tela_pacientes_main.nenhum_agendamento()
 
@@ -282,10 +282,11 @@ class ControladorPacientes():
                         idade = idade_dias.days // 365.24231481481481481481481481481481
                         linha.append(idade)
                         matriz.append(linha)
-            paciente_selecionado = self.__tela_pacientes_main.mostrar_paciente_tabela(matriz,
+            # paciente_selecionado = \
+                self.__tela_pacientes_main.listar_paciente_tabela(matriz,
                                                                                       'Pacientes que receberam a primeira dose')
-            if paciente_selecionado:
-                return matriz[paciente_selecionado[0] + 1][1]
+            # if paciente_selecionado:
+            #     return matriz[paciente_selecionado[0] + 1][1]
         except Exception:
             self.__tela_pacientes_main.nenhum_agendamento()
 
@@ -304,10 +305,11 @@ class ControladorPacientes():
                         idade = idade_dias.days // 365.24231481481481481481481481481481
                         linha.append(idade)
                         matriz.append(linha)
-                    paciente_selecionado = self.__tela_pacientes_main.mostrar_paciente_tabela(matriz,
+                    # paciente_selecionado = \
+                        self.__tela_pacientes_main.listar_paciente_tabela(matriz,
                                                                                               'Pacientes que receberam a primeira dose')
-                    if paciente_selecionado:
-                        return matriz[paciente_selecionado[0] + 1][1]
+                    # if paciente_selecionado:
+                    #     return matriz[paciente_selecionado[0] + 1][1]
         except Exception:
             self.__tela_pacientes_main.nenhum_agendamento()
 
