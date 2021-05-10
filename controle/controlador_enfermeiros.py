@@ -19,8 +19,7 @@ class ControladorEnfermeiros():
     def cadastrar_enfermeiro(self):
         while True:
             dados_enfermeiro = self.__tela_enfermeiros_cadastro.pegar_dados_enfermeiro()
-            if dados_enfermeiro["nome"] is None or dados_enfermeiro["matricula"] is None \
-            or dados_enfermeiro["cpf"] is None or dados_enfermeiro["status"] is None:
+            if dados_enfermeiro is None:
                 break
             for enfermeiro in self.__dao.get_all():
                 if enfermeiro.matricula == dados_enfermeiro["matricula"]:
@@ -138,10 +137,10 @@ class ControladorEnfermeiros():
 
     def get_enfermeiro(self):
         if len(self.__dao.get_all()) == 0:
-            self.__tela_enfermeiros_main.enfermeiro_nao_cadastrado()
+            self.__tela_enfermeiros_main.nenhum_enfermeiro()
             return None
         else:
-            matricula = self.listar_enfermeiros()
+            matricula = self.selecionar_lista_enfermeiros()
             if matricula is None:
                 return None
             if self.__dao.get(matricula):
@@ -162,6 +161,22 @@ class ControladorEnfermeiros():
             self.__dao.add(enfermeiro)
         except Exception:
             pass
+
+    def selecionar_lista_enfermeiros(self):
+        try:
+            if len(self.__dao.get_all()) == 0:
+                raise Exception
+            matriz = []
+            linha = ['Nome', 'CPF', 'Matrícula', 'Status']
+            matriz.append(linha)
+            for enfermeiro in self.__dao.get_all():
+                linha = [enfermeiro.nome, enfermeiro.cpf, enfermeiro.matricula, enfermeiro.status]
+                matriz.append(linha)
+            enfermeiro_selecionado = self.__tela_enfermeiros_main.mostrar_enfermeiro_tabela(matriz)
+            if enfermeiro_selecionado:
+                return matriz[enfermeiro_selecionado[0]+1][2]
+        except Exception:
+            self.__tela_enfermeiros_main.mensagem('Não há enfermeiros cadastrados até o momento.')
 
     def listar_enfermeiros(self):
         try:
@@ -213,11 +228,10 @@ class ControladorEnfermeiros():
         self.__mantem_tela_aberta = True
         lista_opcoes = {1: self.cadastrar_enfermeiro,
                         2: self.editar_enfermeiro,
-                        # 3: self.consultar_enfermeiro,
-                        4: self.alterar_status_enfermeiro,
-                        5: self.listar_enfermeiros,
-                        6: self.listar_pacientes_por_enfermeiro,
-                        7: self.remover_enfermeiro,
+                        3: self.alterar_status_enfermeiro,
+                        4: self.listar_enfermeiros,
+                        5: self.listar_pacientes_por_enfermeiro,
+                        6: self.remover_enfermeiro,
                         0: self.retorna_tela_principal
                         }
 

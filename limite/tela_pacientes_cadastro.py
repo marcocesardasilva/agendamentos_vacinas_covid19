@@ -18,7 +18,8 @@ class TelaPacientesCadastro():
         ]
         window = sg.Window('Vacinas', layout)
         event, values = window.Read()
-        if event == 'Cancelar':
+        if event == sg.WIN_CLOSED or event == 'Cancelar':
+            window.close()
             return None
         window.close()
         return {"nome": values[0], "cpf": values[1], "data_nascimento": values[2]}

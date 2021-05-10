@@ -19,7 +19,8 @@ class TelaEnfermeirosCadastro():
         ]
         window = sg.Window('Enfermeiros', layout)
         event, values = window.read()
-        if event == 'Cancelar':
+        if event == sg.WIN_CLOSED or event == 'Cancelar':
+            window.close()
             return None
         window.close()
         dados = {"nome": values[0], "cpf": str(values[1]), "matricula": values[2], "status": values[3]}

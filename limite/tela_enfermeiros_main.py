@@ -13,11 +13,10 @@ class TelaEnfermeiros():
             [sg.Text('Selecione a opção desejada', size=(30, 1))],
             [sg.Button('Cadastrar enfermeiro', size=(30, 2), key='1')],
             [sg.Button('Editar enfermeiro', size=(30, 2), key='2')],
-           #[sg.Button('Consultar enfermeiro', size=(30, 2), key='3')],
-            [sg.Button('Alterar status do enfermeiro', size=(30, 2), key='4')],
-            [sg.Button('Listar enfermeiros', size=(30, 2), key='5')],
-            [sg.Button('Listar pacientes atendidos por um determinado enfermeiro', size=(30, 2), key='6')],
-            [sg.Button('Remover Enfermeiro', size=(30, 2), key='7')],
+            [sg.Button('Alterar status do enfermeiro', size=(30, 2), key='3')],
+            [sg.Button('Listar enfermeiros', size=(30, 2), key='4')],
+            [sg.Button('Listar pacientes atendidos por um determinado enfermeiro', size=(30, 2), key='5')],
+            [sg.Button('Remover Enfermeiro', size=(30, 2), key='6')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
             ]
         window = sg.Window('Enfermeiros',size=(800, 480)).Layout(layout)
@@ -195,23 +194,26 @@ class TelaEnfermeiros():
                 return values['dado']
         window.close()
 
-    def linha(self):
-        print("-" * 70)
-
     def enfermeiro_nao_cadastrado(self):
-        print("Enfermeiro não cadastrado para o código digitado.")
+        sg.theme('Default')
+        sg.popup("Enfermeiro não cadastrado para o código digitado.", no_titlebar=True)
     
     def enfermeiro_inativo(self):
-        print("Enfermeiro selecionado inativo.")
+        sg.theme('Default')
+        sg.popup("Enfermeiro selecionado inativo.", no_titlebar=True)
 
     def cpf_ja_cadastrado(self, cpf):
-        print(f'O cpf {cpf} já foi cadastrado')
+        sg.theme('Default')
+        sg.popup(f'O cpf {cpf} já foi cadastrado', no_titlebar=True)
 
     def matricula_ja_cadastrada(self, matricula):
-        print(f'A matrícula {matricula} já foi cadastrada')
+        sg.theme('Default')
+        sg.popup(f'A matrícula {matricula} já foi cadastrada', no_titlebar=True)
 
     def nenhum_enfermeiro(self):
-        print('Ainda não há enfermeiros cadastrados')
+        sg.theme('Default')
+        sg.popup('Ainda não há enfermeiros cadastrados', no_titlebar=True)
 
     def nenhum_agendamento(self):
-        print('Ainda não há atendimentos agendados para nenhum enfermeiro')
+        sg.theme('Default')
+        sg.popup('Ainda não há atendimentos agendados para nenhum enfermeiro', no_titlebar=True)
