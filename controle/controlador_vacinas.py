@@ -97,6 +97,9 @@ class ControladorVacinas():
 
     def chamar_doses_insuficiente(self):
         self.__tela_vacinas.doses_insuficiente()
+    
+    def salvar_vacina(self, vacina):
+        self.__dao.add(vacina)
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False

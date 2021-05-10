@@ -77,9 +77,10 @@ class TelaVacinas():
                     return None
                 elif event == 'Selecionar':
                     vacina_selecionada = values['-VACINA-']
+                    window.close()
                     return dados[vacina_selecionada[0]+1][0]
             except IndexError:
-                sg.popup('Vacina não selecionada.', 'Tente novamente.')
+                sg.popup('Vacina não selecionada.')
         window.close()
 
     def pegar_quantidade(self):
@@ -109,7 +110,7 @@ class TelaVacinas():
         dados = []
         for vacina in dados_vacina:
             dados.append([vacina.fabricante, vacina.quantidade])
-        headings = ['Fabricante', 'Quantidade']
+        headings = ['   Fabricante   ', 'Quantidade']
         layout = [
             [sg.Table(values=dados, headings=headings, max_col_width=5,
                 auto_size_columns=True,
@@ -134,7 +135,7 @@ class TelaVacinas():
         dados = []
         for fabricante,quantidade in dados_vacina.items():
             dados.append([fabricante, quantidade])
-        headings = ['Fabricante', 'Quantidade']
+        headings = ['   Fabricante   ', 'Quantidade']
         layout = [
             [sg.Table(values=dados, headings=headings, max_col_width=5,
                 auto_size_columns=True,

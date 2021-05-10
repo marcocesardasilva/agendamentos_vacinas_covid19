@@ -77,6 +77,7 @@ class ControladorAgendamentos():
                 dados_agendamento["dose"]
             )
             self.__dao.add(agendamento)
+            self.__controlador_vacinas.salvar_vacina(vacina)
             self.__tela_agendamentos.agendamento_cadastrado()
             break
 
@@ -141,6 +142,7 @@ class ControladorAgendamentos():
             agendamento_editar.horario = dados_agendamento["horario"]
             agendamento_editar.aplicada = dados_agendamento["aplicada"]
             self.__dao.add(agendamento_editar)
+            self.__controlador_vacinas.salvar_vacina(vacina)
             self.__tela_agendamentos.agendamento_editado()
             break
 
@@ -161,6 +163,7 @@ class ControladorAgendamentos():
                 agendamento.vacina.adiciona_quantidade(1)
                 self.__dao.remove(agendamento.codigo)
                 self.__tela_agendamentos.agendamento_removido()
+                self.__controlador_vacinas.salvar_vacina(agendamento.vacina)
 
     def listar_agendamentos_abertos(self):
         if len(self.__dao.get_all()) == 0:
