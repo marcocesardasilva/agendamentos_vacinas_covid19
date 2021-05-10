@@ -52,7 +52,7 @@ class ControladorPacientes():
                 self.__tela_pacientes.mensagem('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
                 break
             if len(self.__dao.get_all()) == 0:
-                self.__tela_pacientes.mensagem(f'Deu certo até aqui{len(self.__dao.get_all())}')
+                self.__tela_pacientes.mensagem(f'Paciente {nome} cadastrado')
 
                 paciente = Paciente(nome, cpf, data_nascimento_obj)
                 self.__dao.add(paciente)
@@ -112,17 +112,17 @@ class ControladorPacientes():
                 self.__tela_pacientes.cpf_nao_cadastrado(cpf)
         return None
 
-    def tabela_pacientes(self):
-        matriz = []
-        linha = ['      Nome       ', '      CPF      ', ' Idade ']
-        matriz.append(linha)
-        for paciente in self.__dao.get_all():
-            linha = [paciente.nome, paciente.cpf]
-            idade_dias = datetime.today().date() - paciente.data_nascimento
-            idade = idade_dias.days // 365.24231481481481481481481481481481
-            linha.append(idade)
-            matriz.append(linha)
-        return matriz
+    # def tabela_pacientes(self):
+    #     matriz = []
+    #     linha = ['      Nome       ', '      CPF      ', ' Idade ']
+    #     matriz.append(linha)
+    #     for paciente in self.__dao.get_all():
+    #         linha = [paciente.nome, paciente.cpf]
+    #         idade_dias = datetime.today().date() - paciente.data_nascimento
+    #         idade = round((idade_dias.days // 365.24231481481481481481481481481481), 0)
+    #         linha.append(idade)
+    #         matriz.append(linha)
+    #     return matriz
 
     def selecionar_lista_pacientes(self):
         matriz = []
@@ -134,7 +134,7 @@ class ControladorPacientes():
         for paciente in self.__dao.get_all():
             linha = [paciente.nome, paciente.cpf]
             idade_dias = datetime.today().date() - paciente.data_nascimento
-            idade = idade_dias.days // 365.24231481481481481481481481481481
+            idade = int(idade_dias.days // 365.24231481481481481481481481481481)
             linha.append(idade)
             matriz.append(linha)
         paciente_selecionado = self.__tela_pacientes.selecionar_paciente_tabela(matriz, 'Selecionar Pacientes')
@@ -151,7 +151,7 @@ class ControladorPacientes():
         for paciente in self.__dao.get_all():
             linha = [paciente.nome, paciente.cpf]
             idade_dias = datetime.today().date() - paciente.data_nascimento
-            idade = idade_dias.days // 365.24231481481481481481481481481481
+            idade = int(idade_dias.days // 365.24231481481481481481481481481481)
             linha.append(idade)
             matriz.append(linha)
         self.__tela_pacientes.listar_paciente_tabela(matriz, 'Lista de pacientes')
@@ -171,7 +171,7 @@ class ControladorPacientes():
                 if paciente not in pacientes_agendados:
                     linha = [paciente.nome, paciente.cpf]
                     idade_dias = datetime.today().date() - paciente.data_nascimento
-                    idade = idade_dias.days // 365.24231481481481481481481481481481
+                    idade = int(idade_dias.days // 365.24231481481481481481481481481481)
                     linha.append(idade)
                     matriz.append(linha)
             self.__tela_pacientes.listar_paciente_tabela(matriz, 'Pacientes aguardando agendamento')
@@ -206,7 +206,7 @@ class ControladorPacientes():
                         doses_aplicadas +=1
                         linha = [agendamento.paciente.nome, agendamento.paciente.cpf]
                         idade_dias = datetime.today().date() - agendamento.paciente.data_nascimento
-                        idade = idade_dias.days // 365.24231481481481481481481481481481
+                        idade = int(idade_dias.days // 365.24231481481481481481481481481481)
                         linha.append(idade)
                         matriz.append(linha)
             if doses_aplicadas == 0:
@@ -229,7 +229,7 @@ class ControladorPacientes():
                         doses_aplicadas += 1
                         linha = [agendamento.paciente.nome, agendamento.paciente.cpf]
                         idade_dias = datetime.today().date() - agendamento.paciente.data_nascimento
-                        idade = idade_dias.days // 365.24231481481481481481481481481481
+                        idade = int(idade_dias.days // 365.24231481481481481481481481481481)
                         linha.append(idade)
                         matriz.append(linha)
                     # paciente_selecionado = \
@@ -241,11 +241,11 @@ class ControladorPacientes():
             self.__tela_pacientes.nenhum_agendamento()
 
     def remover_paciente(self):
-        paciente = self.get_paciente()
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
-        for agendamento in self.__controlador_agendamentos.agendamentos:
-            if agendamento.paciente == paciente:
-                return None
+        paciente = self.get_paciente()
+        # for agendamento in self.__controlador_agendamentos.agendamentos:
+        #     if agendamento.paciente == paciente:
+        #         return None
         if paciente is not None:
             self.__dao.remove(paciente.cpf)
 
