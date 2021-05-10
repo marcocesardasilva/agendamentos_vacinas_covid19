@@ -16,7 +16,7 @@ class TelaAgendamentos():
             [sg.Button('Remover agendamento', size=(30, 2), key='4')],
             [sg.Button('Listar aplicações agendadas', size=(30, 2), key='5')],
             [sg.Button('Listar histórico de vacinações', size=(30, 2), key='6')],
-            [sg.Button('Relatório Geral', size=(30, 2), key='7')],
+            [sg.Button('Relatório de agendamentos', size=(30, 2), key='7')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
         ]
         window = sg.Window('Agendamentos',size=(800, 480)).Layout(layout)

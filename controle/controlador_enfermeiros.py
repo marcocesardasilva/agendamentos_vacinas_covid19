@@ -177,14 +177,17 @@ class ControladorEnfermeiros():
             pass
 
     def remover_enfermeiro(self):
-        self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
-
         enfermeiro = self.get_enfermeiro()
-        for agendamento in self.__controlador_agendamentos.agendamentos():
-            if agendamento.enfermeiro == enfermeiro:
-                return None
         if enfermeiro is not None:
             self.__dao.remove(enfermeiro.matricula)
+        # ESTÁ COM ERRO AQUI, NÃO ESTÁ REMOVENDO, VOLTEI O CÓDIGO PARA VERIFICARMOS.
+        # self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        # enfermeiro = self.get_enfermeiro()
+        # for agendamento in self.__controlador_agendamentos.agendamentos():
+        #     if agendamento.enfermeiro == enfermeiro:
+        #         return None
+        # if enfermeiro is not None:
+        #     self.__dao.remove(enfermeiro.matricula)
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False
