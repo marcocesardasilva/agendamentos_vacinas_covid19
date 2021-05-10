@@ -1,8 +1,8 @@
 from entidade.vacina import Vacina
 from entidade.enfermeiro import Enfermeiro
 from entidade.paciente import Paciente
-from datetime import datetime as date
-from datetime import datetime as time
+from datetime import date
+from datetime import time
 
 
 class Agendamento:

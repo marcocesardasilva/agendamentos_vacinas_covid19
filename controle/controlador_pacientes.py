@@ -35,7 +35,7 @@ class ControladorPacientes():
                 self.__tela_pacientes.mensagem('Houve problemas com o tipo de dado digitado')
             try:
                 cpf = dados_paciente["cpf"].replace(' ', '')
-                if not cpf.isnumeric() and len(cpf) == 11:
+                if not (cpf.isnumeric() and len(cpf) == 11):
                     self.__tela_pacientes.mensagem(f'O cpf {cpf} é inválido!\nDigite um cpf com 11 dígitos')
                     break
             except (ValueError, TypeError):
