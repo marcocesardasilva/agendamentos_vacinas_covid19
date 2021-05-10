@@ -137,11 +137,6 @@ class ControladorPacientes():
     #                  }
     #             )
 
-    def remover_paciente(self):
-        paciente = self.get_paciente()
-        if paciente is not None:
-            self.__dao.remove(paciente.cpf)
-
     def get_paciente(self):
         if len(self.__dao.get_all()) == 0:
             self.__tela_pacientes_main.nenhum_paciente()
@@ -243,8 +238,7 @@ class ControladorPacientes():
                     linha.append(idade)
                     matriz.append(linha)
             #paciente_selecionado = \
-                self.__tela_pacientes_main.listar_paciente_tabela(matriz,
-                                                                                      'Pacientes aguardando agendamento')
+            self.__tela_pacientes_main.listar_paciente_tabela(matriz, 'Pacientes aguardando agendamento')
             # if paciente_selecionado:
             #     return matriz[paciente_selecionado[0] + 1][1]
         except Exception:
@@ -268,29 +262,33 @@ class ControladorPacientes():
         return pacientes_sem_agendamento
 
     def listar_pacientes_primeira_dose(self):
-        matriz = []
-        matriz.append(['        Nome        ', '    CPF    ', 'Idade'])
+        doses_aplicadas = 0
+        matriz = [['        Nome        ', '    CPF    ', 'Idade']]
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
-        try:
-            if len(self.__controlador_agendamentos.agendamentos) == 0:
-                raise Exception
-            for agendamento in self.__controlador_agendamentos.agendamentos:
-                if agendamento.dose == 1:
-                    if agendamento.aplicada:
-                        linha = [agendamento.paciente.nome, agendamento.paciente.cpf]
-                        idade_dias = datetime.today().date() - agendamento.paciente.data_nascimento
-                        idade = idade_dias.days // 365.24231481481481481481481481481481
-                        linha.append(idade)
-                        matriz.append(linha)
-            # paciente_selecionado = \
-                self.__tela_pacientes_main.listar_paciente_tabela(matriz,
-                                                                                      'Pacientes que receberam a primeira dose')
+        # try:
+        if len(self.__controlador_agendamentos.agendamentos) == 0:
+            raise Exception
+        for agendamento in self.__controlador_agendamentos.agendamentos:
+            if agendamento.dose == 1:
+                if agendamento.aplicada:
+                    doses_aplicadas +=1
+                    linha = [agendamento.paciente.nome, agendamento.paciente.cpf]
+                    idade_dias = datetime.today().date() - agendamento.paciente.data_nascimento
+                    idade = idade_dias.days // 365.24231481481481481481481481481481
+                    linha.append(idade)
+                    matriz.append(linha)
+        # paciente_selecionado = \
+        if doses_aplicadas == 0:
+            self.__tela_pacientes_main.mensagem('Nenhum paciente recebeu a primeira dose')
+            return None
+        self.__tela_pacientes_main.listar_paciente_tabela(matriz, 'Pacientes que receberam a primeira dose')
             # if paciente_selecionado:
             #     return matriz[paciente_selecionado[0] + 1][1]
-        except Exception:
-            self.__tela_pacientes_main.nenhum_agendamento()
+        # except Exception:
+        #     self.__tela_pacientes_main.nenhum_agendamento()
 
     def listar_pacientes_segunda_dose(self):
+        doses_aplicadas = 0
         matriz = []
         matriz.append(['        Nome        ', '    CPF    ', 'Idade'])
         self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
@@ -300,18 +298,30 @@ class ControladorPacientes():
             for agendamento in self.__controlador_agendamentos.agendamentos:
                 if agendamento.dose == 2:
                     if agendamento.aplicada:
+                        doses_aplicadas += 1
                         linha = [agendamento.paciente.nome, agendamento.paciente.cpf]
                         idade_dias = datetime.today().date() - agendamento.paciente.data_nascimento
                         idade = idade_dias.days // 365.24231481481481481481481481481481
                         linha.append(idade)
                         matriz.append(linha)
                     # paciente_selecionado = \
-                        self.__tela_pacientes_main.listar_paciente_tabela(matriz,
-                                                                                              'Pacientes que receberam a primeira dose')
+            if doses_aplicadas == 0:
+                self.__tela_pacientes_main.mensagem('Nenhum paciente recebeu a segunda dose')
+                return None
+            self.__tela_pacientes_main.listar_paciente_tabela(matriz, 'Pacientes que receberam a segunda dose')
                     # if paciente_selecionado:
                     #     return matriz[paciente_selecionado[0] + 1][1]
         except Exception:
             self.__tela_pacientes_main.nenhum_agendamento()
+
+    def remover_paciente(self):
+        paciente = self.get_paciente()
+        self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
+        for agendamento in self.__controlador_agendamentos.agendamentos:
+            if agendamento.paciente == paciente:
+                return None
+        if paciente is not None:
+            self.__dao.remove(paciente.cpf)
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False
