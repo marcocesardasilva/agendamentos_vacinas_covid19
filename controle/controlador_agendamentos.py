@@ -204,9 +204,6 @@ class ControladorAgendamentos():
                     paciente_vacinados_primeira_dose += 1
                 if agendamento.dose == 2:
                     paciente_vacinados_segunda_dose += 1
-            else:
-                if agendamento.dose == 1:
-                    pacientes_sem_agendamentos += 1
         self.__tela_agendamentos.mostrar_relatorio({
                         "vacinas_aplicadas": vacinas_aplicadas,
                         "paciente_vacinados_primeira_dose": paciente_vacinados_primeira_dose,

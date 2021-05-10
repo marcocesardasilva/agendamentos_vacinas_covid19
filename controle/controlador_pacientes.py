@@ -253,9 +253,8 @@ class ControladorPacientes():
             if len(self.__dao.get_all()) == 0:
                 return 0
             for agendamento in self.__controlador_agendamentos.agendamentos:
-                for paciente in self.__dao.get_all():
-                    if agendamento.paciente == paciente and agendamento.dose == 1:
-                        pacientes_com_agendamento += 1
+                if agendamento.aplicada == True and agendamento.dose == 1:
+                    pacientes_com_agendamento += 1
             pacientes_sem_agendamento = pacientes_total - pacientes_com_agendamento
         except:
             self.__tela_pacientes_main.nenhum_agendamento()

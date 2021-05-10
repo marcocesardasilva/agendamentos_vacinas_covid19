@@ -82,54 +82,54 @@ class TelaAgendamentos():
                 key='-AGENDAMENTO-',
                 row_height=35,
                 tooltip='Lista de vacinas disponíveis')],
-                [sg.Button('Selecionar', size=(20, 2)), sg.Button('Cancelar', size=(20, 2))]
+                [sg.Button('Selecionar'), sg.Button('Cancelar')]
         ]
         window = sg.Window('Agendamentos', size=(800, 480)).Layout(layout)
         while True:
-            event, values = window.read()
-            if event == sg.WIN_CLOSED or event == 'Cancelar':
-                window.close()
-                return None
-            elif event == 'Selecionar':
-                window.close()
-                agendamento_selecionado = values['-AGENDAMENTO-']
-                return dados[agendamento_selecionado[0]+1][0]
+            try:
+                event, values = window.read()
+                if event == sg.WIN_CLOSED or event == 'Cancelar':
+                    window.close()
+                    return None
+                elif event == 'Selecionar':
+                    window.close()
+                    agendamento_selecionado = values['-AGENDAMENTO-']
+                    return dados[agendamento_selecionado[0]+1][0]
+            except IndexError:
+                sg.popup('Agendamento não selecionada.', 'Tente novamente.')
         window.close()
 
     def pegar_dados_editar(self):
-        print("-------- EDITAR AGENDAMENTO ----------")
+        sg.theme('Default')
+        layout = [
+            [sg.Text('Editar Agendamento:')],
+            [sg.Text('Data (dd/mm/aaaa):',size=(15, 1)), sg.InputText()],
+            [sg.Text('Hora:',size=(15, 1)), sg.InputCombo(('08','09','10','11','13','14','15','16','17'), size=(15,1)),
+            sg.Text('Minuto:',size=(6, 1)), sg.InputCombo(('00','10','20','30','40','50'), size=(15,1))],
+            [sg.Text('Aplicada', size=(15,1)), sg.InputCombo(('Não', 'Sim'), size=(15,1))],
+            [sg.Button('Ok'), sg.Button('Cancelar')]
+        ]
+        window = sg.Window('Agendamentos',size=(800, 480)).Layout(layout)
         while True:
             try:
-                data_str = input("Data (dd/mm/aaaa): ")
+                event, values = window.read()
+                if event == sg.WIN_CLOSED or event == 'Cancelar':
+                    window.close()
+                    return None
+                data_str = values[0]
                 data = datetime.strptime(data_str, '%d/%m/%Y').date()
-                if data:
-                    break
-            except:
-                print('Data inválida! A data deve ser inserida neste formato: dd/mm/aaaa.')
-        while True:
-            try:
-                horario_str = input("Horário (hh:mm):")
+                horario_str = values[1]+':'+values[2]
                 horario = datetime.strptime(horario_str, '%H:%M').time()
-                if datetime.strptime("08:00", '%H:%M').time() <= horario <= datetime.strptime("18:00", '%H:%M').time():
-                    break
-                else:
-                    raise Exception
-            except Exception:
-                print('Horário inválido! O horário deve ser comercial (08:00 às 18:00).')
-        while True:
-            try:
-                opcao = int(input("Vacina já foi aplicada (1 - Não / 2 - Sim): "))
-                if opcao == 1 or opcao == 2:
-                    status_aplicacao = opcao
-                    break
-                else:
-                    print("Opção escolhida inválida!")
+                datetime.strptime('08:00', '%H:%M').time() <= horario <= datetime.strptime('18:00', '%H:%M').time()
+                break
             except ValueError:
-                print("Valor digitado inválido!")
-        aplicada = False
-        if status_aplicacao == 2:
+                sg.popup('Valores digitados inválidos.', 'Tente novamente.')
+        if values[3] == 'Não':
+            aplicada = False
+        if values[3] == 'Sim':
             aplicada = True
-        return {"data": data, "horario": horario, "aplicada": aplicada}
+        window.close()
+        return {'data': data, 'horario': horario, 'aplicada': aplicada}
 
     def mostrar_lista_agendamentos(self, lista_de_agendamentos):
         sg.theme('Default')

@@ -55,7 +55,7 @@ class TelaVacinas():
         dados.append(['Fabricante', 'Quantidade'])
         for vacina in lista_de_vacinas:
             dados.append([vacina.fabricante, vacina.quantidade])
-        headings = ['Fabricante', 'Quantidade']
+        headings = ['   Fabricante   ', 'Quantidade']
         layout = [
             [sg.Table(values=dados[1:][:], headings=headings, max_col_width=5,
                 def_col_width=200,
@@ -66,18 +66,20 @@ class TelaVacinas():
                 key='-VACINA-',
                 row_height=35,
                 tooltip='Lista de vacinas disponíveis')],
-                [sg.Button('Selecionar', size=(20, 2)), sg.Button('Cancelar', size=(20, 2))]
+                [sg.Button('Selecionar'), sg.Button('Cancelar')]
         ]
         window = sg.Window('Vacinas', size=(800, 480)).Layout(layout)
         while True:
-            event, values = window.read()
-            if event == sg.WIN_CLOSED or event == 'Cancelar':
-                window.close()
-                return None
-            elif event == 'Selecionar':
-                window.close()
-                vacina_selecionada = values['-VACINA-']
-                return dados[vacina_selecionada[0]+1][0]
+            try:
+                event, values = window.read()
+                if event == sg.WIN_CLOSED or event == 'Cancelar':
+                    window.close()
+                    return None
+                elif event == 'Selecionar':
+                    vacina_selecionada = values['-VACINA-']
+                    return dados[vacina_selecionada[0]+1][0]
+            except IndexError:
+                sg.popup('Vacina não selecionada.', 'Tente novamente.')
         window.close()
 
     def pegar_quantidade(self):
