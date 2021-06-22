@@ -9,15 +9,7 @@ class TelaPacientes():
 
     def tela_opcoes(self):
         sg.theme('Default')
-        layout = [#[sg.Table(values=lista[1:][:], max_col_width=25,
-        #                     # background_color='light blue',
-        #                     auto_size_columns=True,
-        #                     display_row_numbers=True,
-        #                     justification='right',
-        #                     alternating_row_color='lightgrey',
-        #                     key='-TABLE-',
-        #                     row_height=35,
-        #                     tooltip='This is a table')],
+        layout = [
             [sg.Text('Selecione a opção desejada', size=(30, 1))],
             [sg.Button('Cadastrar paciente', size=(30, 2), key='1')],
             [sg.Button('Editar paciente', size=(30, 2), key='2')],
@@ -28,7 +20,8 @@ class TelaPacientes():
             [sg.Button('Remover paciente', size=(30, 2), key='7')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
             ]
-        window = sg.Window('Pacientes',size=(800, 480)).Layout(layout)
+        window = sg.Window('Pacientes',size=(800, 480), element_justification="center").Layout(layout).Finalize()
+        window.Maximize()
         botao, valores = window.read()
         try:
             opcao = int(botao)
@@ -47,8 +40,8 @@ class TelaPacientes():
             [sg.Text('Data de Nascimento (dd/mm/aaaa):', size=(15, 1)), sg.InputText()],
             [sg.Button('Ok'), sg.Button('Cancelar')]
         ]
-        window = sg.Window('Vacinas', layout,
-            size=(800, 480),)
+        window = sg.Window('Vacinas', layout, size=(800, 480), element_justification="center").Finalize()
+        window.Maximize()
         event, values = window.Read()
         if event == sg.WIN_CLOSED or event == 'Cancelar':
             window.close()
@@ -60,72 +53,10 @@ class TelaPacientes():
         sg.theme('Default')
         sg.popup(f'{mensagem}', no_titlebar=True)
 
-    # def pega_dados_paciente(self):
-    #     print("-------- INCLUIR PACIENTE ----------")
-    #     while True:
-    #         try:
-    #             nome = input("Nome: ").upper()
-    #             if nome.replace(' ','').isalpha():
-    #                 break
-    #             else:
-    #                 print(f'O nome {nome} é inválido!')
-    #         except (ValueError, TypeError):
-    #             print('Houve problemas com o tipo de dado digitado')
-    #     while True:
-    #         try:
-    #             cpf = input("CPF (apenas números): ").replace(' ','')
-    #             if cpf.isnumeric() and len(cpf) == 11:
-    #                 break
-    #             else:
-    #                 print(f'O cpf {cpf} é inválido!\nDigite um cpf com 11 dígitos')
-    #         except (ValueError, TypeError):
-    #             print('Houve problemas com o tipo de dado digitado')
-    #     while True:
-    #         try:
-    #             data_nascimento_str = input("Data de nascimento (dd/mm/aaaa): ")
-    #             data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
-    #             idade_dias = datetime.today().date() - data_nascimento_obj
-    #             idade = int(idade_dias.days // 365.24231481481481481481481481481481)
-    #             if 0 < idade < 150:
-    #                 break
-    #             else:
-    #                 print('Idade inválida, a idade deve ser entre 0 e 150 anos')
-    #
-    #         except:
-    #             print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
-    #     return {"nome": nome, "cpf": cpf, "data_nascimento": data_nascimento_obj}
-    #
-    # def pega_dados_paciente_edicao(self):
-    #     print('---------- EDITAR PACIENTE ----------')
-    #     while True:
-    #         try:
-    #             nome = input("Nome: ").upper()
-    #             if nome.replace(' ','').isalpha():
-    #                 break
-    #             else:
-    #                 print(f'O nome {nome} é inválido!')
-    #         except (ValueError, TypeError):
-    #             print('Houve problemas com o tipo de dado digitado')
-    #     while True:
-    #         try:
-    #             data_nascimento_str = input("Data de nascimento (dd/mm/aaaa): ")
-    #             data_nascimento_obj = datetime.strptime(data_nascimento_str, '%d/%m/%Y').date()
-    #             idade_dias = datetime.today().date() - data_nascimento_obj
-    #             idade = int(idade_dias.days // 365.24231481481481481481481481481481)
-    #             if 0 <= idade <= 150:
-    #                 break
-    #             else:
-    #                 print('Idade inválida, a idade deve ser entre 0 e 150 anos')
-    #
-    #         except:
-    #             print('Data inválida, a data deve ser inserida neste formato: 11/11/2011')
-    #     return {"nome": nome, "data_nascimento": data_nascimento_obj}
-
     def selecionar_paciente_tabela(self, dados_paciente, titulo):
         titulos = [dados_paciente[0][0], dados_paciente[0][1], dados_paciente[0][2]]
         sg.theme('Default')
         layout = [[sg.Table(values=dados_paciente[1:][:], headings=titulos, max_col_width=50,
-                             # background_color='light blue',
                              def_col_width=200,
                              auto_size_columns=True,
                              display_row_numbers=True,
@@ -136,10 +67,8 @@ class TelaPacientes():
                              tooltip='This is a table')],
                   [sg.Button('Selecionar', size=(20, 2)), sg.Button('sair', size=(20, 2))],
                   ]
-        window = sg.Window(titulo, layout,
-            size=(800, 480),
-                           #botao, valores = window.Read()
-                           )
+        window = sg.Window(titulo, layout, size=(800, 480), element_justification="center").Finalize()
+        window.Maximize()
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED:
@@ -152,21 +81,10 @@ class TelaPacientes():
         window.close()
         return None
 
-#     def mostrar_paciente(self, dados_paciente):
-#         sg.theme('Default')
-#         idade_dias = datetime.today().date() - dados_paciente["data_nascimento"]
-#         idade = idade_dias.days // 365.24231481481481481481481481481481
-#         sg.popup(   f'NOME:         {dados_paciente["nome"]}\n'
-#                     f'CPF:          {dados_paciente["cpf"]}\n'
-#                     f'IDADE:        {idade:.0f} anos\n'
-# #                    f'DOSE:         {dados_paciente["dose"]}\n'
-# #                    f'APLICADA:     {dados_paciente["aplicada"]}\n'
-#                     )
     def listar_paciente_tabela(self, dados_paciente, titulo):
         titulos = [dados_paciente[0][0], dados_paciente[0][1], dados_paciente[0][2]]
         sg.theme('Default')
         layout = [[sg.Table(values=dados_paciente[1:][:], headings=titulos, max_col_width=50,
-                             # background_color='light blue',
                              def_col_width=200,
                              auto_size_columns=True,
                              display_row_numbers=True,
@@ -177,10 +95,8 @@ class TelaPacientes():
                              tooltip='This is a table')],
                             [sg.Button('ok')]
                             ]
-        window = sg.Window(titulo, layout,
-            size=(800, 480),
-                           #botao, valores = window.Read()
-                           )
+        window = sg.Window(titulo, layout, size=(800, 480), element_justification="center").Finalize()
+        window.Maximize()
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED:

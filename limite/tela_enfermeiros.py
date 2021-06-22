@@ -19,7 +19,8 @@ class TelaEnfermeiros():
             [sg.Button('Remover Enfermeiro', size=(30, 2), key='6')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
         ]
-        window = sg.Window('Enfermeiros', size=(800, 480)).Layout(layout)
+        window = sg.Window('Enfermeiros', size=(800, 480), element_justification="center").Layout(layout).Finalize()
+        window.Maximize()
         botao, valores = window.read()
         try:
             opcao = int(botao)
@@ -39,8 +40,8 @@ class TelaEnfermeiros():
             [sg.Text('Status', size=(15,1)), sg.InputCombo(('Ativo', 'Inativo'), size=(15,1))],
             [sg.Button('Ok'), sg.Button('Cancelar')]
         ]
-        window = sg.Window('Enfermeiros', layout,
-            size=(800, 480),)
+        window = sg.Window('Enfermeiros', layout, size=(800, 480), element_justification="center").Finalize()
+        window.Maximize()
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Cancelar':
             window.close()
@@ -57,7 +58,6 @@ class TelaEnfermeiros():
         titulos = [dados_enfermeiro[0][0], dados_enfermeiro[0][1], dados_enfermeiro[0][2], dados_enfermeiro[0][3]]
         sg.theme('Default')
         layout = [[sg.Table(values=dados_enfermeiro[1:][:], headings=titulos, max_col_width=25,
-                            # background_color='light blue',
                             auto_size_columns=True,
                             display_row_numbers=True,
                             justification='left',
@@ -67,10 +67,8 @@ class TelaEnfermeiros():
                             tooltip='This is a table')],
                   [sg.Button('Selecionar', size=(20, 2)), sg.Button('Sair', size=(20, 2))],
                   ]
-        window = sg.Window(titulo, layout,
-            size=(800, 480),
-                           # botao, valores = window.Read()
-                           )
+        window = sg.Window(titulo, layout,size=(800, 480), element_justification="center").Finalize()
+        window.Maximize()
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED:
@@ -86,7 +84,6 @@ class TelaEnfermeiros():
         titulos = [dados_enfermeiro[0][0], dados_enfermeiro[0][1], dados_enfermeiro[0][2], dados_enfermeiro[0][3]]
         sg.theme('Default')
         layout = [[sg.Table(values=dados_enfermeiro[1:][:], headings=titulos, max_col_width=25,
-                            # background_color='light blue',
                             auto_size_columns=True,
                             display_row_numbers=True,
                             justification='left',
@@ -97,11 +94,8 @@ class TelaEnfermeiros():
 
                   [sg.Button('ok')]
                   ]
-        window = sg.Window(titulo, layout,
-            size=(800, 480),
-                           # botao, valores = window.Read()
-
-                           )
+        window = sg.Window(titulo, layout,size=(800, 480), element_justification="center").Finalize()
+        window.Maximize()
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED:
@@ -134,7 +128,6 @@ class TelaEnfermeiros():
         layout = [[sg.Text(
             f'Pacientes atendidos pelo enfermeiro {dados_enfermeiro["nome"]}, matricula {dados_enfermeiro["matricula"]}:')],
                   [sg.Table(values=dados_paciente[1:][:], headings=titulos, max_col_width=25,
-                            # background_color='light blue',
                             auto_size_columns=True,
                             display_row_numbers=True,
                             justification='left',
@@ -142,21 +135,16 @@ class TelaEnfermeiros():
                             key='dado',
                             row_height=35,
                             tooltip='This is a table')],
-                  [sg.Button('Selecionar', size=(20, 2)), sg.Button('Sair', size=(20, 2))],
+                  [sg.Button('Sair', size=(20, 2))],
                   ]
-        window = sg.Window('Enfermeiros', layout,
-            size=(800, 480),
-                           # botao, valores = window.Read()
-                           )
+        window = sg.Window('Enfermeiros', layout, size=(800, 480), element_justification="center").Finalize()
+        window.Maximize()
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED:
                 break
             elif event == 'Sair':
                 break
-            elif event == 'Selecionar':
-                window.close()
-                return values['dado']
         window.close()
 
     def enfermeiro_nao_cadastrado(self):

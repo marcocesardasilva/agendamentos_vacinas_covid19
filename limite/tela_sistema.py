@@ -17,8 +17,9 @@ class TelaSistema:
         window = sg.Window(
             'Sistema de agendamento de vacinações',
             size=(800, 480),
-            #element_justification="center"
-            ).Layout(layout)
+            element_justification="center",
+            ).Layout(layout).Finalize()
+        window.Maximize()
         botao, _ = window.Read()
         if botao == sg.WIN_CLOSED:
             window.close()

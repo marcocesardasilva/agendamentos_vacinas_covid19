@@ -19,7 +19,8 @@ class TelaVacinas():
             [sg.Button('Listar doses aplicadas', size=(30, 2), key='7')],
             [sg.Button('Retornar', size=(30, 2), key='0')]
         ]
-        window = sg.Window('Vacinas', size=(800, 480)).Layout(layout)
+        window = sg.Window('Vacinas', size=(800, 480),element_justification="center").Layout(layout).Finalize()
+        window.Maximize()
         botao, _ = window.Read()
         opcao = int(botao)
         window.close()
@@ -33,7 +34,8 @@ class TelaVacinas():
             [sg.Text('Quantidade',size=(15, 1)), sg.InputText()],
             [sg.Button('Ok'), sg.Button('Cancelar')]
         ]
-        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
+        window = sg.Window('Vacinas',size=(800, 480),element_justification="center").Layout(layout).Finalize()
+        window.Maximize()
         while True:
             try:
                 event, values = window.read()
@@ -68,7 +70,8 @@ class TelaVacinas():
                 tooltip='Lista de vacinas disponíveis')],
                 [sg.Button('Selecionar'), sg.Button('Cancelar')]
         ]
-        window = sg.Window('Vacinas', size=(800, 480)).Layout(layout)
+        window = sg.Window('Vacinas', size=(800, 480),element_justification="center").Layout(layout).Finalize()
+        window.Maximize()
         while True:
             try:
                 event, values = window.read()
@@ -90,7 +93,8 @@ class TelaVacinas():
             [sg.Text('Quantidade',size=(15, 1)), sg.InputText()],
             [sg.Button('Ok'), sg.Button('Cancelar')]
         ]
-        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
+        window = sg.Window('Vacinas',size=(800, 480),element_justification="center").Layout(layout).Finalize()
+        window.Maximize()
         while True:
             try:
                 event, values = window.read()
@@ -123,7 +127,8 @@ class TelaVacinas():
                 tooltip='Lista de vacinas disponíveis')],
                 [sg.Button('Ok')]
         ]
-        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
+        window = sg.Window('Vacinas',size=(800, 480),element_justification="center").Layout(layout).Finalize()
+        window.Maximize()
         while True:
             event, _ = window.read()
             if event == sg.WIN_CLOSED or event == 'Ok':
@@ -148,7 +153,8 @@ class TelaVacinas():
                 tooltip='Lista de vacinas disponíveis')],
                 [sg.Button('Ok')]
         ]
-        window = sg.Window('Vacinas',size=(800, 480)).Layout(layout)
+        window = sg.Window('Vacinas',size=(800, 480),element_justification="center").Layout(layout).Finalize()
+        window.Maximize()
         while True:
             event, _ = window.read()
             if event == sg.WIN_CLOSED or event == 'Ok':

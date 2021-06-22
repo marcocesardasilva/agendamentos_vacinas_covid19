@@ -160,9 +160,9 @@ class ControladorEnfermeiros():
             if len(self.__controlador_agendamentos.agendamentos) == 0:
                 raise IndexError
             enfermeiro_listar = self.get_enfermeiro()
-            dados_enfermeiro = {"nome": enfermeiro_listar.nome, "matricula": enfermeiro_listar.matricula}
             if enfermeiro_listar is None:
                 raise TypeError
+            dados_enfermeiro = {"nome": enfermeiro_listar.nome, "matricula": enfermeiro_listar.matricula}
             for agendamento in self.__controlador_agendamentos.agendamentos:
                 if agendamento.enfermeiro.matricula == enfermeiro_listar.matricula:
                     linha = [agendamento.paciente.nome, agendamento.paciente.cpf]
@@ -180,14 +180,6 @@ class ControladorEnfermeiros():
         enfermeiro = self.get_enfermeiro()
         if enfermeiro is not None:
             self.__dao.remove(enfermeiro.matricula)
-        #ESTÁ COM ERRO AQUI, NÃO ESTÁ REMOVENDO, VOLTEI O CÓDIGO PARA VERIFICARMOS.
-        # self.__controlador_agendamentos = self.__controlador_sistema.controlador_agendamentos
-        # enfermeiro = self.get_enfermeiro()
-        # for agendamento in self.__controlador_agendamentos.agendamentos:
-        #     if agendamento.enfermeiro == enfermeiro:
-        #         return None
-        # if enfermeiro is not None:
-        #     self.__dao.remove(enfermeiro.matricula)
 
     def retorna_tela_principal(self):
         self.__mantem_tela_aberta = False
